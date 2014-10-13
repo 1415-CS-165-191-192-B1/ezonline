@@ -7,8 +7,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-root 'user#start'
+root 'user#login'
 
+get 'authentication' => 'user#get_code'
 get 'list' => 'user#list'
 
 
