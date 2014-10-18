@@ -11,16 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141004060555) do
+ActiveRecord::Schema.define(version: 20141018020843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "commits", force: true do |t|
+    t.text     "commit_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "files", id: false, force: true do |t|
+    t.decimal "file_id",             precision: 21, scale: 0, null: false
+    t.string  "filename", limit: 50
+  end
 
   create_table "posts", force: true do |t|
     t.string   "title"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "snippets", force: true do |t|
+    t.string "title",                  null: false
+    t.string "video_link", limit: 100
+  end
+
+  create_table "users", id: false, force: true do |t|
+    t.decimal "user_id",             precision: 21, scale: 0,                 null: false
+    t.string  "username", limit: 30
+    t.string  "email",    limit: 30
+    t.boolean "admin",                                        default: false
   end
 
 end

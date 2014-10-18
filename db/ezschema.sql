@@ -1,30 +1,30 @@
 CREATE TABLE users (
-	id numeric(30),
+	user_id character varying(30),
 	username character varying(50) NOT NULL,
 	email character varying(50) NOT NULL,
-	admin smallint NOT NULL, /*1 if admin, 0 if not*/
+	admin boolean NOT NULL,
 	PRIMARY KEY(id)
 );
 
 CREATE TABLE commits (
 	id SERIAL,
 	snippet_id integer NOT NULL,
-	user_id integer NOT NULL,
+	user_id character varying(30) NOT NULL,
 	created_at date,
+	commit_text text,
 	PRIMARY KEY(id)
 );
 
 CREATE TABLE snippets (
 	id SERIAL,
-	file_id integer NOT NULL,
+	file_id character varying(30) NOT NULL,
 	title character varying(50) NOT NULL,
-	body text NOT NULL,
 	video_link character varying(50),
 	PRIMARY KEY(id)
 );
 
 CREATE TABLE files (
-	id numeric(30),
+	file_id character varying(30),
 	filename character varying(50) NOT NULL,
 	PRIMARY KEY(id)
 );

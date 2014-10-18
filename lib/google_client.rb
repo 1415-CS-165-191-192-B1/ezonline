@@ -1,8 +1,8 @@
 require 'google/api_client'
 
-class GoogleClient 
+module GoogleClient 
 
-	@@client = Google::APIClient.new
+	@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 	def self.init
 		@@client.authorization.client_id = GoogleModel.id
 		@@client.authorization.client_secret = GoogleModel.secret
