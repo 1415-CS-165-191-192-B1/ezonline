@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user # check if user is authorized to use app
   	if session[:user_id] # session will not be saved otherwise
   		@current_user = User.find session[:user_id]
+      GoogleClient::set_access session[:access_token], session[:refresh_token], session[:expires_in], session[:issued_at]
   		return true
   	else
   		redirect_to(:controller => 'user', :action => 'login')  # prompt user to login
