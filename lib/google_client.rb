@@ -1,7 +1,11 @@
 require 'google/api_client'
 
-module GoogleClient 
+class GoogleClient 
 	@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
+	
+	def self.retrieve	# used to get client instance
+		@@client
+	end
 
 	def self.init
 		@@client.authorization.client_id = GoogleModel.id
@@ -10,25 +14,29 @@ module GoogleClient
 		@@client.authorization.redirect_uri = GoogleModel.uri
 	end
 
-	def self.authorize
+	def self.set_access access_token, refresh_token, expires_in, issued_at # initialize client with existing credentials
+		@@client.authorization.access_token = access_token 
+	    @@client.authorization.refresh_token = refresh_token
+	    @@client.authorization.expires_in = expires_in
+	    @@client.authorization.issued_at = issued_at
+	end
+
+	def self.authorize	# redirect to google login page
 		uri = @@client.authorization.authorization_uri
 		Launchy.open(uri)
 	end
 
-	def self.set_code code
+	def self.fetch_token code	# set access token
 		@@client.authorization.code = code
-	end
-
-	def self.fetch_token
 		@@client.authorization.fetch_access_token!
 	end
 
-	def self.fetch_user
+	def self.fetch_user	# get authenticated users's credentials
 		oauth2 = @@client.discovered_api('oauth2', 'v2')
 	  	@@client.execute!(:api_method => oauth2.userinfo.get)
 	end
 
-	def self.fetch_file file_title
+	def self.fetch_file file_title	# get google doc given exact title
 		drive = @@client.discovered_api('drive', 'v2')
 		@@client.execute(
 					api_method: drive.files.list,
@@ -37,7 +45,7 @@ module GoogleClient
 				  )
 	end
 
-	def self.download_file download_url
+	def self.download_file download_url	# download google doc content
 		@@client.execute(uri: download_url)
 	end
 end

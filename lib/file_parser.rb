@@ -1,9 +1,14 @@
 module FileParser
 	def self.parse result, file_id, filename, user_id
+		
+		begin
 		doc = Doc.new
 		doc.doc_id = file_id
 		doc.docname = filename
 		doc.save!
+		rescue ActiveRecord::RecordNotUnique
+			return 'YOU ALREADY ADDED THIS FILE'
+		end
 
 		array = result.body.split(/(\n)/)
 		for i in 0..array.length-1
@@ -33,6 +38,8 @@ module FileParser
 				end # end inner for loop
 			end # end condition text.starts_with?("#")
 		end # end for loop 
+
+		return 'SUCCESSFULLY ADDED FILE IN DATABASE'
 	end
 
 end

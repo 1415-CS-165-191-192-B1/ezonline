@@ -12,7 +12,7 @@ class FileController < ApplicationController
 			if download_url
 				result = GoogleClient::download_file download_url
 				if result.status == 200
-					FileParser::parse result, file.id, file.title, session[:user_id]
+					@message = FileParser::parse result, file.id, file.title, session[:user_id]
 				else # result.status != 200
 					puts "An error occurred: #{result.data['error']['message']}"
 				end
