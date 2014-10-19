@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-root 'user#login'
+root 'user#home'
 
+get 'user/login' => 'user#login'
 get 'authentication' => 'user#get_code'
-get 'list' => 'user#list'
+get 'user/list' => 'user#list'
+get 'file/get' => 'file#get'
 
 
   # Example of regular route:

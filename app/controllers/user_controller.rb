@@ -1,8 +1,15 @@
 require 'google_client'
 
 class UserController < ApplicationController
-	def login
+	before_filter :save_login_state, :only => [:login]
+	
+	def home
 		GoogleClient::init
+		redirect_to(:controller => 'user', :action => 'login')
+	end
+
+	def login
+		GoogleClient::authorize
 	end
 
 	def get_code
@@ -10,6 +17,7 @@ class UserController < ApplicationController
 			code = params[:code]
 			GoogleClient::set_code code
 			GoogleClient::fetch_token
+			session[:authorized] = 'true'
 
 			get_user
 		end
@@ -30,8 +38,13 @@ class UserController < ApplicationController
 	    # puts user_info.email
 	    # puts user_info.id
 	    begin
-	    User.find(user_info.id)
+	    user = User.find(user_info.id)
+	    session[:user_id] = user_info.id
+	    session[:user_admin] = user.admin
 	    @message = 'Logged in as ' + user_info.name 	
+
+	    redirect_to(:controller => 'file', :action => 'get')
+
    	    rescue ActiveRecord::RecordNotFound
     		@message = 'YOU HAVE NO PERMISSION TO USE THIS APPLICATION'
 	    end

@@ -1,5 +1,5 @@
 CREATE TABLE users (
-	user_id character varying(30),
+	user_id numeric(30),
 	username character varying(50) NOT NULL,
 	email character varying(50) NOT NULL,
 	admin boolean NOT NULL,
@@ -17,15 +17,15 @@ CREATE TABLE commits (
 
 CREATE TABLE snippets (
 	id SERIAL,
-	file_id character varying(30) NOT NULL,
+	doc_id numeric(30) NOT NULL,
 	title character varying(50) NOT NULL,
 	video_link character varying(50),
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE files (
-	file_id character varying(30),
-	filename character varying(50) NOT NULL,
+CREATE TABLE docs (
+	doc_id numeric(30),
+	docname character varying(50) NOT NULL,
 	PRIMARY KEY(id)
 );
 

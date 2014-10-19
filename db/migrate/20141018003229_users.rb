@@ -6,6 +6,7 @@ class Users < ActiveRecord::Migration
   		u.string :email, :limit => 30
   		u.boolean :admin, :default => false
   	end
+  	add_index :users, :user_id, :unique => true
   	execute "ALTER TABLE users ADD PRIMARY KEY (user_id);"
   end
 end

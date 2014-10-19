@@ -11,21 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018020843) do
+ActiveRecord::Schema.define(version: 20141018124216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "commits", force: true do |t|
+    t.decimal  "user_id",     precision: 21, scale: 0, null: false
+    t.integer  "snippet_id",                           null: false
     t.text     "commit_text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "files", id: false, force: true do |t|
-    t.decimal "file_id",             precision: 21, scale: 0, null: false
-    t.string  "filename", limit: 50
+  create_table "docs", id: false, force: true do |t|
+    t.string "doc_id",  null: false
+    t.string "docname"
   end
+
+  add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -35,8 +39,9 @@ ActiveRecord::Schema.define(version: 20141018020843) do
   end
 
   create_table "snippets", force: true do |t|
-    t.string "title",                  null: false
-    t.string "video_link", limit: 100
+    t.string "doc_id",     null: false
+    t.string "title"
+    t.string "video_link"
   end
 
   create_table "users", id: false, force: true do |t|
@@ -45,5 +50,7 @@ ActiveRecord::Schema.define(version: 20141018020843) do
     t.string  "email",    limit: 30
     t.boolean "admin",                                        default: false
   end
+
+  add_index "users", ["user_id"], name: "index_users_on_user_id", unique: true, using: :btree
 
 end
