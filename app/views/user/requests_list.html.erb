@@ -1,0 +1,28 @@
+<h1>Requests</h1>
+ 
+<table id='requests_list'>
+  <tr>
+    <th>userid</th>
+    <th>username</th>
+    <th>email</th>
+  </tr>
+ 
+<% @requests.each do |request| %>
+  <tr>
+    <td><%= request.user_id %></td>
+    <td><%= request.username %></td>
+    <td><%= request.email %></td>
+    
+    <td>
+        <%= button_to "Approve Request",
+                      user_path(request),
+                      id: "approve", 
+                      remote: true, 
+                      method: :delete,
+                      data: { confirm: 'You are about to authorize this account to use EZ Troubleshooter File Repository.' } 
+        %>
+    </td>
+
+  </tr>
+<% end %>
+</table>

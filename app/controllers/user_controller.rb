@@ -2,10 +2,20 @@ require 'google_client'
 
 class UserController < ApplicationController
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
+	before_filter :authenticate_admin, :only => [:requests_list] # if user not admin, restrict access
+	respond_to :html, :js
 	
+	def show
+		@users = User.all
+	end
+
 	def home	# set as root
 		GoogleClient::init
 		redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
+	end
+
+	def logout
+		session.clear
 	end
 
 	def login
@@ -31,9 +41,6 @@ class UserController < ApplicationController
 	  end
 
 	  if user_info != nil && user_info.id != nil
-	    # puts user_info.name
-	    # puts user_info.email
-	    # puts user_info.id
 	    begin
 	    user = User.find(user_info.id)	# if user is authorized to use app
 	    session[:user_id] = user_info.id
@@ -51,24 +58,34 @@ class UserController < ApplicationController
 	    redirect_to(:controller => 'file', :action => 'get')	# temporarily redirects to /file/get to test functionality
 
    	    rescue ActiveRecord::RecordNotFound
-    		@message = 'YOU HAVE NO PERMISSION TO USE THIS APPLICATION'
-	    end
+   	    	begin 
+	   	    	request = Request.new
+	   	    	request.user_id = user_info.id
+	   	    	request.email = user_info.email
+	   	    	request.username = user_info.name
+	   	    	request.save!
+   	    	rescue ActiveRecord::RecordNotUnique
+   	    		@message = 'A REQUEST WAS ALREADY SENT TO THIS APPLICATION. Please try again later.'
+   	    	end # end rescue ActiveRecord::RecordNotFound
+    		@message = 'YOU HAVE NO PERMISSION TO USE THIS APPLICATION. A request was sent to grant access.'
+	    end # end rescue ActiveRecord::RecordNotFound
 	  end
-	
 	end
 
-	def list
-		@users = User.all
+	def requests_list
+		@requests = Request.all
 	end
 
-	def save 	# replace with method to add user to app users
+	def destroy # add user from requests - destroy from requests
+		@request = Request.find(params[:id])
+p @request
 		user = User.new
-		user.id = 104044938106898565002
-		user.username = 'Christiane Yee'
-		user.email = 'christiane.yee@gmail.com'
-		user.admin = 1
-
+		user.user_id = @request.user_id
+		user.email = @request.email
+		user.username = @request.username
 		user.save!
+		@request.destroy!
+		@requests = Request.all
 	end
 
 end

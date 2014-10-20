@@ -1,5 +1,6 @@
-Rails.application.routes.draw do
-  resources :posts
+Rails.application.routes.draw do  
+  resources :user, :except => [:login, :logout, :edit, :update]
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -10,9 +11,12 @@ Rails.application.routes.draw do
 root 'user#home'
 
 get 'user/login' => 'user#login'
+get 'user/logout' => 'user#logout'
+
 get 'authentication' => 'user#get_code'
-get 'user/list' => 'user#list'
+post 'request/list' => 'user#requests_list'
 get 'file/get' => 'file#get'
+
 
 
   # Example of regular route:
