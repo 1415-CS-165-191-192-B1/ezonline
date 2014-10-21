@@ -41,11 +41,6 @@ class UserController < ApplicationController
 	  end
 
 	  if user_info != nil && user_info.id != nil
-
-p user_info.id
-p user_info.email
-p user_info.name
-
 	    begin
 	    user = User.find(user_info.id)	# if user is authorized to use app
 	    session[:user_id] = user_info.id
@@ -83,6 +78,7 @@ p user_info.name
 
 	def destroy # add user from requests - destroy from requests
 		@request = Request.find(params[:id])
+p @request
 		user = User.new
 		user.user_id = @request.user_id
 		user.email = @request.email
