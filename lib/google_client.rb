@@ -7,6 +7,10 @@ class GoogleClient
 		@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 	end
 
+	def self.retrieve
+		@@client
+	end
+
 	def self.init
 		@@client.authorization.client_id = GoogleModel.id
 		@@client.authorization.client_secret = GoogleModel.secret
