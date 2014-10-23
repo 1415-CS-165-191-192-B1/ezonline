@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def authenticate_user # check if user is authorized to use app
-  	if session[:user_id] # session will not be saved otherwise
+  	if session[:user_id]
   		@current_user = User.find session[:user_id]
       GoogleClient::set_access session[:access_token], session[:refresh_token], session[:expires_in], session[:issued_at]
   		return true
@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
 
   protected
   def authenticate_admin
-    if session[:user_id] # session will not be saved otherwise
-      @current_user = User.find session[:user_id]
+    if session[:user_id]
+      @current_user = User.find session[:user_id] # no need for rescue ActiveRecord::RecordNotFound
       GoogleClient::set_access session[:access_token], session[:refresh_token], session[:expires_in], session[:issued_at]
       unless @current_user.admin
         redirect_to(:controller => 'user', :action => 'show') # if current user is not admin, temporarily redirect to user/show
