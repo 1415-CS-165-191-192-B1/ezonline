@@ -22,7 +22,7 @@ class UserController < ApplicationController
 		GoogleClient::authorize	# redirect to google login
 	end
 
-	def authentication	# exchange code for access token, called upon redirection from google
+	def get_code	# exchange code for access token, called upon redirection from google
 		if params[:code]
 			code = params[:code]
 			GoogleClient::fetch_token code
