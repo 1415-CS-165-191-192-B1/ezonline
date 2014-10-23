@@ -3,8 +3,8 @@ require 'google/api_client'
 class GoogleClient 
 	@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 	
-	def self.retrieve	# used to get client instance
-		@@client
+	def self.reset	# used to get new client instance
+		@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 	end
 
 	def self.init

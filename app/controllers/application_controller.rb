@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
       end # end unless
       return true
     else
+      # redirect to home, show not authorized message
       return false
     end # end if condition
   end
@@ -36,6 +37,7 @@ class ApplicationController < ActionController::Base
       GoogleClient::set_access session[:access_token], session[:refresh_token], session[:expires_in], session[:issued_at]
   		return true
   	else
+      GoogleClient::reset
   		return false
   	end
   end
