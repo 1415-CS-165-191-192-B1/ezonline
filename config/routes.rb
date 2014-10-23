@@ -1,5 +1,13 @@
 Rails.application.routes.draw do  
-  resources :user, :except => [:login, :logout, :edit, :update]
+  #resources :user, :except => [:create, :new, :edit, :update, :index]
+  resources :user do
+    collection do
+      get 'login'
+      get 'logout'
+      get 'requests_list'
+      get 'show'
+    end
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -10,11 +18,10 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
-get 'user/login' => 'user#login'
-get 'user/logout' => 'user#logout'
+#get 'user/login' => 'user#login'
+#get 'user/logout' => 'user#logout'
 
-get 'authentication' => 'user#get_code'
-post 'request/list' => 'user#requests_list'
+get 'authentication' => 'user#authentication'
 get 'file/get' => 'file#get'
 
 
