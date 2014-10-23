@@ -1,20 +1,11 @@
 Rails.application.routes.draw do  
-<<<<<<< HEAD
+  #resources :user, :except => [:create, :new, :edit, :update, :index]
   resources :user do
     collection do
       get 'login'
       get 'logout'
       get 'requests_list'
       get 'show'
-    end
-  end
-=======
-  resources :user, :except => [:login, :logout, :edit, :update]
->>>>>>> parent of ceb2207... fixed routes
-
-  resources :file do
-    collection do
-      get 'get'
     end
   end
 
@@ -27,18 +18,13 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
-<<<<<<< HEAD
-get 'authentication' => 'user#authentication'
-=======
-get 'user/login' => 'user#login'
-get 'user/logout' => 'user#logout'
+#get 'user/login' => 'user#login'
+#get 'user/logout' => 'user#logout'
 
-get 'authentication' => 'user#get_code'
-post 'request/list' => 'user#requests_list'
+get 'authentication' => 'user#authentication'
 get 'file/get' => 'file#get'
 
 
->>>>>>> parent of ceb2207... fixed routes
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
