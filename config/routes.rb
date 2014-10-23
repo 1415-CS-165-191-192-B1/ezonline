@@ -1,16 +1,11 @@
 Rails.application.routes.draw do  
+  #resources :user, :except => [:create, :new, :edit, :update, :index]
   resources :user do
     collection do
       get 'login'
       get 'logout'
       get 'requests_list'
       get 'show'
-    end
-  end
-
-  resources :file do
-    collection do
-      get 'get'
     end
   end
 
@@ -23,7 +18,13 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
+#get 'user/login' => 'user#login'
+#get 'user/logout' => 'user#logout'
+
 get 'authentication' => 'user#authentication'
+get 'file/get' => 'file#get'
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

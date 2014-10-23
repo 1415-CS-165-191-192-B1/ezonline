@@ -2,7 +2,7 @@ require 'google_client'
 require 'file_parser'
 
 class FileController < ApplicationController
-	before_filter :authenticate_admin
+	before_filter :authenticate_user
 
 	def get
 		search_result = GoogleClient::fetch_file "CS 191 [2] - Project Environment"

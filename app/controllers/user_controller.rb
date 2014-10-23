@@ -15,7 +15,7 @@ class UserController < ApplicationController
 	end
 
 	def logout
-		session.clear # only deletes app session, browser is still logged in to account
+		session.clear
 	end
 
 	def login
@@ -42,9 +42,9 @@ class UserController < ApplicationController
 
 	  if user_info != nil && user_info.id != nil
 
-		p user_info.id 		# print details
-		p user_info.email
-		p user_info.name
+p user_info.id
+p user_info.email
+p user_info.name
 
 	    begin
 	    user = User.find(user_info.id)	# if user is authorized to use app
@@ -77,7 +77,7 @@ class UserController < ApplicationController
 	  end
 	end
 
-	def requests_list # lists all requests received by app
+	def requests_list
 		@requests = Request.all
 	end
 
