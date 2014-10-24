@@ -10,8 +10,8 @@ class UserController < ApplicationController
 	end
 
 	def home	# set as root
-		GoogleClient::init
-		redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
+		#GoogleClient::init
+		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
 	def logout
@@ -19,6 +19,7 @@ class UserController < ApplicationController
 	end
 
 	def login
+		#GoogleClient::init
 		GoogleClient::authorize	# redirect to google login
 	end
 

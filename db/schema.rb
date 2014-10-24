@@ -11,17 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020094534) do
+ActiveRecord::Schema.define(version: 20141020071813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "articles", force: true do |t|
-    t.string   "name"
-    t.boolean  "approved"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "commits", force: true do |t|
     t.decimal  "user_id",     precision: 21, scale: 0, null: false
@@ -37,13 +30,6 @@ ActiveRecord::Schema.define(version: 20141020094534) do
   end
 
   add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree
-
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "requests", id: false, force: true do |t|
     t.decimal "user_id",             precision: 21, scale: 0, null: false

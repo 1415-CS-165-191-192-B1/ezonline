@@ -5,10 +5,17 @@ class GoogleClient
 	
 	def self.reset	# used to get new client instance
 		@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
+		init
 	end
 
 	def self.retrieve
+		#@@client
+		unless @@client
+			@@client = Google::APIClient.new(@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"}))
+		end 
 		@@client
+		init
+
 	end
 
 	def self.init
