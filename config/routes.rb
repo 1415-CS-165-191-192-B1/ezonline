@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 root 'user#home'
 
 post 'user/login' => 'user#login'
+post 'user/show' => 'user#show'
 
 get 'authentication' => 'user#authentication'
 
