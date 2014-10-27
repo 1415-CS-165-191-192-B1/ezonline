@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
+post 'user/login' => 'user#login'
+
 get 'authentication' => 'user#authentication'
 
   # Example of regular route:

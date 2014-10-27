@@ -12,4 +12,14 @@ User.create(user_id: 104044938106898565002,
 			admin: true
 			)
 
+User.create(user_id: 104688058010189878683,
+			username: 'Ricardo Pablo de Leon',
+			email: 'ricardopablo.deleon@gmail.com',
+			admin: true
+			)
+
+
+
+
+
 

@@ -12,9 +12,10 @@ class GoogleClient
 		#@@client
 		unless @@client
 			@@client = Google::APIClient.new(@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"}))
-		end 
-		@@client
+		end
 		init
+		@@client
+		
 
 	end
 
