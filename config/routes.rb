@@ -1,4 +1,6 @@
 Rails.application.routes.draw do  
+  resources :todos
+
   resources :user do
     collection do
       get 'login'
