@@ -5,6 +5,10 @@ class UserController < ApplicationController
 	before_filter :authenticate_admin, :only => [:requests_list] # if user not admin, restrict access
 	respond_to :html, :js
 	
+	def index
+		
+	end
+
 	def show
 		@users = User.all
 	end
