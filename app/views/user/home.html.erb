@@ -1,3 +1,24 @@
 <h1>EZ Troubleshooter File Repository Home Page</h1>
-<%= button_to "Login", { action: "login" }, form_class: "new-thing" %>
-<%= button_to "Show User Requests", { action: "show" }, form_class: "new-thing" %>
+
+<% if session[:user_id] %>
+	<%= button_to "Logout", 
+				  logout_user_index_path, 
+				  method: :get %>
+<% else %>
+	<%= button_to "Login", 
+				  { action: "login" }, 
+				  form_class: "new-thing" %>
+<% end %>
+
+<%= button_to "Show Users", 
+			  { action: "show" }, 
+			  form_class: "new-thing" %>
+
+<%= button_to "Show User Requests", 
+			  requests_list_user_index_path,
+			  method: :get %>
+
+
+<%= button_to "Add CS 191 [2] - Project Environment",
+			  get_file_index_path,
+			  method: :get %>

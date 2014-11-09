@@ -9,14 +9,11 @@ class GoogleClient
 	end
 
 	def self.retrieve
-		#@@client
 		unless @@client
 			@@client = Google::APIClient.new(@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"}))
+			init
 		end
-		init
 		@@client
-		
-
 	end
 
 	def self.init

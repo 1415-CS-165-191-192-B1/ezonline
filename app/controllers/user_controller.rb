@@ -2,28 +2,24 @@ require 'google_client'
 
 class UserController < ApplicationController
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
-	before_filter :authenticate_admin, :only => [:requests_list] # if user not admin, restrict access
+	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 	respond_to :html, :js
-	
-	def index
-		
-	end
 
 	def show
 		@users = User.all
 	end
 
 	def home	# set as root
-		#GoogleClient::init
+		GoogleClient::init
 		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
 	def logout
 		session.clear # only deletes app session, browser is still logged in to account
+		GoogleClient::reset
 	end
 
 	def login
-		#GoogleClient::init
 		GoogleClient::authorize	# redirect to google login
 	end
 
@@ -31,11 +27,11 @@ class UserController < ApplicationController
 		if params[:code]
 			code = params[:code]
 			GoogleClient::fetch_token code
-			save_credentials
+			verify_credentials
 		end
 	end
 
-	def save_credentials	# after user logs in, store state in session
+	def verify_credentials	# after user logs in, store state in session
 	  result = GoogleClient::fetch_user
 	  user_info = nil
 
@@ -48,8 +44,8 @@ class UserController < ApplicationController
 	  if user_info != nil && user_info.id != nil
 
 		p user_info.id 		# print details
-		p user_info.email
-		p user_info.name
+		#p user_info.email
+		#p user_info.name
 
 	    begin
 	    user = User.find(user_info.id)	# if user is authorized to use app
@@ -65,9 +61,9 @@ class UserController < ApplicationController
 
 	    @message = 'Logged in as ' + user_info.name 	
 
-	    redirect_to(:controller => 'file', :action => 'get')	# temporarily redirects to /file/get to test functionality
-
    	    rescue ActiveRecord::RecordNotFound
+   	    	GoogleClient::reset
+
    	    	begin 
 	   	    	request = Request.new
 	   	    	request.user_id = user_info.id
