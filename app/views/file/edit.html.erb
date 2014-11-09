@@ -1,0 +1,12 @@
+<h1><%= @title %></h1>
+
+<%= form_for :text, url: {action: "update"}, html: {class: "nifty_form"} do |c| %>
+  <%= c.text_area :commit_text, value: @commit.commit_text, size: "75x15" %>
+  <%= c.submit "Save" %>
+<% end %>
+
+<h2>Latest commit:</h2>
+<p>
+	<%= @username %>
+	<%= @commit.created_at %><br/>
+</p>

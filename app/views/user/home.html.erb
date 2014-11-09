@@ -18,7 +18,12 @@
 			  requests_list_user_index_path,
 			  method: :get %>
 
+<%= button_to "Show Files", 
+			  { action: "show",
+			    controller: "file"},
+			    method: :get %>
+
 
 <%= button_to "Add CS 191 [2] - Project Environment",
-			  get_file_index_path,
+			  fetch_file_index_path,
 			  method: :get %>

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do  
-  resources :todos
+
+  resources :file do
+    collection do
+      get 'fetch'
+      get 'show'
+    end
+  end
 
   resources :user do
     collection do
@@ -9,13 +15,6 @@ Rails.application.routes.draw do
       get 'show'
     end
   end
-
-  resources :file do
-    collection do
-      get 'get'
-    end
-  end
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -27,6 +26,8 @@ root 'user#home'
 
 post 'user/login' => 'user#login'
 post 'user/show' => 'user#show'
+
+post "file/:id" => 'file#update'
 
 get 'authentication' => 'user#authentication'
 

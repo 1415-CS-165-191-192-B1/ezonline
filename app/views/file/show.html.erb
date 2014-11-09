@@ -1,0 +1,20 @@
+<h1>List of All Snippets</h1><br />
+<h2>Snippets</h2>
+ 
+<table>
+  <tr>
+    <th>title</th>
+  </tr>
+ 
+<% @snippets.each do |snippet| %>
+  <tr>
+    <td><%= snippet.title %></td>
+    <td>
+        <%= button_to "Edit Snippet",
+                      edit_file_path(snippet),
+                      method: :get
+        %>
+    </td>
+  </tr>
+<% end %>
+</table>
