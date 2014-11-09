@@ -1,14 +1,4 @@
-<% provide(:title, '') %>
-
-<% provide(:jumbotron, '
-      <h1>Welcome to EZOnline.</h1>
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a href="user/login" class="btn btn-primary btn-lg" role="button">Login with Google Account &raquo;</a></p>
-  '.html_safe)%>
-
-  
-
-<!-- <h1>EZ Troubleshooter File Repository Home Page</h1> -->
+<h1>EZ Troubleshooter File Repository Home Page</h1>
 
 <% if session[:user_id] %>
 	<%= button_to "Logout", 
