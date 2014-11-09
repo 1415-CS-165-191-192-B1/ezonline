@@ -30,6 +30,9 @@ post 'user/show' => 'user#show'
 post "file/:id" => 'file#update'
 
 get 'authentication' => 'user#authentication'
+get 'login' => 'user#login'
+get 'show' => 'user#show'
+get 'requests' => 'user#requests_list'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
