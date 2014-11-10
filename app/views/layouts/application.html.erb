@@ -12,6 +12,7 @@
   <title><%= full_title(yield(:title)) %></title>
 
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "btn.custom" %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 
@@ -45,7 +46,7 @@
             <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Logout", { action: "logout", controller: "user"}%></li>
           <% end %>
           
-          <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><%= link_to "Show Users", { action: "show", controller: "user"}%></li>
+          <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><%= link_to "Contact EZ Troubleshooter", { action: "show", controller: "user"}%></li>
         </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
@@ -74,7 +75,7 @@
       <p>
         &copy; <%= Time.now.year %> <%= site_name %> 
         &bull;
-        <<%= link_to "Show Users", { action: "show", controller: "user"}%></li>
+        <%= link_to "Show Users", { action: "show", controller: "user"}%></li>
         &bull;
         <%= link_to "Requests", { action: "requests_list", controller: "user"}%></li>
       </p>
