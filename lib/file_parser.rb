@@ -17,7 +17,7 @@ module FileParser
 		for i in 0...length
 			text = array[i].force_encoding('UTF-8')
 			text.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '')
-p text
+
 			if text.start_with?("#") # using '#' as snippet title starting character -- NOT WORKING FOR FIRST ENTRY!!!
 				text.slice! "#"
 
@@ -34,8 +34,9 @@ p text
 				for j in i+1...length	
 					content = array[j].force_encoding('UTF-8')
 					content.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') # remove the damn BOMs
-
+p j
 					if content.start_with?("#") or j==length-1
+						string << content
 						commit.commit_text = string
 						commit.save!
 
