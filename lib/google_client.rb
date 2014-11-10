@@ -17,10 +17,10 @@ class GoogleClient
 	end
 
 	def self.init
-		@@client.authorization.client_id = GoogleModel.id
-		@@client.authorization.client_secret = GoogleModel.secret
-		@@client.authorization.scope = GoogleModel.scope
-		@@client.authorization.redirect_uri = GoogleModel.uri
+		@@client.authorization.client_id = GoogleModel::ID
+		@@client.authorization.client_secret = GoogleModel::SECRET
+		@@client.authorization.scope = GoogleModel::SCOPE
+		@@client.authorization.redirect_uri = GoogleModel::URI
 	end
 
 	def self.set_access access_token, refresh_token, expires_in, issued_at # initialize client with existing credentials

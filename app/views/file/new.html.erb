@@ -1,0 +1,6 @@
+<h1>Add a Google Doc</h1>
+
+<%= form_for :title, url: file_fetch_path, html: {class: "nifty_form"} do |c| %>
+  <%= c.text_field :text, value: 'type in exact title' %>
+  <%= c.submit 'Add' %>
+<% end %>

@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   resources :file do
     collection do
-      get 'fetch'
       get 'show'
       get 'history'
     end
@@ -28,8 +27,10 @@ root 'user#home'
 post 'user/login' => 'user#login'
 post 'user/show' => 'user#show'
 
-post 'file/:id' => 'file#update'
+post 'file/fetch' => 'file#fetch'
+post 'file/update' => 'file#update'
 
+get 'vauthentication' => 'user#vauthentication'
 get 'authentication' => 'user#authentication'
 get 'login' => 'user#login'
 get 'show' => 'user#show'

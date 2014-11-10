@@ -3,9 +3,12 @@ require 'file_parser'
 
 class FileController < ApplicationController
   before_filter :authenticate_admin
+
+  def new
+  end
   
   def fetch
-    search_result = GoogleClient::fetch_file "CS 191 [2] - Project Environment"
+    search_result = GoogleClient::fetch_file params[:title][:text]
     if search_result.status == 200
       file = search_result.data['items'].first
       download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 

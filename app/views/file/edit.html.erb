@@ -1,6 +1,6 @@
 <h1><%= @title %></h1>
 
-<%= form_for :text, url: {action: "update"}, html: {class: "nifty_form"} do |c| %>
+<%= form_for :text, url: file_update_path, html: {class: "nifty_form"} do |c| %>
   <%= hidden_field_tag :snippet_id, @commit.snippet_id %>
   <%= c.text_area :commit_text, value: @commit.commit_text, size: "75x15" %>
   <%= c.submit "Save" %>

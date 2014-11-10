@@ -78,6 +78,9 @@ class UserController < ApplicationController
 	  end
 	end
 
+	def vauthentication
+	end
+
 	def requests_list # lists all requests received by app
 		@requests = Request.all
 	end
