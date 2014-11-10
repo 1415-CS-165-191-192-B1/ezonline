@@ -40,10 +40,9 @@
 
           <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
           <% if session[:user_id] %>
-
+            <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Logout", { action: "logout", controller: "user"}%></li>            
+          <% else %>            
             <li class="<%= 'active' if current_page?({ action: "login", controller: "user"}) %>"><%= link_to "Login", { action: "login", controller: "user"}%></li>
-          <% else %>
-            <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Logout", { action: "logout", controller: "user"}%></li>
           <% end %>
           
           <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><a href="#contact">Contact</a></li>
@@ -70,6 +69,7 @@
 
   <footer>
       <div class="col-lg-10 col-lg-offset-1 text-center">
+        <a href="#top"> Back to top</a>
         <hr class="small">
         <p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
         <br/><br/><br/>
@@ -97,23 +97,5 @@
         });
     });
     </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
