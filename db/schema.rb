@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20141103130214) do
     t.string "video_link"
   end
 
+  create_table "todos", force: true do |t|
+    t.string   "title"
+    t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", id: false, force: true do |t|
     t.decimal "user_id",             precision: 21, scale: 0,                 null: false
     t.string  "username", limit: 30

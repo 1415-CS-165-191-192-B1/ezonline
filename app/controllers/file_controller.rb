@@ -11,15 +11,20 @@ class FileController < ApplicationController
     search_result = GoogleClient::fetch_file params[:title][:text]
     if search_result.status == 200
       file = search_result.data['items'].first
-      download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
-      if download_url
-        result = GoogleClient::download_file download_url
-        if result.status == 200
-          @message = FileParser::parse result, file.id, file.title, session[:user_id]
-        else # result.status != 200
-          @message = "An error occurred: #{result.data['error']['message']}"
+      unless file.nil?
+        download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
+        if download_url
+          result = GoogleClient::download_file download_url
+          if result.status == 200
+            @message = FileParser::parse result, file.id, file.title, session[:user_id]
+          else # result.status != 200
+            @message = "An error occurred: #{result.data['error']['message']}"
+          end
         end
-      end
+
+      else
+        @message = "Cannot find document with title"
+      end # end unless
     end
   end
 
@@ -29,6 +34,7 @@ class FileController < ApplicationController
 
   def history
     @commits = Commit.where(snippet_id: params[:format])
+    @snippet = Snippet.find(params[:format])
   end
 
   def edit

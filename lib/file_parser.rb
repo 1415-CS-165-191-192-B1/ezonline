@@ -2,18 +2,23 @@ module FileParser
 	def self.parse result, file_id, filename, user_id
 		
 		begin
-		doc = Doc.new
-		doc.doc_id = file_id
-		doc.docname = filename
-		doc.save!
+			doc = Doc.new
+			doc.doc_id = file_id
+			doc.docname = filename
+			doc.save!
 		rescue ActiveRecord::RecordNotUnique
 			return 'YOU ALREADY ADDED THIS FILE'
 		end
 
-		array = result.body.split(/(\n)/)
-		for i in 0..array.length-1
-			text = array[i]
-			if text.starts_with?("#") # using '#' as snippet title starting character
+		#array = result.body.split(/(\n)/)
+		array = result.body.lines
+		length = array.length
+
+		for i in 0...length
+			text = array[i].force_encoding('UTF-8')
+			text.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '')
+p text
+			if text.start_with?("#") # using '#' as snippet title starting character -- NOT WORKING FOR FIRST ENTRY!!!
 				text.slice! "#"
 
 				snippet = Snippet.new
@@ -21,21 +26,27 @@ module FileParser
 				snippet.title = text.chomp!
 				snippet.save!
 
-				commit = Commit.new	# not being executed in last run
+				commit = Commit.new	# not being executed at some point
 				commit.user_id = user_id
 				commit.snippet_id = snippet.id
 
-				string = ''
-				for j in i+1..array.length-1	
-					content = array[j]
-					unless content.starts_with?("#")
-						string << content
-					else
+				string = ""
+				for j in i+1...length	
+					content = array[j].force_encoding('UTF-8')
+					content.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') # remove the damn BOMs
+
+					if content.start_with?("#") or j==length-1
 						commit.commit_text = string
 						commit.save!
+
+						i = j
+
 						break
+					else
+						string << content
 					end # end condition unless content.starts_with?("#")
 				end # end inner for loop
+
 			end # end condition text.starts_with?("#")
 		end # end for loop 
 
