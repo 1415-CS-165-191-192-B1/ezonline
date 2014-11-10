@@ -4,3 +4,9 @@
   <%= c.text_field :text, value: 'type in exact title' %>
   <%= c.submit 'Add' %>
 <% end %>
+
+<% unless session[:vimeo_access] %>
+	<%= button_to "Login to Vimeo", 
+				  user_vlogin_path, 
+				  form_class: "new-thing" %>
+<% end %>

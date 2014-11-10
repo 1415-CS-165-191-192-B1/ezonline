@@ -28,6 +28,7 @@ gem 'rest-client', :require => false
 gem 'launchy'
 gem 'json'
 gem 'vimeo', '~> 1.5.4'
+gem 'gemcutter', '~> 0.7.1'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

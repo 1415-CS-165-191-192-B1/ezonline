@@ -1,4 +1,5 @@
 require 'google_client'
+require 'vimeo_client'
 
 class UserController < ApplicationController
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
@@ -43,7 +44,7 @@ class UserController < ApplicationController
 
 	  if user_info != nil && user_info.id != nil
 
-		p user_info.id 		# print details
+		#p user_info.id 		# print details
 		#p user_info.email
 		#p user_info.name
 
@@ -52,7 +53,7 @@ class UserController < ApplicationController
 	    session[:user_id] = user_info.id
 	    session[:user_admin] = user.admin
 
-	    api_client = GoogleClient::retrieve	# get current instance of google client
+	    api_client = GoogleClient::retrieve	# get current authorized instance of google client
 
 	   	session[:access_token] = api_client.authorization.access_token	# save credentials
 		session[:refresh_token] = api_client.authorization.refresh_token
@@ -78,7 +79,20 @@ class UserController < ApplicationController
 	  end
 	end
 
+	def vlogin
+		VimeoClient::reset
+		session[:vimeo_oauth] = VimeoClient::fetch_oauth
+		redirect_to VimeoClient::fetch_url
+	end
+
 	def vauthentication
+		base = VimeoClient::retrieve
+		access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
+
+		session[:vimeo_access] = access_token.token
+		session[:vimeo_secret] = access_token.secret
+
+		redirect_to new_file_path
 	end
 
 	def requests_list # lists all requests received by app

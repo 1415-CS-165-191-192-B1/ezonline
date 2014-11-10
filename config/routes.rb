@@ -1,5 +1,17 @@
 Rails.application.routes.draw do  
 
+root 'user#home'
+
+get 'user/login' => 'user#login'
+get 'user/vlogin' => 'user#vlogin'
+post 'user/show' => 'user#show'
+
+post 'file/fetch' => 'file#fetch'
+post 'file/update' => 'file#update'
+
+get 'vauthentication' => 'user#vauthentication'
+get 'authentication' => 'user#authentication'
+
   resources :file do
     collection do
       get 'show'
@@ -9,7 +21,6 @@ Rails.application.routes.draw do
 
   resources :user do
     collection do
-      get 'login'
       get 'logout'
       get 'requests_list'
       get 'show'
@@ -21,20 +32,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
-
-root 'user#home'
-
-post 'user/login' => 'user#login'
-post 'user/show' => 'user#show'
-
-post 'file/fetch' => 'file#fetch'
-post 'file/update' => 'file#update'
-
-get 'vauthentication' => 'user#vauthentication'
-get 'authentication' => 'user#authentication'
-get 'login' => 'user#login'
-get 'show' => 'user#show'
-get 'requests' => 'user#requests_list'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
