@@ -8,10 +8,17 @@ body {
     border-radius: 0px;
 }
 
-.text-vertical-center {
+.text-vertical-center {	
     display: table-cell;
     text-align: center;
     vertical-align: middle;
+}
+
+.tvc-box{	
+	border-style: solid;
+    border-width: 5px;
+    width: 100vw;
+	height: 35vh;	
 }
 
 .text-vertical-center h1 {
@@ -54,7 +61,7 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    background: url(bg.jpg) no-repeat center center scroll;
+    background: url(bg-1a2.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -64,3 +71,4 @@ body {
 footer {
     padding: 100px 0;
 }
+

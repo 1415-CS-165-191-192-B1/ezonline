@@ -46,7 +46,7 @@
             <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Logout", { action: "logout", controller: "user"}%></li>
           <% end %>
           
-          <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><%= link_to "Contact EZ Troubleshooter", { action: "show", controller: "user"}%></li>
+          <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><%= link_to "Contact", { action: "show", controller: "user"}%></li>
         </ul>
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
@@ -67,19 +67,39 @@
     <div class="container">
   <% end %>
   <%= yield %>
-  <footer>
-    <hr>
-      <p class="pull-right">
-        <%= link_to '<span class="glyphicon-class glyphicon glyphicon-chevron-up"></span> Back to top'.html_safe, '#Top' %>
-      </p>
-      <p>
-        &copy; <%= Time.now.year %> <%= site_name %> 
-        &bull;
-        <%= link_to "Show Users", { action: "show", controller: "user"}%></li>
-        &bull;
-        <%= link_to "Requests", { action: "requests_list", controller: "user"}%></li>
-      </p>
+
+<footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <div class="col-md-6 text-center">
+                        <h4><strong>EZ Troubleshooter</strong>
+                        </h4>
+                        <p>ITS OK LLC<br>Orlando, Florida, USA</p>
+                        <ul class="list-unstyled">
+                            <!-- <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li> -->
+                            <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:info@eztroubleshooter.com">info@eztroubleshooter.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h4><strong>EZOnline</strong>
+                        </h4>
+                        <p>University of the Philippines Diliman<br>Quezon City, Philippines</p>
+                        <ul class="list-unstyled">
+                            <!-- <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li> -->
+                            <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:ezonline.dev@gmail.com">ezonline.dev@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
+                </div>
+            </div>
+        </div>
     </footer>
+
   </div> <!-- /container -->
 </body>
 </html>

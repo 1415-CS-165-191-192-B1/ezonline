@@ -3,48 +3,24 @@
 
 <header id="top" class="header">
         <div class="text-vertical-center">
-            <h1>EZOnline</h1>
-            <h3>Work Management App for EZ Troubleshooter</h3>
-            <br>
-            <a href="user/login" class="btn btn-dark btn-lg">Login with your Google account</a>
+            <div class="col md-4">
+                <h1>EZOnline</h1>
+                <h3>Work Management App for <br> EZ Troubleshooter</h3>
+                <br>
+                <a href="user/login" class="btn btn-dark btn-lg">Login with your Google account</a>
+            </div>           
         </div>
     </header>
 
 
 
-<<<<<<< HEAD
-=======
     <!-- Example row of columns -->
     
+
 <div class = "container">
 
 <!-- <h1>EZ Troubleshooter File Repository Home Page</h1> -->
 
->>>>>>> FETCH_HEAD
-<% if session[:user_id] %>
-	<%= button_to "Logout", 
-				  logout_user_index_path, 
-				  method: :get %>
-<% else %>
-	<%= button_to "Login", 
-				  { action: "login" }, 
-				  form_class: "new-thing" %>
-<% end %>
-
-<%= button_to "Show Users", 
-			  { action: "show" }, 
-			  form_class: "new-thing" %>
-
-<%= button_to "Show User Requests", 
-			  requests_list_user_index_path,
-			  method: :get %>
-
-<%= button_to "Show Files", 
-			  { action: "show",
-			    controller: "file"},
-			    method: :get %>
 
 
-<%= button_to "Add a file",
-			  new_file_path,
-			  method: :get %>
+
