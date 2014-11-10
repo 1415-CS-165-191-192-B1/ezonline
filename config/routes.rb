@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get 'fetch'
       get 'show'
+      get 'history'
     end
   end
 
@@ -27,7 +28,7 @@ root 'user#home'
 post 'user/login' => 'user#login'
 post 'user/show' => 'user#show'
 
-post "file/:id" => 'file#update'
+post 'file/:id' => 'file#update'
 
 get 'authentication' => 'user#authentication'
 get 'login' => 'user#login'

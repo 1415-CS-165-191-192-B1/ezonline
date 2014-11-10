@@ -3,15 +3,15 @@
  
 <table>
   <tr>
-    <th>title</th>
+    <th>Title</th>
   </tr>
  
 <% @snippets.each do |snippet| %>
   <tr>
     <td><%= snippet.title %></td>
     <td>
-        <%= button_to "Edit Snippet",
-                      edit_file_path(snippet),
+        <%= button_to "Show History",
+                      history_file_index_path(snippet),
                       method: :get
         %>
     </td>

@@ -1,0 +1,25 @@
+<h1>List of Commits For This Snippet</h1><br />
+<h2>Commits</h2>
+ 
+<table>
+  <tr>
+    <th>Commit by:</th>
+    <th>Time:</th>
+    <th>Text:</th>
+  </tr>
+ 
+<% @commits.each do |commit| %>
+  <% user = User.find(commit.user_id) %>
+  <tr>
+    <td><%= user.username %></td>
+    <td><%= commit.created_at %></td>
+    <td><%= commit.commit_text %></td>
+    <td>
+        <%= button_to "Edit",
+                      edit_file_path(commit),
+                      method: :get
+        %>
+    </td>
+  </tr>
+<% end %>
+</table>

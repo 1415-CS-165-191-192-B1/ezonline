@@ -3,8 +3,6 @@ require 'file_parser'
 
 class FileController < ApplicationController
   before_filter :authenticate_admin
-
-  @@snippet_id = 0
   
   def fetch
     search_result = GoogleClient::fetch_file "CS 191 [2] - Project Environment"
@@ -26,11 +24,14 @@ class FileController < ApplicationController
   	@snippets = Snippet.all
   end
 
+  def history
+    @commits = Commit.where(snippet_id: params[:format])
+  end
+
   def edit
-  	@@snippet_id = params[:id]
-  	snippet = Snippet.find(@@snippet_id)
+    @commit = Commit.find(params[:id])
+  	snippet = Snippet.find(@commit.snippet_id)
   	@title = snippet.title
-  	@commit = Commit.where(snippet_id: params[:id]).last!
   	user = User.find(@commit.user_id)
   	@username = user.username
   end
@@ -38,7 +39,7 @@ class FileController < ApplicationController
   def update
   	commit = Commit.new
   	commit.user_id = session[:user_id]
-  	commit.snippet_id = @@snippet_id
+  	commit.snippet_id = params[:snippet_id]
   	commit.commit_text = params[:text][:commit_text]
   	commit.save!
   end
