@@ -6,6 +6,7 @@ get 'user/login' => 'user#login'
 get 'user/vlogin' => 'user#vlogin'
 post 'user/show' => 'user#show'
 
+post 'file/new' => 'file#new'
 post 'file/fetch' => 'file#fetch'
 post 'file/update' => 'file#update'
 

@@ -7,7 +7,11 @@
                 <h1>EZOnline</h1>
                 <h3>Work Management App for <br> EZ Troubleshooter</h3>
                 <br>
-                <a href="user/login" class="btn btn-dark btn-lg">Login with your Google account</a>
+                <% if session[:user_id] %>
+                    <a class="btn btn-dark btn-lg">You are already logged in</a>                    
+                <% else %>
+                    <a href="user/login" class="btn btn-dark btn-lg">Log In with your Google account</a>
+                <% end %>
             </div>           
         </div>
     </header>

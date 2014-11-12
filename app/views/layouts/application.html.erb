@@ -40,9 +40,9 @@
 
           <li class="<%= 'active' if current_page?(root_path) %>"><%= link_to "Home", root_path %></li>
           <% if session[:user_id] %>
-            <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Logout", { action: "logout", controller: "user"}%></li>            
+            <li class="<%= 'active' if current_page?({ action: "logout", controller: "user"}) %>"><%= link_to "Log Out", { action: "logout", controller: "user"}%></li>            
           <% else %>            
-            <li class="<%= 'active' if current_page?({ action: "login", controller: "user"}) %>"><%= link_to "Login", { action: "login", controller: "user"}%></li>
+            <li class="<%= 'active' if current_page?({ action: "login", controller: "user"}) %>"><%= link_to "Log In", { action: "login", controller: "user"}%></li>
           <% end %>
           
           <li class="<%= 'active' if current_page?({ action: "show", controller: "user"}) %>"><a href="#contact">Contact</a></li>
