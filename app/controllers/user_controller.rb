@@ -6,12 +6,20 @@ class UserController < ApplicationController
 	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 	respond_to :html, :js
 
+	def index
+
+	end
+
 	def show
 		@users = User.all
 	end
 
 	def home	# set as root
-		GoogleClient::init
+		if session[:user_id]
+			redirect_to(:controller => 'user', :action => 'index')
+		else
+			GoogleClient::init
+		end
 		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
