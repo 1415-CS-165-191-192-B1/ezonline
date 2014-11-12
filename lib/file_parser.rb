@@ -35,7 +35,14 @@ module FileParser
 					content = array[j].force_encoding('UTF-8')
 					content.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') # remove the damn BOMs
 
-					if content.start_with?("#") or j==length-1
+					if content.start_with?("#")
+						commit.commit_text = string
+						commit.save!
+
+						i = j
+
+						break
+					elsif j == length-1
 						string << content
 						commit.commit_text = string
 						commit.save!
