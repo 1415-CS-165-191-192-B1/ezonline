@@ -55,10 +55,13 @@ class UserController < ApplicationController
 
 	    api_client = GoogleClient::retrieve	# get current authorized instance of google client
 
-	   	session[:access_token] = api_client.authorization.access_token	# save credentials
-		session[:refresh_token] = api_client.authorization.refresh_token
+	   	session[:google_access] = api_client.authorization.access_token	# save credentials
+		session[:google_refresh] = api_client.authorization.refresh_token
 		session[:expires_in] = api_client.authorization.expires_in
 		session[:issued_at] = api_client.authorization.issued_at
+
+		puts '======'
+		puts session[:expires_in]
 
 	    @message = 'Logged in as ' + user_info.name 	
 
