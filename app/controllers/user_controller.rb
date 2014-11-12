@@ -71,7 +71,8 @@ class UserController < ApplicationController
 		puts '======'
 		puts session[:expires_in]
 
-	    @message = 'Logged in as ' + user_info.name 	
+	    #@message = 'Logged in as ' + user_info.name 	
+	    redirect_to(:controller => 'user', :action => 'index')
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset
