@@ -18,21 +18,21 @@
 
     <br/><br/><br/>
 
-<%#= button_to "Show Users", 
+<%= button_to "Show Users", 
         { action: "show" }, 
         form_class: "new-thing" %>
 
-<%#= button_to "Show User Requests", 
+<%= button_to "Show User Requests", 
         requests_list_user_index_path,
         method: :get %>
 
-<%#= button_to "Show Files", 
+<%= button_to "Show Files", 
         { action: "show",
           controller: "file"},
           method: :get %>
 
 
-<%#= button_to "Add a file",
+<%= button_to "Add a file",
         new_file_path,
         method: :get %>
 

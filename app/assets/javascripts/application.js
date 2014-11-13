@@ -13,8 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require smoothscroll
-//= require metisMenu
-//= require sb-admin-2
+//= require plugins/metisMenu/metisMenu.min
+//= require custom_js
 //= require turbolinks
 //= require_tree .
