@@ -8,7 +8,7 @@ class UserController < ApplicationController
 	respond_to :html, :js
 
 	def index
-
+		
 	end
 
 	def show
@@ -30,7 +30,7 @@ class UserController < ApplicationController
 		render layout: "home_temp"
 		session.clear # only deletes app session, browser is still logged in to account
 		GoogleClient::reset
-		
+
 	end
 
 	def login
@@ -77,7 +77,7 @@ class UserController < ApplicationController
 		puts session[:expires_in]
 
 	    #@message = 'Logged in as ' + user_info.name 	
-	    redirect_to(:controller => 'user', :action => 'index')
+	    redirect_to(:controller => 'user', :action => 'index') and return
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset

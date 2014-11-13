@@ -40,7 +40,7 @@
 		</div>
         
         <!--logo start-->
-        <a href="index.html" class="logo"><b>EZOnline</b></a>
+        <a href="index" class="logo"><b>EZOnline</b></a>
         <!--logo end-->
         <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
@@ -74,11 +74,11 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-              	  <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <!--<p class="centered"><a href="profile.html"><img src="user/ez-logo.png" class="img-circle" width="60"></a></p>-->
               	  <h5 class="centered">USERNAME</h5>
               	  	
                   <li class="mt">
-                      <a href="index.html">
+                      <a href="index">
                           <i class="fa fa-dashboard"></i>
                           <span>Dashboard</span>
                       </a>
@@ -87,7 +87,7 @@
                   <li class="sub-menu">
                       <a href="http://localhost:3000/user/show" >
                           <i class="fa fa-desktop"></i>
-                          <span>UI Elements</span>
+                          <span>Authorized Users</span>
                       </a>
                       <ul class="sub">
                           <li><a  href="general.html">General</a></li>
@@ -99,7 +99,7 @@
                   <li class="sub-menu">
                       <a href="http://localhost:3000/user/requests_list">
                           <i class="fa fa-cogs"></i>
-                          <span>Components</span>
+                          <span>Pending User Requests</span>
                       </a>
                       <ul class="sub">
                           <li><a  href="calendar.html">Calendar</a></li>
@@ -110,7 +110,7 @@
                   <li class="sub-menu">
                       <a class="active" href="http://localhost:3000/file/new" >
                           <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
+                          <span>Add New Google Doc File</span>
                       </a>
                       <ul class="sub">
                           <li class="active"><a  href="blank.html">Blank Page</a></li>
@@ -119,14 +119,15 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="http://localhost:3000/user/file/edit" >
+                      <a href="http://localhost:3000/file/show" >
                           <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
+                          <span>All Google Doc Snippets</span>
                       </a>
                       <ul class="sub">
                           <li><a  href="form_component.html">Form Components</a></li>
                       </ul>
                   </li>
+                  <!--
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-th"></i>
@@ -146,7 +147,7 @@
                           <li><a  href="morris.html">Morris</a></li>
                           <li><a  href="chartjs.html">Chartjs</a></li>
                       </ul>
-                  </li>
+                  </li> -->
 
               </ul>
               <!-- sidebar menu end-->
@@ -162,7 +163,7 @@
 		  <div class="col-lg-12">
 		    <%= yield %>
 				<footer>
-					<div class="col-lg-12 col-lg-offset-1 text-center">
+					<div class="col-lg-12 text-center">
 						<a href="#top" class="smoothScroll"> Back to top</a>
 						<hr class="small">
 						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
