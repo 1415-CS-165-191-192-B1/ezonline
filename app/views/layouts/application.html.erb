@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 
-                <li><a class="login" href="login.html">Log In</a></li>
+                <li><a class="login" href="http://localhost:3000/user/logout">Log Out</a></li>
             </ul>
         </div>
     </header>
@@ -85,7 +85,7 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="http://localhost:3000/user/show" >
                           <i class="fa fa-desktop"></i>
                           <span>UI Elements</span>
                       </a>
@@ -97,7 +97,7 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="http://localhost:3000/user/requests_list">
                           <i class="fa fa-cogs"></i>
                           <span>Components</span>
                       </a>
@@ -108,7 +108,7 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a class="active" href="javascript:;" >
+                      <a class="active" href="http://localhost:3000/file/new" >
                           <i class="fa fa-book"></i>
                           <span>Extra Pages</span>
                       </a>
@@ -119,7 +119,7 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="http://localhost:3000/user/file/edit" >
                           <i class="fa fa-tasks"></i>
                           <span>Forms</span>
                       </a>
@@ -157,23 +157,24 @@
 <br/><br/><br/><br/><br/>
   
 <div id="page-wrapper">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12">
-        <%= yield %>
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<div class="row">
+		  <div class="col-lg-12">
+		    <%= yield %>
+				<footer>
+					<div class="col-lg-12 col-lg-offset-1 text-center">
+						<a href="#top" class="smoothScroll"> Back to top</a>
+						<hr class="small">
+						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
+						<br/><br/><br/>
+					</div>
+				</footer>        
+		  	</div>
+		</div>
+	</div>
 </div>
 
-  <footer>
-      <div class="col-lg-12 col-lg-offset-1 text-center">
-        <a href="#top"> Back to top</a>
-        <hr class="small">
-        <p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
-        <br/><br/><br/>
-      </div>
-  </footer>
+  
 
  </section>
  <!-- /container -->

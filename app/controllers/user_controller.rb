@@ -15,20 +15,22 @@ class UserController < ApplicationController
 		@users = User.all
 	end
 
-	def home	# set as root
-		render layout: "home_temp"
+	def home	# set as root		
 
 		if session[:user_id]
-			redirect_to(:controller => 'user', :action => 'index')
+			redirect_to(:controller => 'user', :action => 'index') and return
 		else
+			render layout: "home_temp"
 			GoogleClient::init
 		end
 		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
 	def logout
+		render layout: "home_temp"
 		session.clear # only deletes app session, browser is still logged in to account
 		GoogleClient::reset
+		
 	end
 
 	def login
