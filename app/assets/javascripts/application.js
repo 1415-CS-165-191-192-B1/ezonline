@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require plugins/metisMenu/metisMenu.min
+
 //= require custom_js
 //= require turbolinks
 //= require_tree .
