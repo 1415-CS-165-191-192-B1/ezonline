@@ -16,12 +16,11 @@ class UserController < ApplicationController
 	end
 
 	def home	# set as root
-		
+		render layout: "home_temp"
 
 		if session[:user_id]
-			redirect_to(:controller => 'user', :action => index) and return
+			redirect_to(:controller => 'user', :action => 'index')
 		else
-			render layout: "home_temp"
 			GoogleClient::init
 		end
 		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
