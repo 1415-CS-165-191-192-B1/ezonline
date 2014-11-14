@@ -11,6 +11,11 @@
  * file per style scope.
  *
  *= require bootstrap.min
+ *= require style-responsive
+ *= require style
+ *= require table-responsive
+ *= require to-do
+ *= require zabuto_calendar
  *= require_tree .
  *= require_self 
  */

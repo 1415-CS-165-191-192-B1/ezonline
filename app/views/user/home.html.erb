@@ -3,48 +3,68 @@
 
 <header id="top" class="header">
         <div class="text-vertical-center">
-            <h1>EZOnline</h1>
-            <h3>Work Management App for EZ Troubleshooter</h3>
-            <br>
-            <a href="user/login" class="btn btn-dark btn-lg">Login with your Google account</a>
+            <div class="col md-4">
+                <h1>EZOnline</h1>
+                <h3>Work Management App for <br> EZ Troubleshooter</h3>
+                <br>
+                <% if session[:user_id] %>
+                    <a class="btn btn-dark btn-lg">You are already logged in</a>                    
+                <% else %>
+                    <a href="user/login" class="btn btn-dark btn-lg">Log In with your Google account</a>
+                <% end %>
+            </div>           
         </div>
     </header>
 
+    <br/><br/><br/>
+
+<%#= button_to "Show Users", 
+        { action: "show" }, 
+        form_class: "new-thing" %>
+
+<%#= button_to "Show User Requests", 
+        requests_list_user_index_path,
+        method: :get %>
+
+<%#= button_to "Show Files", 
+        { action: "show",
+          controller: "file"},
+          method: :get %>
 
 
-<<<<<<< HEAD
-=======
-    <!-- Example row of columns -->
+<%#= button_to "Add a file",
+        new_file_path,
+        method: :get %>
+
     
-<div class = "container">
+    <div class="container">
+        <div class="row">
+        <section id="contact">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                 <div class="col-md-6 text-center">
+                    <h4><strong>EZ Troubleshooter</strong></h4>
+                    <p>ITS OK LLC<br>Orlando, Florida, USA</p>
+                    <ul class="list-unstyled">
+                     <!-- <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li> -->
+                    <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:info@eztroubleshooter.com">info@eztroubleshooter.com</a>
+                    </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h4><strong>EZOnline</strong>
+                    </h4>
+                    <p>University of the Philippines Diliman<br>Quezon City, Philippines</p>
+                    <ul class="list-unstyled">
+                    <!-- <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li> -->
+                    <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:ezonline.dev@gmail.com">ezonline.dev@gmail.com</a>
+                    </li>
+                    <br/> <br/> 
+                     </ul>
+                </div> 
+            </div>
+            </section>
+        <!--</div>
+    </div>-->
 
-<!-- <h1>EZ Troubleshooter File Repository Home Page</h1> -->
-
->>>>>>> FETCH_HEAD
-<% if session[:user_id] %>
-	<%= button_to "Logout", 
-				  logout_user_index_path, 
-				  method: :get %>
-<% else %>
-	<%= button_to "Login", 
-				  { action: "login" }, 
-				  form_class: "new-thing" %>
-<% end %>
-
-<%= button_to "Show Users", 
-			  { action: "show" }, 
-			  form_class: "new-thing" %>
-
-<%= button_to "Show User Requests", 
-			  requests_list_user_index_path,
-			  method: :get %>
-
-<%= button_to "Show Files", 
-			  { action: "show",
-			    controller: "file"},
-			    method: :get %>
 
 
-<%= button_to "Add a file",
-			  new_file_path,
-			  method: :get %>

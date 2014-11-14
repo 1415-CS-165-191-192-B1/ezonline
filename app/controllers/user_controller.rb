@@ -2,22 +2,35 @@ require 'google_client'
 require 'vimeo_client'
 
 class UserController < ApplicationController
+
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 	respond_to :html, :js
+
+	def index
+		
+	end
 
 	def show
 		@users = User.all
 	end
 
-	def home	# set as root
-		GoogleClient::init
+	def home	# set as root		
+
+		if session[:user_id]
+			redirect_to(:controller => 'user', :action => 'index') and return
+		else
+			render layout: "home_temp"
+			GoogleClient::init
+		end
 		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
 	def logout
+		render layout: "home_temp"
 		session.clear # only deletes app session, browser is still logged in to account
 		GoogleClient::reset
+
 	end
 
 	def login
@@ -59,8 +72,17 @@ class UserController < ApplicationController
 		session[:google_refresh] = api_client.authorization.refresh_token
 		session[:expires_in] = api_client.authorization.expires_in
 		session[:issued_at] = api_client.authorization.issued_at
+<<<<<<< HEAD
 		
 	    @message = 'Logged in as ' + user_info.name 	
+=======
+
+		puts '======'
+		puts session[:expires_in]
+
+	    #@message = 'Logged in as ' + user_info.name 	
+	    redirect_to(:controller => 'user', :action => 'index') and return
+>>>>>>> FETCH_HEAD
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset # effectively deleting access token for current client instance

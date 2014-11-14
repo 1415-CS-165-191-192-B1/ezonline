@@ -4,13 +4,20 @@ root 'user#home'
 
 get 'user/login' => 'user#login'
 get 'user/vlogin' => 'user#vlogin'
-post 'user/show' => 'user#show'
-
-post 'file/fetch' => 'file#fetch'
-post 'file/update' => 'file#update'
 
 get 'vauthentication' => 'user#vauthentication'
 get 'authentication' => 'user#authentication'
+
+post 'user/show' => 'user#show'
+post 'file/new' => 'file#new'
+post 'file/fetch' => 'file#fetch'
+post 'file/update' => 'file#update'
+
+get 'index' => 'user#index'
+get 'show' => 'user#show'
+get 'requests' => 'user#requests_list'
+
+
 
   resources :file do
     collection do

@@ -7,7 +7,7 @@ module FileParser
 			doc.docname = filename
 			doc.save!
 		rescue ActiveRecord::RecordNotUnique
-			return 'YOU ALREADY ADDED THIS FILE'
+			return 'The file you are trying to add has already been added previously.'
 		end
 
 		#array = result.body.split(/(\n)/)
@@ -58,7 +58,7 @@ module FileParser
 			end # end condition text.starts_with?("#")
 		end # end for loop 
 
-		return 'SUCCESSFULLY ADDED FILE IN DATABASE'
+		return 'The file has been successfully added to the database.'
 	end
 
 end

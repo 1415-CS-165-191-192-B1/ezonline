@@ -2,9 +2,11 @@ require 'google_client'
 require 'vimeo_client'
 require 'file_parser'
 
+
 class FileController < ApplicationController
   before_filter :authenticate_admin, :only => [:new, :fetch]
   before_filter :check_login_state, :only => [:show]
+  
 
   def new
   end

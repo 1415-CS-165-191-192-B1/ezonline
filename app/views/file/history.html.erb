@@ -1,25 +1,48 @@
-<h1>List of Commits For This Snippet</h1><br />
-<h2><%= @snippet.title %></h2>
+
+<h1><%= @snippet.title %></h1><br />
+<h3>List of Commits For This Snippet</h3>
  
-<table>
-  <tr>
-    <th>Commit by:</th>
-    <th>Time:</th>
-    <th>Text:</th>
-  </tr>
- 
-<% @commits.each do |commit| %>
-  <% user = User.find(commit.user_id) %>
-  <tr>
-    <td><%= user.username %></td>
-    <td><%= commit.created_at %></td>
-    <td><%= commit.commit_text %></td>
-    <td>
-        <%= button_to "Edit",
-                      edit_file_path(commit),
-                      method: :get
-        %>
-    </td>
-  </tr>
-<% end %>
-</table>
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="requests" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Commit By</th>
+                              <th>Time Committed</th>
+                              <th>Snippet Text</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% @commits.each do |commit| %>
+                          <% user = User.find(commit.user_id) %>
+                          <tr>
+                            <td><%= user.username %></td>
+                            <td><%= commit.created_at %></td>
+                            <td><%= commit.commit_text %></td>              
+                              <td>
+                                  <%= button_to "Edit",
+                                                edit_file_path(commit),
+                                                method: :get,                                                
+                                                :class => 'btn btn-success btn-small'
+                                  %>                                  
+                              </td>
+                            </tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+
+
