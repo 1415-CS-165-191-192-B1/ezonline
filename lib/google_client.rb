@@ -3,7 +3,7 @@ require 'google/api_client'
 class GoogleClient 
 	@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 	
-	def self.reset	# used to get new client instance
+	def self.reset	# used to reset client instance
 		@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
 		init
 	end
@@ -49,7 +49,6 @@ class GoogleClient
 		drive = @@client.discovered_api('drive', 'v2')
 		@@client.execute(
 					api_method: drive.files.list,
-					#parameters: {q: %(title = "CS 191 [2] - Project Environment"), maxResults: 1}
 					parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1}
 				  )
 	end
