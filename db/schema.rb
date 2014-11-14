@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20141103130214) do
   create_table "snippets", force: true do |t|
     t.string "doc_id",     null: false
     t.string "title"
-    t.string "video_link"
+    t.string "video_id"
   end
 
   create_table "todos", force: true do |t|

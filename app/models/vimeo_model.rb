@@ -8,4 +8,6 @@ module VimeoModel
 
 	URI = 'http://localhost:3000/vauthentication'
 
+	USERNAME = 'EZOnline Development'
+
 end

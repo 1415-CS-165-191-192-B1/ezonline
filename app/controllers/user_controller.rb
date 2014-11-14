@@ -72,17 +72,9 @@ class UserController < ApplicationController
 		session[:google_refresh] = api_client.authorization.refresh_token
 		session[:expires_in] = api_client.authorization.expires_in
 		session[:issued_at] = api_client.authorization.issued_at
-<<<<<<< HEAD
 		
 	    @message = 'Logged in as ' + user_info.name 	
-=======
-
-		puts '======'
-		puts session[:expires_in]
-
-	    #@message = 'Logged in as ' + user_info.name 	
 	    redirect_to(:controller => 'user', :action => 'index') and return
->>>>>>> FETCH_HEAD
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset # effectively deleting access token for current client instance
@@ -115,6 +107,7 @@ class UserController < ApplicationController
 		session[:vimeo_secret] = access_token.secret
 
 		redirect_to new_file_path
+		session[:video_id] = VimeoClient::fetch_videos session[:vimeo_access], session[:vimeo_secret]
 	end
 
 	def requests_list # lists all requests received by app

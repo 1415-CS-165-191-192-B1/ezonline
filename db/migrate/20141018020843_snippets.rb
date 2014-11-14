@@ -3,7 +3,7 @@ class Snippets < ActiveRecord::Migration
   	create_table :snippets do |s|
   		s.string :doc_id, :null => false
   		s.string :title
-  		s.string :video_link
+  		s.string :video_id
   	end
   end
 end

@@ -7,6 +7,12 @@
 
 <% unless session[:vimeo_access] %>
 	<%= button_to "Login to Vimeo", 
-				  user_vlogin_path, 
+				  user_vlogin_path,
+				  method: :get, 
 				  form_class: "new-thing" %>
+<% end %>
+
+<% if session[:video_id] %>
+	<% link = "//player.vimeo.com/video/" + session[:video_id] %>
+	<iframe src=<%= link %> width="800" height="500" frameborder="0"></iframe>
 <% end %>
