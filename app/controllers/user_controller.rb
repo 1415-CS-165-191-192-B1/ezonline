@@ -106,8 +106,9 @@ class UserController < ApplicationController
 		session[:vimeo_access] = access_token.token
 		session[:vimeo_secret] = access_token.secret
 
+		VimeoClient::fetch_videos session[:vimeo_access], session[:vimeo_secret]
+
 		redirect_to new_file_path
-		session[:video_id] = VimeoClient::fetch_videos session[:vimeo_access], session[:vimeo_secret]
 	end
 
 	def requests_list # lists all requests received by app

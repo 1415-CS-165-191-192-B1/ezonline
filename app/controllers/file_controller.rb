@@ -49,6 +49,7 @@ class FileController < ApplicationController
     @commit = Commit.find(params[:id])
   	snippet = Snippet.find(@commit.snippet_id)
   	@title = snippet.title
+    @video_id = snippet.video_id
   	user = User.find(@commit.user_id)
   	@username = user.username
   end

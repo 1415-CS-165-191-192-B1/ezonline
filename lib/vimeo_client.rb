@@ -25,7 +25,15 @@ class VimeoClient
 		response = video.get_all(VimeoModel::USERNAME, { :page => "1", :per_page => "25", :sort => "newest" })
 		#response = video.get_by_tag("how to download memtest plus 7", { :page => "1", :per_page => "25", :full_response => true, :sort => "relevant" })
 		videos = response['videos']['video']
-		id = videos[0]['id']
+		video_list = []
+		videos.each do |v|
+			hash = {id: v['id'], title: v['title']}
+			video_list.push(hash)
+		end
+
+		p video_list
+
+		VimeoModel::set_videos video_list
 		#video.search("how to download memtest plus 7", 
 					#{ :page => "1", :per_page => "25", :full_response => "0", :sort => "newest", :user_id => nil })
 	end

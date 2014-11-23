@@ -31,8 +31,12 @@ class GoogleClient
 	end
 
 	def self.authorize	# redirect to google login page
-		uri = @@client.authorization.authorization_uri
+		uri = build_auth_uri
 		Launchy.open(uri)
+	end
+
+	def self.build_auth_uri
+		return @@client.authorization.authorization_uri(:approval_prompt => :auto).to_s 
 	end
 
 	def self.fetch_token code	# set access token

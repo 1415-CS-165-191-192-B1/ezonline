@@ -10,4 +10,14 @@ module VimeoModel
 
 	USERNAME = 'EZOnline Development'
 
+	@@videos = nil
+
+	def self.set_videos video_list
+		@@videos = video_list
+	end
+
+	def self.get_videos
+		@@videos
+	end
+
 end

@@ -10,9 +10,10 @@ module FileParser
 			return 'The file you are trying to add has already been added previously.'
 		end
 
-		#array = result.body.split(/(\n)/)
 		array = result.body.lines
 		length = array.length
+
+		videos = VimeoModel::get_videos
 
 		for i in 0...length
 			text = array[i].force_encoding('UTF-8')
@@ -24,6 +25,14 @@ module FileParser
 				snippet = Snippet.new
 				snippet.doc_id = file_id
 				snippet.title = text.chomp!
+
+				unless videos.nil?
+					video = videos.find {|v| v[:title].casecmp(snippet.title).zero? }
+					unless video.nil? 
+						snippet.video_id = video[:id]
+					end
+				end
+
 				snippet.save!
 
 				commit = Commit.new	# not being executed at some point
@@ -58,7 +67,7 @@ module FileParser
 			end # end condition text.starts_with?("#")
 		end # end for loop 
 
-		return 'The file has been successfully added to the database.'
+		return 'The file was successfully added to the database.'
 	end
 
 end
