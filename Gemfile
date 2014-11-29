@@ -33,6 +33,9 @@ gem 'gemcutter', '~> 0.7.1'
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+# Heroku
+gem 'rails_12factor', group: :production
+
 # Bootstrap stuff
 #gem 'bootstrap-sass', '~> 3.2.0'
 #gem 'autoprefixer-rails'
