@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20141103130214) do
   add_index "requests", ["user_id"], name: "index_requests_on_user_id", unique: true, using: :btree
 
   create_table "snippets", force: true do |t|
-    t.string "doc_id",     null: false
+    t.string "doc_id",   null: false
     t.string "title"
     t.string "video_id"
   end

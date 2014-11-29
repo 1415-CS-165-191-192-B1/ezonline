@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
-get 'user/login' => 'user#login'
+get 'u_login' => 'user#login'
+get 'u_logout' => 'user#logout'
+
+
+
 get 'user/vlogin' => 'user#vlogin'
 
 get 'vauthentication' => 'user#vauthentication'
