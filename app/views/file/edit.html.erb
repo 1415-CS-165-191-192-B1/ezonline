@@ -1,3 +1,4 @@
+<div align = center>
 <h1><%= @title %></h1>
 
 <% unless @video_id.nil? %>
@@ -6,12 +7,15 @@
 <% end %>
 
 <%= form_for :text, url: file_update_path, html: {class: "nifty_form"} do |c| %>
-  <%= hidden_field_tag :snippet_id, @commit.snippet_id %>
+  <%= hidden_field_tag :snippet_id, @commit.snippet_id %><br/>
   <%= c.text_area :commit_text, value: @commit.commit_text, size: "95x5" %>
-  <br />
+  <br/>
+  <br/>
   <%= c.submit "Save" %>
 <% end %>
-
+</div>
+<br/>
+<br/>
 <h2>This commit:</h2>
 <p>
 	<%= @username %>
