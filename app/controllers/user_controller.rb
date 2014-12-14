@@ -53,7 +53,7 @@ class UserController < ApplicationController
 	end
 
 	def verify_credentials	# after user logs in, store state in session
-	
+
 	  result = GoogleClient::fetch_user
 	  user_info = nil
 
@@ -81,7 +81,8 @@ class UserController < ApplicationController
 		session[:expires_in] = api_client.authorization.expires_in
 		session[:issued_at] = api_client.authorization.issued_at
 		
-	    @message = 'Logged in as ' + user_info.name 	
+	    @message = 'Logged in as ' + user_info.name 
+	    @u_name = user_info.name	
 	    redirect_to(:controller => 'user', :action => 'index') and return
 
    	    rescue ActiveRecord::RecordNotFound
