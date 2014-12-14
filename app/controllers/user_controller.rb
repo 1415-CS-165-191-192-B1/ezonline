@@ -34,6 +34,7 @@ class UserController < ApplicationController
 	end
 
 	def login
+		render layout: "home_temp"
 		GoogleClient::authorize	# redirect to google login
 	end
 

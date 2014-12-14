@@ -29,7 +29,7 @@ class FileController < ApplicationController
         end
 
       else
-        @message = "Cannot find document with title"
+        @message = "Sorry, EZ Online cannot find a Google Doc with that title."
       end # end unless
 
     end
