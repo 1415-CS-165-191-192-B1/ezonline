@@ -23,7 +23,13 @@
                               <td><%= user.user_id %></td>
                               <td><%= user.username %></td>
                               <td><%= user.email %></td>
-                              <td><%= user.admin %></td>
+                              <td>
+                              <% if user.admin %>
+                                <img src="/assets/check.png" alt="rss feed" height=20/> 
+                              <% else %>
+                                <img src="/assets/cross.png" alt="rss feed" height=20/> 
+                              <% end %>
+                              </td>
                             </tr>
                           <% end %>
                       </tbody>
