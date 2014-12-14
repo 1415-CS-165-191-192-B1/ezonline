@@ -2,10 +2,16 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
+get 'u_home' => 'user#home'
 get 'u_login' => 'user#login'
 get 'u_logout' => 'user#logout'
+get 'u_index' => 'user#index'
+get 'u_show' => 'user#show'
+get 'u_req' => 'user#requests_list'
+get 'u_contact' => 'user#contact'
 
-
+get 'f_new' => 'file#new'
+get 'f_show' => 'file#show'
 
 get 'user/vlogin' => 'user#vlogin'
 

@@ -15,6 +15,10 @@ class UserController < ApplicationController
 		@users = User.all
 	end
 
+	def contact
+
+	end
+
 	def home	# set as root		
 
 		if session[:user_id]
