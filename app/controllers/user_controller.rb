@@ -43,6 +43,8 @@ class UserController < ApplicationController
 	end
 
 	def authentication	# exchange code for access token, called upon redirection from google
+		render layout: "home_temp"
+
 		if params[:code]
 			code = params[:code]
 			GoogleClient::fetch_token code
@@ -51,6 +53,7 @@ class UserController < ApplicationController
 	end
 
 	def verify_credentials	# after user logs in, store state in session
+	
 	  result = GoogleClient::fetch_user
 	  user_info = nil
 
@@ -91,9 +94,9 @@ class UserController < ApplicationController
 	   	    	request.username = user_info.name
 	   	    	request.save!
    	    	rescue ActiveRecord::RecordNotUnique
-   	    		@message = 'A REQUEST WAS ALREADY SENT TO THIS APPLICATION. Please try again later.'
+   	    		@message = 'A request was already sent to the application. Please try again later.'
    	    	end # end rescue ActiveRecord::RecordNotFound
-    		@message = 'YOU HAVE NO PERMISSION TO USE THIS APPLICATION. A request was sent to grant access.'
+    		@message = 'Sorry, you have no permission to use this application. A request was sent to grant access.'
 	    end # end rescue ActiveRecord::RecordNotFound
 	  end
 	end
