@@ -43,7 +43,7 @@ class UserController < ApplicationController
 	end
 
 	def authentication	# exchange code for access token, called upon redirection from google
-		render layout: "home_temp"
+		
 
 		if params[:code]
 			code = params[:code]
