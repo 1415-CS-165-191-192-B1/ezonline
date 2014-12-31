@@ -1,10 +1,11 @@
 require 'google_client'
 require 'vimeo_client'
 require 'file_parser'
+require 'tempfile'
 
 
 class FileController < ApplicationController
-  before_filter :authenticate_admin, :only => [:new, :fetch]
+  before_filter :authenticate_admin, :only => [:new, :fetch, :compile]
   before_filter :check_login_state, :only => [:show]
   
 
@@ -37,7 +38,18 @@ class FileController < ApplicationController
   end
 
   def show
-  	@snippets = Snippet.all
+  	snippets = Snippet.all
+    docs = Doc.all
+    @files = Hash.new
+
+    docs.each do |d|
+      title = d.read_attribute('docname')
+      id = d.read_attribute('doc_id')
+      @files[title] = Snippet.where(doc_id: id)
+    end
+    
+    p @files
+
   end
 
   def history
@@ -60,6 +72,53 @@ class FileController < ApplicationController
   	commit.snippet_id = params[:snippet_id]
   	commit.commit_text = params[:text][:commit_text]
   	commit.save!
+  end
+
+  def compile
+    doc = Doc.find_by docname: params[:id]
+    doc_id = doc.read_attribute('doc_id')
+    snippets = Snippet.where(doc_id: doc_id)
+
+    result = Hash.new
+    snippets.each do |s|
+      result[s.title] = Commit.where(id: s.id)
+                              .order(created_at: :desc)
+                              .first
+                              .commit_text
+    end
+
+    tmp = Tempfile.new(params[:id], Rails.root.join('tmp'))
+    begin
+      result.each do |title, text|
+        tmp.write(title.upcase)
+        tmp.write(text)
+      end
+
+      result = GoogleClient::upload tmp, params[:id]
+      if result.status == 200
+        return result.data
+      else
+        puts "An error occurred: #{result.data['error']['message']}"
+        return nil
+      end
+    ensure
+      tmp.close
+      tmp.unlink
+    end
+
+    #Snippet.select("DISTINCT(snippet_id)")
+    #       .where(doc_id: doc_id)
+    #       .merge(Snippet.group("snippet_id")
+    #                     .order("created_at DESC"))
+
+    #latest = Snippet.joins(:commits)
+    #                .select('commits.commit_text AS commit_text')
+    #                .where(doc_id: doc_id)
+    #                .maximum(:created_at, :group => snippet_id)  
+    #p latest.first.commit_text
+    #result = []
+    #latest.each_pair do |t, p|  
+    #  result << Table.find(:first, :conditions => ["type = ? and price = ?", t, p])
   end
 
 end

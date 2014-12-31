@@ -34,6 +34,9 @@ get 'requests' => 'user#requests_list'
       get 'show'
       get 'history'
     end
+    member do
+      get 'compile'
+    end
   end
 
   resources :user do

@@ -60,4 +60,23 @@ class GoogleClient
 	def self.download_file download_url	# download google doc content
 		@@client.execute(uri: download_url)
 	end
+
+	def self.upload tmp, title
+	  media = Google::APIClient::UploadIO.new(tmp, 'text/plain', title + '.txt')
+	  drive = @@client.discovered_api('drive', 'v2')
+      file = drive.files.insert.request_schema.new({
+        'title' => title,
+        'description' => 'Compiled',
+        'mimeType' => 'text/plain'
+      })
+      @@client.execute(
+        :api_method => drive.files.insert,
+        :body_object => file,
+        :media => media,
+        :parameters => {
+          'uploadType' => 'multipart',
+          'convert' => true,
+          'alt' => 'json'})
+     end
+
 end

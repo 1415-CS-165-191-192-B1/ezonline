@@ -16,18 +16,35 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <% @snippets.each do |snippet| %>
+                        <% if @files %>
+                          <% @files.each do |key, snippets| %>
+
                             <tr>
-                              <td><%= snippet.title %></td>
+                              <td><strong><%= key %></strong></td>
                               <td>
-                                  <%= button_to "Show History",
-                                                history_file_index_path(snippet),
-                                                method: :get,                                                
-                                                :class => 'btn btn-success btn-small'
-                                  %>                                  
+                                <%= button_to "Compile",
+                                    compile_file_path(key),
+                                    :method => :get,
+                                    :class => 'btn btn-success btn-small'
+                                %>
                               </td>
                             </tr>
+                            
+                            <% snippets.each do |snippet| %>
+                              <tr>
+                                <td><%= snippet.title %></td>
+                                <td>
+                                  <%= button_to "Show History",
+                                                history_file_index_path(snippet),
+                                                :method => :get,                                                
+                                                :class => 'btn btn-success btn-small'
+                                  %>                                  
+                                </td>
+                              </tr>
+                            <% end %>
+
                           <% end %>
+                        <% end %>
                       </tbody>
                   </table>
               </div>
