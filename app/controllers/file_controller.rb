@@ -81,7 +81,7 @@ class FileController < ApplicationController
 
     result = Hash.new
     snippets.each do |s|
-      result[s.title] = Commit.where(id: s.id)
+      result[s.title] = Commit.where(snippet_id: s.id)
                               .order(created_at: :desc)
                               .first
                               .commit_text
@@ -91,14 +91,17 @@ class FileController < ApplicationController
     begin
       result.each do |title, text|
         tmp.write(title.upcase)
+        tmp.write("\n")
         tmp.write(text)
+        tmp.write("\n\n")
       end
 
       result = GoogleClient::upload tmp, params[:id]
       if result.status == 200
-        return result.data
+        #@message = "Successfully compiled snippets"
+        @message = result.data.alternateLink
       else
-        puts "An error occurred: #{result.data['error']['message']}"
+        @message = "An error occurred: #{result.data['error']['message']}"
         return nil
       end
     ensure

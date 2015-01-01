@@ -52,9 +52,8 @@ class GoogleClient
 	def self.fetch_file file_title	# get google doc given exact title
 		drive = @@client.discovered_api('drive', 'v2')
 		@@client.execute(
-					api_method: drive.files.list,
-					parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1}
-				  )
+			api_method: drive.files.list,
+			parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1})
 	end
 
 	def self.download_file download_url	# download google doc content
@@ -62,21 +61,21 @@ class GoogleClient
 	end
 
 	def self.upload tmp, title
-	  media = Google::APIClient::UploadIO.new(tmp, 'text/plain', title + '.txt')
-	  drive = @@client.discovered_api('drive', 'v2')
-      file = drive.files.insert.request_schema.new({
-        'title' => title,
-        'description' => 'Compiled',
-        'mimeType' => 'text/plain'
-      })
-      @@client.execute(
-        :api_method => drive.files.insert,
-        :body_object => file,
-        :media => media,
-        :parameters => {
-          'uploadType' => 'multipart',
-          'convert' => true,
-          'alt' => 'json'})
-     end
+	    media = Google::APIClient::UploadIO.new(tmp, 'text/plain', title + '.txt')
+	    drive = @@client.discovered_api('drive', 'v2')
+        file = drive.files.insert.request_schema.new({
+          'title' => title,
+          'description' => 'Compiled',
+          'mimeType' => 'text/plain'
+        })
+        @@client.execute(
+          :api_method => drive.files.insert,
+          :body_object => file,
+          :media => media,
+          :parameters => {
+            'uploadType' => 'multipart',
+            'convert' => true,
+            'alt' => 'json'})
+    end
 
 end
