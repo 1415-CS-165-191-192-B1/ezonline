@@ -28,6 +28,13 @@
                                     :class => 'btn btn-success btn-small'
                                 %>
                               </td>
+                              <td>
+                                <%= button_to "Delete",
+                                    delete_file_path(key),
+                                    :method => :get,
+                                    :class => 'btn btn-success btn-small'
+                                %>
+                              </td>
                             </tr>
                             
                             <% snippets.each do |snippet| %>
@@ -35,7 +42,7 @@
                                 <td><%= snippet.title %></td>
                                 <td>
                                   <%= button_to "Show History",
-                                                history_file_index_path(snippet),
+                                                history_file_path(snippet),
                                                 :method => :get,                                                
                                                 :class => 'btn btn-success btn-small'
                                   %>                                  

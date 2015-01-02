@@ -53,8 +53,8 @@ class FileController < ApplicationController
   end
 
   def history
-    @commits = Commit.where(snippet_id: params[:format])
-    @snippet = Snippet.find(params[:format])
+    @commits = Commit.where(snippet_id: params[:id])
+    @snippet = Snippet.find(params[:id])
   end
 
   def edit
@@ -122,6 +122,10 @@ class FileController < ApplicationController
     #result = []
     #latest.each_pair do |t, p|  
     #  result << Table.find(:first, :conditions => ["type = ? and price = ?", t, p])
+  end
+
+  def delete
+    Doc.where(docname: params[:id]).destroy_all
   end
 
 end

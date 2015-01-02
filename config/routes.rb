@@ -32,10 +32,11 @@ get 'requests' => 'user#requests_list'
   resources :file do
     collection do
       get 'show'
-      get 'history'
     end
     member do
+      get 'history'
       get 'compile'
+      get 'delete'
     end
   end
 

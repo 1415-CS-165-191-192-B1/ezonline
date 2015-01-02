@@ -53,7 +53,7 @@ class GoogleClient
 		drive = @@client.discovered_api('drive', 'v2')
 		@@client.execute(
 			api_method: drive.files.list,
-			parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1})
+			parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1, trashed: false})
 	end
 
 	def self.download_file download_url	# download google doc content
