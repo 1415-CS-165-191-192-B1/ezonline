@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def save_login_state # skip login if already logged in, initialize google client with existing credentials
-  	if session[:user_id]
+    if session[:user_id]
       GoogleClient::set_access session[:google_access], session[:google_refresh], session[:expires_in], session[:issued_at]
   		redirect_to root_url
       return true

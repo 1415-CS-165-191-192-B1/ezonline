@@ -25,22 +25,28 @@ class FileController < ApplicationController
           result = GoogleClient::download_file download_url
           if result.status == 200
             if FileParser::parse result, file.id, file.title, session[:user_id]
-              flash[:success] = "The file you are trying to add has already been added previously."
-              redirect_to f_show_path
+              flash[:success] = "The file was successfully added to the database."
+              redirect_to file_index_path
             else
-              flash[:notice] = "The file was successfully added to the database."
-              redirect_to f_show_path
+              flash[:notice] = "The file you are trying to add has already been added previously."
+              redirect_to file_index_path
             end
           else
             flash[:error] = "An error occurred: #{result.data['error']['message']}"
-            redirect_to f_new_path
+            redirect_to new_file_path
           end # end if result.status == 200
+        else
+          flash[:error] = "An error occurred."
         end # end if download_url
 
-      else
+      else # unless
         flash[:error] = "Sorry, EZ Online cannot find a Google Doc with that title."
-        redirect_to f_new_path
-      end # end unless    
+        redirect_to new_file_path
+      end # end unless 
+
+    else
+      flash[:error] = "An error occured."
+      redirect_to new_file_path   
     end
 
   end

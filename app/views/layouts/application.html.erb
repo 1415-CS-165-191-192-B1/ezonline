@@ -34,7 +34,8 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
       <!--header start-->
-      <header class="header2 black-bg">
+
+    <header class="header2 black-bg">
 		<div class="sidebar-toggle-box">
 			<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
 		</div>
@@ -164,6 +165,12 @@
 <br/><br/><br/><br/><br/>
   
 <div id="page-wrapper">
+
+   <%= render :partial => "plash", :locals => {:flash => flash} %>
+    <!--<div class="container">    
+      <%= flash_messages %>
+    </div>-->
+
 	<div class="container-fluid">
 		<div class="row">
 		  <div class="col-lg-12">
