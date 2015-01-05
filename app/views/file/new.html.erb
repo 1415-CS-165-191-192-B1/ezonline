@@ -1,3 +1,5 @@
+<div align = center>
+
 <h1>Add a Google Doc</h1>
 
 <%= form_for :title, url: file_fetch_path, html: {class: "nifty_form"} do |c| %>
@@ -17,9 +19,11 @@
 
 <br /><br />
 
-<% unless session[:vimeo_access] %>
+<% unless session[:vimeo_token] %>
   <%= button_to "Login to Vimeo", 
 			    user_vlogin_path,
 			    method: :get, 
 			    form_class: "new-thing" %>
+<% else %>
+  <h4>You are logged in to Vimeo. All associated videos will be added automatically.</h4>
 <% end %>

@@ -37,6 +37,8 @@ get 'requests' => 'user#requests_list'
       get 'history'
       get 'compile'
       get 'delete'
+      get 'fetch_video'
+      get 'fetch_videos'
     end
   end
 
@@ -45,6 +47,9 @@ get 'requests' => 'user#requests_list'
       get 'logout'
       get 'requests_list'
       get 'show'
+    end
+    member do 
+      get 'unauthorize'
     end
   end
 

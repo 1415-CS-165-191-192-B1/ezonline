@@ -1,48 +1,38 @@
 module FileParser
 	def self.parse result, file_id, filename, user_id
-		
 		begin
 			doc = Doc.new
 			doc.doc_id = file_id
 			doc.docname = filename
 			doc.save!
 		rescue ActiveRecord::RecordNotUnique
-			return 'The file you are trying to add has already been added previously.'
+			return false	#'The file you are trying to add has already been added previously.'
 		end
 
 		array = result.body.lines
 		length = array.length
 
-		videos = VimeoModel::get_videos
-
 		for i in 0...length
 			text = array[i].force_encoding('UTF-8')
-			text.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '')
+			text.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') #remove the damn BOMs
 
-			if text.start_with?("#") # using '#' as snippet title starting character -- NOT WORKING FOR FIRST ENTRY!!!
+			if text.start_with?("#")
 				text.slice! "#"
 
 				snippet = Snippet.new
 				snippet.doc_id = file_id
 				snippet.title = text.chomp!
-
-				unless videos.nil?
-					video = videos.find {|v| v[:title].casecmp(snippet.title).zero? }
-					unless video.nil? 
-						snippet.video_id = video[:id]
-					end
-				end
-
+				snippet.video_id = VimeoModel::find snippet.title if VimeoModel::is_logged_in #get corresponding video
 				snippet.save!
 
-				commit = Commit.new	# not being executed at some point
+				commit = Commit.new	# not being executed at some point?
 				commit.user_id = user_id
 				commit.snippet_id = snippet.id
 
 				string = ""
 				for j in i+1...length	
 					content = array[j].force_encoding('UTF-8')
-					content.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') # remove the damn BOMs
+					content.gsub!("\xEF\xBB\xBF".force_encoding("UTF-8"), '') #remove the damn BOMs
 
 					if content.start_with?("#")
 						commit.commit_text = string
@@ -67,7 +57,7 @@ module FileParser
 			end # end condition text.starts_with?("#")
 		end # end for loop 
 
-		return 'The file was successfully added to the database.'
+		return true	#'The file was successfully added to the database.'
 	end
 
 end

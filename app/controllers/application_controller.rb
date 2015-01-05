@@ -17,6 +17,16 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+  def check_vlogin_state
+    unless session[:vimeo_token]
+      redirect_to user_vlogin_path
+    else
+      VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
+    end
+    return false
+  end
+
+  protected
   def authenticate_admin # called only when user is logged in
     if session[:user_id]
       @current_user = User.find session[:user_id] # no need for rescue ActiveRecord::RecordNotFound

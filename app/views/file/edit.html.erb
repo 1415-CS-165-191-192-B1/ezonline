@@ -4,6 +4,12 @@
 <% unless @video_id.nil? %>
 	<% link = "//player.vimeo.com/video/" +  @video_id %>
 	<iframe src=<%= link %> width="600" height="400" frameborder="0"></iframe>
+<% else %>
+	<%= button_to "Fetch Video for This Snippet",
+			      fetch_video_file_path(@title),
+			      :method => :get,
+			      :class => 'btn btn-success btn-small'
+  	%>
 <% end %>
 
 <%= form_for :text, url: file_update_path, html: {class: "nifty_form"} do |c| %>

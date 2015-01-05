@@ -7,20 +7,18 @@ class UserController < ApplicationController
 	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 	respond_to :html, :js
 
-	def index
-		
+	def index	
 	end
 
 	def show
 		@users = User.all
+		@current_user_id = session[:user_id]
 	end
 
 	def contact
-
 	end
 
 	def home	# set as root		
-
 		if session[:user_id]
 			redirect_to(:controller => 'user', :action => 'index') and return
 		else
@@ -34,7 +32,8 @@ class UserController < ApplicationController
 		render layout: "home_temp"
 		session.clear # only deletes app session, browser is still logged in to account
 		GoogleClient::reset
-
+		VimeoClient::reset
+		VimeoModel::reset_session
 	end
 
 	def login
@@ -43,8 +42,6 @@ class UserController < ApplicationController
 	end
 
 	def authentication	# exchange code for access token, called upon redirection from google
-		
-
 		if params[:code]
 			code = params[:code]
 			GoogleClient::fetch_token code
@@ -53,7 +50,6 @@ class UserController < ApplicationController
 	end
 
 	def verify_credentials	# after user logs in, store state in session
-
 	  result = GoogleClient::fetch_user
 	  user_info = nil
 
@@ -105,6 +101,8 @@ class UserController < ApplicationController
 	def vlogin
 		VimeoClient::reset
 		session[:vimeo_oauth] = VimeoClient::fetch_oauth
+		
+		session[:return_to] = request.referer
 		redirect_to VimeoClient::fetch_url
 	end
 
@@ -112,12 +110,13 @@ class UserController < ApplicationController
 		base = VimeoClient::retrieve
 		access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
 
-		session[:vimeo_access] = access_token.token
+		session[:vimeo_token] = access_token.token
 		session[:vimeo_secret] = access_token.secret
+		session[:page] = 1
 
-		VimeoClient::fetch_videos session[:vimeo_access], session[:vimeo_secret]
+		VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
 
-		redirect_to new_file_path
+		redirect_to session.delete(:return_to)
 	end
 
 	def requests_list # lists all requests received by app
@@ -133,6 +132,15 @@ class UserController < ApplicationController
 		user.save!
 		@request.destroy!
 		@requests = Request.all
+
+		render :show
+	end
+
+	def unauthorize
+		user = user.find(params[:id])
+		User.find(params[:id]).delete
+
+		render :text => "You successfully unauthorized" + user.username, :layout => true
 	end
 
 end

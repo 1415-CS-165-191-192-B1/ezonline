@@ -1,6 +1,7 @@
 require 'vimeo_client'
 
 class VimeoClient
+
 	@@base = Vimeo::Advanced::Base.new(VimeoModel::ID, VimeoModel::SECRET)
 
 	def self.reset
@@ -20,22 +21,20 @@ class VimeoClient
 		@@base = Vimeo::Advanced::Base.new(VimeoModel::ID, VimeoModel::SECRET)
 	end
 
-	def self.fetch_videos token, secret
-		video = Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, :token => token, :secret => secret)
-		response = video.get_all(VimeoModel::USERNAME, { :page => "1", :per_page => "25", :sort => "newest" })
-		#response = video.get_by_tag("how to download memtest plus 7", { :page => "1", :per_page => "25", :full_response => true, :sort => "relevant" })
-		videos = response['videos']['video']
-		video_list = []
-		videos.each do |v|
-			hash = {id: v['id'], title: v['title']}
-			video_list.push(hash)
+	def self.fetch_videos
+		video = Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, 
+										   :token => VimeoModel::token, :secret => VimeoModel::secret)
+		
+		begin
+			response = video.get_all(VimeoModel::USERNAME, { :page => VimeoModel::page, :per_page => "2", :sort => "newest" })
+			VimeoModel::inc_page
+			VimeoModel::save_videos response
+			return true
+		#if response.nil? || response['err'] && response['err']['code'] == '50' #exceeded page number
+		rescue Vimeo::Advanced::RequestFailed 
+			VimeoModel::reset_page
+			return false
 		end
-
-		p video_list
-
-		VimeoModel::set_videos video_list
-		#video.search("how to download memtest plus 7", 
-					#{ :page => "1", :per_page => "25", :full_response => "0", :sort => "newest", :user_id => nil })
 	end
 
 end
