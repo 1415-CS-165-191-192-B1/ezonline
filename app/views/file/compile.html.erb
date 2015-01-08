@@ -1,7 +1,0 @@
-<div align = center>
-
-<% if @message.start_with?('http://') or @message.start_with?('https://') %>
-	<h1><%= link_to 'View Google Doc', @message %></h1>
-<% else %>
-	<h1><%=  @message %></h1>
-<% end %>

@@ -18,20 +18,20 @@
                       </thead>
                       <tbody>
                         <% if @files %>
-                          <% @files.each do |key, snippets| %>
+                          <% @files.each do |doc, snippets| %>
 
                             <tr>
-                              <td><strong><%= key %></strong></td>
+                              <td><strong><%= doc.docname %></strong></td>
                               <td>
                                 <%= button_to "Compile",
-                                    compile_file_path(key),
+                                    compile_file_path(doc.doc_id),
                                     :method => :get,
                                     :class => 'btn btn-success btn-small'
                                 %>
                               </td>
                               <td>
                                 <%= button_to "Delete",
-                                    delete_file_path(key),
+                                    delete_file_path(doc.doc_id),
                                     :method => :get,
                                     :data => { confirm: 'Delete this file and all its snippets?' },
                                     :class => 'btn btn-success btn-small'
@@ -39,10 +39,13 @@
                               </td>
                               <td>
                                 <%= button_to "Fetch Videos for this File",
-                                    fetch_videos_file_path(key),
+                                    fetch_videos_file_path(doc.doc_id),
                                     :method => :get,
                                     :class => 'btn btn-success btn-small'
                                 %>
+                              </td>
+                              <td>
+                                <h1><%= link_to 'View Google Doc', doc.link %></h1>
                               </td>
                             </tr>
                             

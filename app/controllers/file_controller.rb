@@ -13,19 +13,21 @@ class FileController < ApplicationController
   end
   
   def fetch
-    search_result = GoogleClient::fetch_file params[:title][:text]
+    #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
+    search_result = GoogleClient::fetch_file params[:title][:text].squish unless params[:title][:text].blank?
 
     if search_result.status == 200
       file = search_result.data['items'].first
 
       unless file.nil?
         download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
+        link = file['alternateLink']
         
         if download_url
           result = GoogleClient::download_file download_url
           if result.status == 200
 
-            type, message = FileParser::parse result, file.id, file.title, session[:user_id]
+            type, message = FileParser::parse result, file.id, file.title, link, session[:user_id]
             flash[type] = message
             redirect_to file_index_path
           
@@ -47,36 +49,14 @@ class FileController < ApplicationController
 
   end
 
-  def fetch_video   #get video for this snippet
-    video_id = VimeoModel::find params[:id] #search by snippet title
-
-    flash[:error] = "Failed to retrieve video for this snippet." unless VimeoModel::save params[:id], video_id
-
-    redirect_to request.referer
-  end
-
-  def fetch_videos #get all videos associated with this file
-    doc = Doc.where(docname: params[:id]).first
-    doc_id = doc.read_attribute('doc_id')
-    snippets = Snippet.where(doc_id: doc_id)
-
-    snippets.each do |s|
-      video_id = VimeoModel::find s.title
-      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save params[:id], video_id
-    end
-
-    redirect_to request.referer
-  end
-
   def show
   	snippets = Snippet.order(:id)
     docs = Doc.all
     @files = Hash.new
 
-    docs.each do |d|
-      title = d.read_attribute('docname')
-      id = d.read_attribute('doc_id')
-      @files[title] = Snippet.where(doc_id: id)
+    docs.each do |doc|
+      id = doc.read_attribute('doc_id')
+      files[doc] = Snippet.where(doc_id: id)
     end
   end
 
@@ -113,8 +93,9 @@ class FileController < ApplicationController
   end
 
   def compile
-    doc = Doc.find_by docname: params[:id]
-    doc_id = doc.read_attribute('doc_id')
+    doc_id = params[:id]
+
+    doc = Doc.find_by doc_id: doc_id
     snippets = Snippet.where(doc_id: doc_id)
 
     result = Hash.new
@@ -125,7 +106,7 @@ class FileController < ApplicationController
                               .commit_text
     end
 
-    tmp = Tempfile.new(params[:id], Rails.root.join('tmp'))
+    tmp = Tempfile.new(doc.docname, Rails.root.join('tmp'))
     begin
       result.each do |title, text|
         tmp.write(title.upcase)
@@ -134,19 +115,56 @@ class FileController < ApplicationController
         tmp.write("\n\n")
       end
 
-      result = GoogleClient::upload tmp, params[:id]
-      if result.status == 200
-        #@message = "Successfully compiled snippets"
-        @message = result.data.alternateLink
+      result = GoogleClient::upload tmp, doc.docname
+      if !result.nil? and result.status == 200
+        doc.update_attribute :link, result.data.alternateLink
+
+        flash[:success] = "successfully compiled snippets."
+        redirect_to file_index_path
       else
-        @message = "An error occurred: #{result.data['error']['message']}"
-        return nil
+        flash[:error] = "An error occurred: #{result.data['error']['message']}"
+        redirect_to file_index_path
       end
+
     ensure
       tmp.close
       tmp.unlink
     end
+  end
 
+  def delete
+    Doc.where(doc_id: params[:id]).destroy_all
+
+    flash[:success] = "The file '#{params[:id]}' was successfully removed from the database."
+
+    redirect_to file_index_path
+  end
+
+  def fetch_videos #get all videos associated with this file
+    doc_id = params[:id]
+
+    doc = Doc.find_by doc_id: doc_id
+    snippets = Snippet.where(doc_id: doc_id)
+
+    snippets.each do |s|
+      video_id = VimeoModel::find s.title
+      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save doc.docname, video_id
+    end
+
+    redirect_to request.referer
+  end
+
+  def fetch_video   #get video for this snippet
+    video_id = VimeoModel::find params[:id] #search by snippet title
+
+    flash[:error] = "Failed to retrieve video for this snippet." unless VimeoModel::save params[:id], video_id
+
+    redirect_to request.referer
+  end
+
+end
+
+#def compile
     #Snippet.select("DISTINCT(snippet_id)")
     #       .where(doc_id: doc_id)
     #       .merge(Snippet.group("snippet_id")
@@ -160,14 +178,4 @@ class FileController < ApplicationController
     #result = []
     #latest.each_pair do |t, p|  
     #  result << Table.find(:first, :conditions => ["type = ? and price = ?", t, p])
-  end
-
-  def delete
-    Doc.where(docname: params[:id]).destroy_all
-
-    flash[:success] = "The file '#{params[:id]}' was successfully removed from the database."
-
-    redirect_to file_index_path
-  end
-
-end
+#end

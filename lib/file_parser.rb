@@ -1,9 +1,10 @@
 module FileParser
-	def self.parse result, file_id, filename, user_id
+	def self.parse result, file_id, filename, link, user_id
 
 		doc = Doc.new
 		doc.doc_id = file_id
 		doc.docname = filename
+		doc.link = link
 
 		array = result.body.lines
 		length = array.length
