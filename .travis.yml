@@ -6,6 +6,7 @@ addons:
   postgresql: "9.3"
 
 before_script:
-  - psql -c 'create database ezonline_test;' -U ezonline
+ - psql -c "CREATE USER ezonline WITH PASSWORD 'ezonline';" -U postgres
+ - psql -c 'create database ezonline_test;' -U postgres
 # uncomment this line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
