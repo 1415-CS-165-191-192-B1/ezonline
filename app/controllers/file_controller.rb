@@ -24,19 +24,15 @@ class FileController < ApplicationController
         if download_url
           result = GoogleClient::download_file download_url
           if result.status == 200
-            if FileParser::parse result, file.id, file.title, session[:user_id]
-              flash[:success] = "The file was successfully added to the database."
-              redirect_to file_index_path
-            else
-              flash[:notice] = "The file you are trying to add has already been added previously."
-              redirect_to file_index_path
-            end
+
+            type, message = FileParser::parse result, file.id, file.title, session[:user_id]
+            flash[type] = message
+            redirect_to file_index_path
+          
           else
             flash[:error] = "An error occurred: #{result.data['error']['message']}"
             redirect_to new_file_path
           end # end if result.status == 200
-        else
-          flash[:error] = "An error occurred."
         end # end if download_url
 
       else # unless
@@ -47,13 +43,14 @@ class FileController < ApplicationController
     else
       flash[:error] = "An error occured."
       redirect_to new_file_path   
-    end
+    end # end outermost if
 
   end
 
   def fetch_video   #get video for this snippet
     video_id = VimeoModel::find params[:id] #search by snippet title
-    VimeoModel::save params[:id], video_id
+
+    flash[:error] = "Failed to retrieve video for this snippet." unless VimeoModel::save params[:id], video_id
 
     redirect_to request.referer
   end
@@ -65,7 +62,7 @@ class FileController < ApplicationController
 
     snippets.each do |s|
       video_id = VimeoModel::find s.title
-      VimeoModel::save s.title, video_id
+      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save params[:id], video_id
     end
 
     redirect_to request.referer
@@ -102,7 +99,17 @@ class FileController < ApplicationController
   	commit.user_id = session[:user_id]
   	commit.snippet_id = params[:snippet_id]
   	commit.commit_text = params[:text][:commit_text]
-  	commit.save!
+
+    begin
+  	  commit.save!
+      flash[:success] = "Update saved."
+      redirect_to history_file_path(params[:snippet_id])
+
+    rescue ActiveRecord::ActiveRecordError
+      flash.now[:error] = "Failed to save commit."
+      render :edit
+    end
+
   end
 
   def compile
@@ -157,6 +164,10 @@ class FileController < ApplicationController
 
   def delete
     Doc.where(docname: params[:id]).destroy_all
+
+    flash[:success] = "The file '#{params[:id]}' was successfully removed from the database."
+
+    redirect_to file_index_path
   end
 
 end

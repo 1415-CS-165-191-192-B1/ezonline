@@ -99,6 +99,11 @@ module VimeoModel
 
 	def self.save title, video_id
 		snippet = Snippet.where("lower(title) = ?", title.downcase).first
-		snippet.update_attribute :video_id, video_id unless snippet.nil?
+		
+		unless snippet.nil? or video_id.nil?
+			snippet.update_attribute :video_id, video_id 
+		else
+			return nil
+		end
 	end
 end
