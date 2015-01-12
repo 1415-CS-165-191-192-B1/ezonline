@@ -19,11 +19,11 @@
 
 <br /><br />
 
-<% unless session[:vimeo_token] %>
+<% unless session[:vimeo_token] and session[:vimeo_secret] %>
   <%= button_to "Login to Vimeo", 
-			    user_vlogin_path,
-			    method: :get, 
-			    form_class: "new-thing" %>
+      			    user_vlogin_path,
+      			    method: :get, 
+      			    form_class: "new-thing" %>
 <% else %>
   <h4>You are logged in to Vimeo. All associated videos will be added automatically.</h4>
 <% end %>

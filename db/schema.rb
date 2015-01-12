@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150103070745) do
   create_table "docs", id: false, force: true do |t|
     t.string "doc_id",  null: false
     t.string "docname"
+    t.string "link"
   end
 
   add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree

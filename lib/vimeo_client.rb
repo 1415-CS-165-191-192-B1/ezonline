@@ -26,7 +26,7 @@ class VimeoClient
 										   :token => VimeoModel::token, :secret => VimeoModel::secret)
 		
 		begin
-			response = video.get_all(VimeoModel::USERNAME, { :page => VimeoModel::page, :per_page => "2", :sort => "newest" })
+			response = video.get_all(VimeoModel::USERNAME, { :page => VimeoModel::page, :per_page => "1", :sort => "newest" })
 			VimeoModel::inc_page
 			VimeoModel::save_videos response
 			return true

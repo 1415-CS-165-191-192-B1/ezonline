@@ -10,6 +10,7 @@ class FileController < ApplicationController
   before_filter :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
 
   def new
+    VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
   end
   
   def fetch
@@ -56,7 +57,7 @@ class FileController < ApplicationController
 
     docs.each do |doc|
       id = doc.read_attribute('doc_id')
-      files[doc] = Snippet.where(doc_id: id)
+      @files[doc] = Snippet.where(doc_id: id)
     end
   end
 
@@ -133,9 +134,11 @@ class FileController < ApplicationController
   end
 
   def delete
-    Doc.where(doc_id: params[:id]).destroy_all
+    doc = Doc.where(doc_id: params[:id])
+    Doc.where(doc_id: params[:id]).destroy_all  #fix this
+    docname = doc.read_attribute('docname')
 
-    flash[:success] = "The file '#{params[:id]}' was successfully removed from the database."
+    flash[:success] = "The file '#{docname}' was successfully removed from the database."
 
     redirect_to file_index_path
   end
