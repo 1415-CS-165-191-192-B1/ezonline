@@ -13,7 +13,6 @@ deploy:
   provider: heroku
   api_key: "ba03f681-db39-4290-94e1-c3da5ebcccbe"
   app: ezonline
-  run:
-    - "rake db:migrate"
+  run: "rake db:migrate"
 # uncomment this line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
