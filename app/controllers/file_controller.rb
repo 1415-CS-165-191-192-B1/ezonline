@@ -43,6 +43,9 @@ class FileController < ApplicationController
         redirect_to new_file_path
       end # end unless 
 
+    elsif search_result.status == 401
+      p 'The access token you\'re using is either expired or invalid.'
+
     else
       flash[:error] = "An error occured."
       redirect_to new_file_path   
@@ -134,9 +137,12 @@ class FileController < ApplicationController
   end
 
   def delete
-    doc = Doc.where(doc_id: params[:id])
-    Doc.where(doc_id: params[:id]).destroy_all  #fix this
+    doc_id = params[:id]
+
+    doc = Doc.find_by doc_id: doc_id
     docname = doc.read_attribute('docname')
+
+    Doc.destroy_all(:doc_id => doc_id)
 
     flash[:success] = "The file '#{docname}' was successfully removed from the database."
 

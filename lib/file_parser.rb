@@ -62,10 +62,10 @@ module FileParser
 		begin
 			doc.save!
 
-			snippets.each_with_index do |snippet, i|
+			snippets.each do |snippet|
 				snippet.save!
-				commit = commits[i]
-				commit.snippet_id = snippet.id
+			end	
+			commits.each do |commit|
 				commit.save!
 			end
 
