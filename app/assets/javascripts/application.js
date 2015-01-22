@@ -13,6 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require smoothscroll
+//= require jquery.dcjqaccordion.2.7
+//= require jquery.nicescroll
+//= require jquery-ui-1.9.2.custom.min
+//= require jquery.sparkline
+//= require jquery.scrollTo.min
+//= require jquery.gritter
+//= require gritter-conf
+//= require sparkline-chart
 //= require common-scripts
 //= require turbolinks
 //= require_tree .
