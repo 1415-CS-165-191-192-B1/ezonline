@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 root 'user#home'
 
+
+#temporary
 get 'u_home' => 'user#home'
 get 'u_login' => 'user#login'
 get 'u_logout' => 'user#logout'
