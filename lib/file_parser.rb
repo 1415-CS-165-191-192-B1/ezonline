@@ -24,6 +24,7 @@ module FileParser
 				snippet.title = text.chomp!
 				snippet.video_id = VimeoModel::find snippet.title if VimeoModel::is_logged_in #get corresponding video
 				snippets << snippet
+				snippet.save
 
 				commit = Commit.new	# not being executed at some point?
 				commit.user_id = user_id
@@ -36,7 +37,7 @@ module FileParser
 
 					if content.start_with?("#") #reached next snippet
 						commit.commit_text = string
-						#commit.save!
+						commit.save
 						commits << commit
 
 						i = j
@@ -45,7 +46,7 @@ module FileParser
 					elsif j == length-1	#reached end of file
 						string << content
 						commit.commit_text = string
-						#commit.save!
+						commit.save
 						commits << commit
 
 						i = j
@@ -61,13 +62,7 @@ module FileParser
 
 		begin
 			doc.save!
-
-			snippets.each do |snippet|
-				snippet.save!
-			end	
-			commits.each do |commit|
-				commit.save!
-			end
+			
 
 		rescue ActiveRecord::RecordNotUnique
 			return :notice, 'The file you are trying to add has already been added previously.'
