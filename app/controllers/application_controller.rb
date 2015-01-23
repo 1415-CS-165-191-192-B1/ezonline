@@ -3,6 +3,15 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_filter :foo_function
+
+  def foo_function
+    unless session[:user_id].nil?
+      user = User.find(session[:user_id])
+      @name = user.read_attribute('username')
+    end
+  end
+
   def redirect_to(options = {}, response_status = {}) # for debug purposes
   ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
   super(options, response_status)

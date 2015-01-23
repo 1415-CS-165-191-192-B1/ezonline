@@ -102,6 +102,7 @@ module VimeoModel
 		
 		unless snippet.nil? or video_id.nil?
 			snippet.update_attribute :video_id, video_id 
+			return true
 		else
 			return nil
 		end

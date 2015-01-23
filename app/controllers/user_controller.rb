@@ -137,8 +137,9 @@ class UserController < ApplicationController
 	end
 
 	def unauthorize
-		user = user.find(params[:id])
-		User.find(params[:id]).delete
+		user_id = params[:id]
+		user = User.find(user_id)
+		User.find(user_id).delete
 
 		render :text => "You successfully unauthorized" + user.username, :layout => true
 	end
