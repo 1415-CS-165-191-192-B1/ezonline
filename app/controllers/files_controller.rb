@@ -4,7 +4,7 @@ require 'file_parser'
 require 'tempfile'
 
 
-class FileController < ApplicationController
+class FilesController < ApplicationController
   before_filter :authenticate_admin, :only => [:new, :fetch, :compile]
   before_filter :check_login_state, :only => [:show]
   before_filter :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
@@ -14,43 +14,56 @@ class FileController < ApplicationController
   end
   
   def fetch
-    #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
-    search_result = GoogleClient::fetch_file params[:title][:text].squish unless params[:title][:text].blank?
+    begin
+      refreshed ||= false
 
-    if search_result.status == 200
-      file = search_result.data['items'].first
+      #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
+      search_result = GoogleClient::fetch_file params[:title][:text].squish unless params[:title][:text].blank?
 
-      unless file.nil?
-        download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
-        link = file['alternateLink']
-        
-        if download_url
-          result = GoogleClient::download_file download_url
-          if result.status == 200
+      if search_result.status == 200
+        file = search_result.data['items'].first
 
-            type, message = FileParser::parse result, file.id, file.title, link, session[:user_id]
-            flash[type] = message
-            redirect_to file_index_path
+        unless file.nil?
+          download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
+          link = file['alternateLink']
           
-          else
-            flash[:error] = "An error occurred: #{result.data['error']['message']}"
-            redirect_to new_file_path
-          end # end if result.status == 200
-        end # end if download_url
+          if download_url
+            result = GoogleClient::download_file download_url
+            if result.status == 200
 
-      else # unless
-        flash[:error] = "Sorry, EZ Online cannot find a Google Doc with that title."
-        redirect_to new_file_path
-      end # end unless 
+              type, message = FileParser::parse result, file.id, file.title, link, session[:user_id]
+              flash[type] = message
+              redirect_to file_index_path
+            
+            else
+              flash[:error] = "An error occurred: #{result.data['error']['message']}"
+              redirect_to new_file_path
+            end # end if result.status == 200
+          end # end if download_url
 
-    elsif search_result.status == 401
-      p 'The access token you\'re using is either expired or invalid.'
+        else # unless
+          flash[:error] = "Sorry, EZ Online cannot find a Google Doc with that title."
+          redirect_to new_file_path
+        end # end unless 
 
-    else
-      flash[:error] = "An error occured."
-      redirect_to new_file_path   
-    end # end outermost if
+      elsif search_result.status == 401 # The access token is either expired or invalid.
+        GoogleClient::refresh_token
+        update_session GoogleClient::get_auth
+        raise
 
+      else
+        flash[:error] = "An error occured."
+        redirect_to new_file_path   
+      end # end outermost if
+
+    rescue
+      unless refreshed
+        refreshed = true
+        retry
+      end
+        flash[:error] = "An error occured. Please logout and try again."
+        redirect_to new_file_path   
+    end
   end
 
   def show
@@ -123,7 +136,7 @@ class FileController < ApplicationController
       if !result.nil? and result.status == 200
         doc.update_attribute :link, result.data.alternateLink
 
-        flash[:success] = "successfully compiled snippets."
+        flash[:success] = "Successfully compiled snippets."
         redirect_to file_index_path
       else
         flash[:error] = "An error occurred: #{result.data['error']['message']}"

@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def update_session auth # save credentials (after login, refresh token)
+    session[:google_access] = auth.access_token 
+    session[:google_refresh] = auth.refresh_token
+    session[:expires_in] = auth.expires_in
+    session[:issued_at] = auth.issued_at
+  end
+
   def redirect_to(options = {}, response_status = {}) # for debug purposes
   ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
   super(options, response_status)
@@ -20,7 +27,7 @@ class ApplicationController < ActionController::Base
   protected
   def check_login_state
     unless session[:user_id]
-      redirect_to user_login_path
+      redirect_to login_user_path
     end
     return false
   end
@@ -28,7 +35,7 @@ class ApplicationController < ActionController::Base
   protected
   def check_vlogin_state
     unless session[:vimeo_token]
-      redirect_to user_vlogin_path
+      redirect_to vlogin_user_path
     else
       VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
     end
@@ -45,7 +52,7 @@ class ApplicationController < ActionController::Base
       end # end unless
       return true
     else
-      redirect_to user_login_path
+      redirect_to login_user_path
       return false
     end # end if condition
   end

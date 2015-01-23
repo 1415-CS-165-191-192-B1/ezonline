@@ -10,7 +10,7 @@ class GoogleClient
 
 	def self.retrieve
 		unless @@client
-			@@client = Google::APIClient.new(@@client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"}))
+			@@client = Google::APIClient.new({:application_name => "ezonline", :application_version => "1.0"})
 			init
 		end
 		@@client
@@ -42,6 +42,18 @@ class GoogleClient
 	def self.fetch_token code	# set access token
 		@@client.authorization.code = code
 		@@client.authorization.fetch_access_token!
+	end
+
+	def self.get_auth
+		@@client.authorization
+	end
+
+	def self.refresh_token
+	    auth = @@client.authorization
+		
+		auth.client_id = GoogleModel::ID
+		auth.client_secret = GoogleModel::SECRET
+	    auth.refresh!
 	end
 
 	def self.fetch_user	# get authenticated users's credentials

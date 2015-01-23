@@ -1,7 +1,7 @@
 require 'google_client'
 require 'vimeo_client'
 
-class UserController < ApplicationController
+class UsersController < ApplicationController
 
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
@@ -20,7 +20,7 @@ class UserController < ApplicationController
 
 	def home	# set as root		
 		if session[:user_id]
-			redirect_to(:controller => 'user', :action => 'index') and return
+			redirect_to(:controller => 'users', :action => 'index') and return
 		else
 			render layout: "home_temp"
 			GoogleClient::init
@@ -70,12 +70,7 @@ class UserController < ApplicationController
 	    session[:user_id] = user_info.id
 	    session[:user_admin] = user.admin
 
-	    api_client = GoogleClient::retrieve	# get current authorized instance of google client
-
-	   	session[:google_access] = api_client.authorization.access_token	# save credentials
-		session[:google_refresh] = api_client.authorization.refresh_token
-		session[:expires_in] = api_client.authorization.expires_in
-		session[:issued_at] = api_client.authorization.issued_at
+	    update_session GoogleClient::get_auth   	
 		
 	    @message = 'Logged in as ' + user_info.name 
 	    @u_name = user_info.name	

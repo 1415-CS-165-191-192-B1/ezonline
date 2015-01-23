@@ -67,10 +67,10 @@ module FileParser
 		rescue ActiveRecord::RecordNotUnique
 			return :notice, 'The file you are trying to add has already been added previously.'
 
-		rescue ActiveRecord::ActiveRecordError
+		rescue ActiveRecord::ActiveRecordError # will most likely be caused by validate_uniqueness_of :docname
 			Doc.destroy_all(:doc_id => doc.doc_id)
-			return :error, 'Failed to add file to database.'
-
+			return :error, "A file with the same title is already in the database."
+			
 		else
 			return :success, 'The file was successfully added to the database.'
 		end
