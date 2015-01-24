@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
 	def home	# set as root		
 		if session[:user_id]
-			redirect_to(:controller => 'users', :action => 'index') and return
+			redirect_to user_index_path and return
 		else
 			render layout: "home_temp"
 			GoogleClient::init
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
 		
 	    @message = 'Logged in as ' + user_info.name 
 	    @u_name = user_info.name	
-	    redirect_to(:controller => 'user', :action => 'index') and return
+	    redirect_to user_index_path and return
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset # effectively deleting access token for current client instance
@@ -107,9 +107,8 @@ class UsersController < ApplicationController
 
 		session[:vimeo_token] = access_token.token
 		session[:vimeo_secret] = access_token.secret
-		session[:page] = 1
 
-		VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
+		VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret]
 
 		redirect_to session.delete(:return_to)
 	end
