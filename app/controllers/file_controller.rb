@@ -1,6 +1,6 @@
 require 'google_client'
 require 'vimeo_client'
-require 'file_parser'
+require 'filer'
 require 'tempfile'
 
 
@@ -18,8 +18,10 @@ class FileController < ApplicationController
 
       #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
       search_result = GoogleClient::fetch_file params[:title][:text].squish unless params[:title][:text].blank?
-
-      if search_result.status == 200
+      if search_result.nil?
+        flash[:notice] = "Please enter a title."
+        redirect_to :back
+      elsif search_result.status == 200
         file = search_result.data['items'].first
 
         unless file.nil?
@@ -30,7 +32,7 @@ class FileController < ApplicationController
             result = GoogleClient::download_file download_url
             if result.status == 200
 
-              type, message = FileParser::parse result, file.id, file.title, link, session[:user_id]
+              type, message = Filer::parse result, file.id, file.title, link, session[:user_id]
               flash[type] = message
               redirect_to file_index_path
             
@@ -55,7 +57,7 @@ class FileController < ApplicationController
         redirect_to new_file_path   
       end # end outermost if
 
-    rescue
+    rescue 
       unless refreshed
         refreshed = true
         retry
@@ -109,43 +111,9 @@ class FileController < ApplicationController
   end
 
   def compile
-    doc_id = params[:id]
-
-    doc = Doc.find_by doc_id: doc_id
-    snippets = Snippet.where(doc_id: doc_id)
-
-    result = Hash.new
-    snippets.each do |s|
-      result[s.title] = Commit.where(snippet_id: s.id)
-                              .order(created_at: :desc)
-                              .first
-                              .commit_text
-    end
-
-    tmp = Tempfile.new(doc.docname, Rails.root.join('tmp'))
-    begin
-      result.each do |title, text|
-        tmp.write(title.upcase)
-        tmp.write("\n")
-        tmp.write(text)
-        tmp.write("\n\n")
-      end
-
-      result = GoogleClient::upload tmp, doc.docname
-      if !result.nil? and result.status == 200
-        doc.update_attribute :link, result.data.alternateLink
-
-        flash[:success] = "Successfully compiled snippets."
-        redirect_to file_index_path
-      else
-        flash[:error] = "An error occurred: #{result.data['error']['message']}"
-        redirect_to file_index_path
-      end
-
-    ensure
-      tmp.close
-      tmp.unlink
-    end
+    type, message = Filer::write params[:id]
+    flash[type] = message
+    redirect_to file_index_path
   end
 
   def delete

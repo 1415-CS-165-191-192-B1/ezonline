@@ -1,6 +1,5 @@
-module FileParser
+module Filer
 	def self.parse result, file_id, filename, link, user_id
-
 		doc = Doc.new
 		doc.doc_id = file_id
 		doc.docname = filename
@@ -73,4 +72,41 @@ module FileParser
 		end
 
 	end
+
+	def self.write doc_id
+	    doc = Doc.find_by doc_id: doc_id
+	    snippets = Snippet.where(doc_id: doc_id)
+
+	    result = Hash.new
+	    snippets.each do |s|
+	      result[s.title] = Commit.where(snippet_id: s.id)
+	                              .order(created_at: :desc)
+	                              .first
+	                              .commit_text
+	    end
+
+	    tmp = Tempfile.new(doc.docname, Rails.root.join('tmp'))
+	    begin
+	      result.each do |title, text|
+	        tmp.write(title.upcase)
+	        tmp.write("\n")
+	        tmp.write(text)
+	        tmp.write("\n\n")
+	      end
+
+	      result = GoogleClient::upload tmp, doc.docname
+
+	      tmp.close
+	      tmp.unlink
+	      
+	      if !result.nil? and result.status == 200
+	        doc.update_attribute :link, result.data.alternateLink
+	        return :success, "Successfully compiled snippets."
+	      else
+	        return :error, "An error occurred: #{result.data['error']['message']}"
+	      end
+
+	    end
+	end
+	
 end
