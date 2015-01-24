@@ -4,7 +4,6 @@ root 'users#home'
 
 
 #temporary
-
 get 'u_home' => 'users#home'
 get 'u_login' => 'users#login'
 get 'u_logout' => 'users#logout'
@@ -19,17 +18,41 @@ get 'f_show' => 'files#show'
 get 'vauthentication' => 'users#vauthentication'
 get 'authentication' => 'users#authentication'
 
+post 'users/show' => 'users#show'
+
 get 'index' => 'users#index'
 get 'show' => 'users#show'
-get 'requests' => 'users#requests_list’
+get 'requests' => 'users#requests_list'
 
 
-post 'file/fetch', :to => 'files#fetch', :as => 'fetch_file'
-post 'file/update', :to => 'files#update', :as => 'update_file'
-get 'file/compile', :to => 'files#compile', :as => 'compile_file'
-get 'file/fetch_videos', :to => 'files#fetch_videos', :as => 'fetch_videos_file'
-get 'file/fetch_video', :to => 'files#fetch_video', :as => 'fetch_video_file'
 
+  resource :file do
+    collection do
+      get 'show'
+    end
+    member do
+      get 'history'
+      get 'compile'
+      get 'delete'
+      get 'fetch_video'
+      get 'fetch_videos'
+      get 'edit'
+      post 'fetch'
+    end
+  end
+
+  resource :user do
+    collection do
+      get 'login'
+      get 'vlogin'
+      get 'logout'
+      get 'requests_list'
+      get 'show'
+    end
+    member do 
+      get 'unauthorize'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

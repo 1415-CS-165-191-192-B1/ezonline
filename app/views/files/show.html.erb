@@ -31,8 +31,8 @@
                               </td>
                               <td>
                                 <%= button_to "Delete",
-                                    file_path(doc.doc_id),
-                                    :method => :delete,
+                                    delete_file_path(doc.doc_id),
+                                    :method => :get,
                                     :data => { confirm: 'Delete this file and all its snippets?' },
                                     :class => 'btn btn-success btn-small'
                                 %>
