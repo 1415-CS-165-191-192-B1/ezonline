@@ -15,6 +15,8 @@ get 'u_contact' => 'user#contact'
 get 'f_new' => 'file#new'
 get 'f_show' => 'file#show'
 
+get 'refresh_videos' => 'file#refresh_videos'
+
 get 'vauthentication' => 'user#vauthentication'
 get 'authentication' => 'user#authentication'
 

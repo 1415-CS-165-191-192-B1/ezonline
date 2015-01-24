@@ -2,9 +2,8 @@ require 'google_client'
 require 'vimeo_client'
 
 class UserController < ApplicationController
-
-	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
-	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
+	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
+	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 	respond_to :html, :js
 
 	def index	
@@ -107,6 +106,7 @@ class UserController < ApplicationController
 		session[:vimeo_secret] = access_token.secret
 
 		VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret]
+		VimeoModel::save_latest
 
 		redirect_to session.delete(:return_to)
 	end

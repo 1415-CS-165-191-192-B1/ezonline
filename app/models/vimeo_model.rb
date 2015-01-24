@@ -91,7 +91,6 @@ module VimeoModel
 			unless video.nil? #video not yet in database
 				return video.read_attribute('video_id')	#return video_id
 			else
-				@@page += 1
 				if VimeoClient::fetch @@page.to_s # fetched next set of videos
 					raise
 				else

@@ -5,9 +5,10 @@ require 'tempfile'
 
 
 class FileController < ApplicationController
-  before_filter :authenticate_admin, :only => [:new, :fetch, :compile]
-  before_filter :check_login_state, :only => [:show]
-  before_filter :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
+  before_action :check_login_state
+  before_action :authenticate_admin, :only => [:new, :fetch, :compile]
+  before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
+  before_action :save_vlogin_state, :only => [:new]
 
   def new
   end
@@ -135,20 +136,40 @@ class FileController < ApplicationController
     doc = Doc.find_by doc_id: doc_id
     snippets = Snippet.where(doc_id: doc_id)
 
+    successes = 0
+    failures = 0
+
     snippets.each do |s|
       video_id = VimeoModel::find s.title
-      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save s.title, video_id
+      successes += 1 if VimeoModel::save s.title, video_id
     end
 
+    case successes
+    when snippets.size
+      flash[:success] = "Successfully added all videos for this file."
+    when 0
+      flash[:error] = "Failed to add any video for this file."
+    when 1..snippets.size
+      flash[:notice] = "Some videos were not found for this file."
+    end
     redirect_to request.referer
   end
 
   def fetch_video   #get video for this snippet
     video_id = VimeoModel::find params[:id] #search by snippet title
 
-    flash[:error] = "Failed to retrieve video for this snippet." unless VimeoModel::save params[:id], video_id
+    if VimeoModel::save params[:id], video_id
+      flash[:success] = "Successfully added video for this snippet."
+    else
+      flash[:error] = "Failed to retrieve video for this snippet." 
+    end
 
     redirect_to request.referer
+  end
+
+  def refresh_videos
+    VimeoModel::save_latest
+    redirect_to new_file_path
   end
 
 end

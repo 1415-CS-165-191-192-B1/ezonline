@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   super(options, response_status)
   end
 
-  before_filter :foo_function
+  before_action :foo_function
 
   def foo_function  
     # sets the username display
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   protected
   def check_login_state
     unless session[:user_id]
-      redirect_to login_user_path
+      redirect_to login_user_index_path
     end
     return false
   end
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
       end # end unless
       return true
     else
-      redirect_to login_user_path
+      redirect_to login_user_index_path
       return false
     end # end if condition
   end
@@ -74,6 +74,12 @@ class ApplicationController < ActionController::Base
   	else
   		return false
   	end
+  end
+
+  protected
+  def save_vlogin_state # initialize vimeo client with existing credentials
+    VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret] if session[:vimeo_token]
+    return false
   end
 
 end
