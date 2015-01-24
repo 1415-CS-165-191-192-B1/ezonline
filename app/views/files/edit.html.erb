@@ -12,7 +12,7 @@
   	%>
 <% end %>
 
-<%= form_for :text, url: file_update_path, html: {class: "nifty_form"} do |c| %>
+<%= form_for :text, url: update_file_path, html: {class: "nifty_form"} do |c| %>
   <%= hidden_field_tag :snippet_id, @commit.snippet_id %><br/>
   <%= c.text_area :commit_text, value: @commit.commit_text, size: "95x5" %>
   <br/>
