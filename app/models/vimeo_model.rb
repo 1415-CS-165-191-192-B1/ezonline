@@ -14,18 +14,17 @@ module VimeoModel
 
 	@@token = nil
 	@@secret = nil
-	@@page_num = 1
+	@@page = 1
 
 	def self.reset_session
 		@@token = nil
 		@@secret = nil
-		@@page_num = 1
+		@@page = 1
 	end
 
-	def self.set_session t, s, p
+	def self.set_session t, s
 		@@token = t
 		@@secret = s
-		@@page_num = p
 	end
 
 	def self.token
@@ -36,20 +35,23 @@ module VimeoModel
 		@@secret
 	end
 
-	def self.page
-		@@page_num.to_s
+	def self.set_page page # sets the page to session[:page]
+		@@page = page.nil? ? 1 : page 
 	end
 
-	def self.inc_page
-		@@page_num += 1
-	end
-
-	def self.reset_page
-		@@page_num = 1
+	def self.get_page 	# sets the session[:page]
+		@@page
 	end
 
 	def self.is_logged_in
 		true unless @@token.nil? || @@secret.nil?
+	end
+
+	def self.save_latest	# called upon login, get latest 250 videos
+		for i in 1..5
+			@@page = i
+			break unless VimeoClient::fetch @@page.to_s
+		end
 	end
 
 	def self.save_videos response
@@ -67,8 +69,10 @@ module VimeoModel
 				video.title = v['title']
 				video.save!
 			end
-		rescue ActiveRecord::RecordNotUnique
-			return
+			return true
+		rescue ActiveRecord::RecordNotUnique	# database already updated
+			# what if only the last video in the list is not unique?
+			return false
 		end
 	end
 
@@ -81,19 +85,27 @@ module VimeoModel
 		#    	snippet.update_attribute(:video_id, "#{video[:id]}")
 		#	end
 		#end
-		while true 
-			#begin
-				#video = Video.find(:first, :conditions => ["lower(title) = ?", title.downcase])
+
+		begin
 			video = Video.where("lower(title) = ?", title.downcase).first
-			unless video.nil?
+			unless video.nil? #video not yet in database
 				return video.read_attribute('video_id')	#return video_id
-			#rescue ActiveRecord::RecordNotFound	#video not yet in database
 			else
-				unless VimeoClient::fetch_videos #fetch next set of videos
-					break	#already fetched all videos
+				@@page += 1
+				if VimeoClient::fetch @@page.to_s # fetched next set of videos
+					raise
+				else
+					return nil	# already fetched all videos
 				end
 			end
+		rescue
+			retry
 		end
+
+		# retry one last time in case save_videos returned false
+		video = Video.where("lower(title) = ?", title.downcase).first
+		return video.read_attribute('video_id')	unless video.nil?
+		
 		return nil
 	end
 
