@@ -4,7 +4,7 @@ require 'file_parser'
 require 'tempfile'
 
 
-class FilesController < ApplicationController
+class FileController < ApplicationController
   before_filter :authenticate_admin, :only => [:new, :fetch, :compile]
   before_filter :check_login_state, :only => [:show]
   before_filter :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
@@ -148,7 +148,7 @@ class FilesController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
     doc_id = params[:id]
 
     doc = Doc.find_by doc_id: doc_id

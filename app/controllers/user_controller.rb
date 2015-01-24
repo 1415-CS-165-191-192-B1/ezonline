@@ -1,7 +1,7 @@
 require 'google_client'
 require 'vimeo_client'
 
-class UsersController < ApplicationController
+class UserController < ApplicationController
 
 	before_filter :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_filter :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
 	def home	# set as root		
 		if session[:user_id]
-			redirect_to user_index_path and return
+			redirect_to index_path and return
 		else
 			render layout: "home_temp"
 			GoogleClient::init

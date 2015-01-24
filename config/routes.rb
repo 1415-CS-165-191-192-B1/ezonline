@@ -1,32 +1,32 @@
 Rails.application.routes.draw do  
 
-root 'users#home'
+root 'user#home'
 
 
 #temporary
-get 'u_home' => 'users#home'
-get 'u_login' => 'users#login'
-get 'u_logout' => 'users#logout'
-get 'u_index' => 'users#index'
-get 'u_show' => 'users#show'
-get 'u_req' => 'users#requests_list'
-get 'u_contact' => 'users#contact'
+get 'u_home' => 'user#home'
+get 'u_login' => 'user#login'
+get 'u_logout' => 'user#logout'
+get 'u_index' => 'user#index'
+get 'u_show' => 'user#show'
+get 'u_req' => 'user#requests_list'
+get 'u_contact' => 'user#contact'
 
-get 'f_new' => 'files#new'
-get 'f_show' => 'files#show'
+get 'f_new' => 'file#new'
+get 'f_show' => 'file#show'
 
-get 'vauthentication' => 'users#vauthentication'
-get 'authentication' => 'users#authentication'
+get 'vauthentication' => 'user#vauthentication'
+get 'authentication' => 'user#authentication'
 
-post 'users/show' => 'users#show'
+get 'index' => 'user#index'
+get 'show' => 'user#show'
+get 'requests' => 'user#requests_list'
 
-get 'index' => 'users#index'
-get 'show' => 'users#show'
-get 'requests' => 'users#requests_list'
+get 'vlogin/user' => 'user#vlogin'
+post 'fetch/file' => 'file#fetch'
+post 'file/update' => 'file#update'
 
-
-
-  resource :file do
+  resources :file do
     collection do
       get 'show'
     end
@@ -37,14 +37,12 @@ get 'requests' => 'users#requests_list'
       get 'fetch_video'
       get 'fetch_videos'
       get 'edit'
-      post 'fetch'
     end
   end
 
-  resource :user do
+  resources :user do
     collection do
       get 'login'
-      get 'vlogin'
       get 'logout'
       get 'requests_list'
       get 'show'
