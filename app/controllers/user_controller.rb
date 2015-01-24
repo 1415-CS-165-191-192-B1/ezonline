@@ -72,9 +72,7 @@ class UserController < ApplicationController
 
 	    update_session GoogleClient::get_auth   	
 		
-	    @message = 'Logged in as ' + user_info.name 
-	    @u_name = user_info.name	
-	    redirect_to user_index_path and return
+	    redirect_to root_url and return
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset # effectively deleting access token for current client instance

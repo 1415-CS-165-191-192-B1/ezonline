@@ -10,7 +10,6 @@ module FileParser
 		length = array.length
 
 		snippets = Array.new
-		commits = Array.new
 
 		for i in 0...length
 			text = array[i].force_encoding('UTF-8')
@@ -23,8 +22,8 @@ module FileParser
 				snippet.doc_id = file_id
 				snippet.title = text.chomp!
 				snippet.video_id = VimeoModel::find snippet.title if VimeoModel::is_logged_in #get corresponding video
-				snippets << snippet
 				snippet.save
+				snippets << snippet
 
 				commit = Commit.new	# not being executed at some point?
 				commit.user_id = user_id
@@ -38,7 +37,6 @@ module FileParser
 					if content.start_with?("#") #reached next snippet
 						commit.commit_text = string
 						commit.save
-						commits << commit
 
 						i = j
 
@@ -47,7 +45,6 @@ module FileParser
 						string << content
 						commit.commit_text = string
 						commit.save
-						commits << commit
 
 						i = j
 
@@ -61,16 +58,16 @@ module FileParser
 		end # end for loop 
 
 		begin
-			doc.save!
+			if doc.valid? # no file with the same title exists in the db
+				doc.save!
+			else 
+				snippets.each {|s| Snippet.destroy(s.id)}
+				return :notice, "A file with the same title is already in the database."
+			end
 			
-
-		rescue ActiveRecord::RecordNotUnique
+		rescue ActiveRecord::RecordNotUnique # same file, different title
 			return :notice, 'The file you are trying to add has already been added previously.'
 
-		rescue ActiveRecord::ActiveRecordError # will most likely be caused by validate_uniqueness_of :docname
-			Doc.destroy_all(:doc_id => doc.doc_id)
-			return :error, "A file with the same title is already in the database."
-			
 		else
 			return :success, 'The file was successfully added to the database.'
 		end
