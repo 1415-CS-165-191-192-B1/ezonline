@@ -3,25 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def redirect_to(options = {}, response_status = {}) # for debug purposes
-  ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
-  super(options, response_status)
-  end
-
   before_filter :foo_function
 
-  def foo_function  
-    # sets the username display
+  def foo_function
     unless session[:user_id].nil?
       user = User.find(session[:user_id])
       @name = user.read_attribute('username')
-    end
-    # sets the page
-    page = VimeoModel::get_page   # assumes that VimeoModel::page is more likely to be updated
-    unless page.nil?
-      session[:page] = page
-    else
-      VimeoModel::set_page session[:page]
     end
   end
 
@@ -30,6 +17,11 @@ class ApplicationController < ActionController::Base
     session[:google_refresh] = auth.refresh_token
     session[:expires_in] = auth.expires_in
     session[:issued_at] = auth.issued_at
+  end
+
+  def redirect_to(options = {}, response_status = {}) # for debug purposes
+  ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
+  super(options, response_status)
   end
 
   protected
@@ -45,7 +37,7 @@ class ApplicationController < ActionController::Base
     unless session[:vimeo_token]
       redirect_to vlogin_user_path
     else
-      VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret]
+      VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
     end
     return false
   end

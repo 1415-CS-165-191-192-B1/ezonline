@@ -10,6 +10,7 @@ class FilesController < ApplicationController
   before_filter :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
 
   def new
+    VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret], session[:page]
   end
   
   def fetch
@@ -148,7 +149,7 @@ class FilesController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
     doc_id = params[:id]
 
     doc = Doc.find_by doc_id: doc_id
@@ -169,7 +170,7 @@ class FilesController < ApplicationController
 
     snippets.each do |s|
       video_id = VimeoModel::find s.title
-      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save s.title, video_id
+      flash[:error] = "Failed to retrieve all videos for this file." unless VimeoModel::save doc.docname, video_id
     end
 
     redirect_to request.referer
