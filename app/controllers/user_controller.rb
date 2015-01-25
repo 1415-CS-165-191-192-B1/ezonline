@@ -4,8 +4,7 @@ require 'vimeo_client'
 class UserController < ApplicationController
 	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
-
-	respond_to :html, :json, :xml
+	respond_to :html, :js
 
 	def index	
 	end
@@ -13,7 +12,6 @@ class UserController < ApplicationController
 	def show
 		@users = User.all
 		@current_user_id = session[:user_id]
-		respond_with(@users)
 	end
 
 	def contact

@@ -21,7 +21,7 @@
                           <% @files.each do |doc, snippets| %>
 
                             <tr>
-                              <td><a href="#" id="docname"><strong><%= doc.docname %></strong></a></td>
+                              <td><strong><%= doc.docname %></strong></td>
                               <td>
                                 <%= button_to "Compile",
                                     compile_file_path(doc.doc_id),
