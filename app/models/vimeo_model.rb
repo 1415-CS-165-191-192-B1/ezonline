@@ -47,10 +47,10 @@ module VimeoModel
 		true unless @@token.nil? || @@secret.nil?
 	end
 
-	def self.save_latest	# called upon login, get latest 250 videos
+	def self.save_latest	# called upon login or refresh, get latest 5 pages
 		for i in 1..5
 			@@page = i
-			break unless VimeoClient::fetch @@page.to_s
+			break unless VimeoClient::fetch @@page.to_s #stops when there is nothing new to save in db
 		end
 	end
 
@@ -70,7 +70,7 @@ module VimeoModel
 				video.save!
 			end
 			return true
-		rescue ActiveRecord::RecordNotUnique	# database already updated
+		rescue ActiveRecord::RecordNotUnique	# database already contains this 'latest' video
 			# what if only the last video in the list is not unique?
 			return false
 		end
@@ -91,17 +91,17 @@ module VimeoModel
 			unless video.nil? #video not yet in database
 				return video.read_attribute('video_id')	#return video_id
 			else
-				if VimeoClient::fetch @@page.to_s # fetched next set of videos
-					raise
+				if VimeoClient::fetch @@page.to_s #returns true if new videos were saved
+					raise #pass control to rescue
 				else
-					return nil	# already fetched all videos
+					return nil	# already fetched all videos, stop rechecking
 				end
 			end
 		rescue
-			retry
+			retry #recheck if video is in db
 		end
 
-		# retry one last time in case save_videos returned false
+		# retry one last time in case save_videos(returned by VimeoClient::fetch) returned false
 		video = Video.where("lower(title) = ?", title.downcase).first
 		return video.read_attribute('video_id')	unless video.nil?
 		

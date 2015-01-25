@@ -5,6 +5,7 @@ class Requests < ActiveRecord::Migration
   		r.string :username, :limit => 30
   		r.string :email, :limit => 30
   		r.boolean :granted
+      r.timestamps
   	end
   	add_index :requests, :user_id, :unique => true
   	execute "ALTER TABLE requests ADD PRIMARY KEY (user_id);"

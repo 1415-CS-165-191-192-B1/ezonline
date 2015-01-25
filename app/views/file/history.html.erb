@@ -23,17 +23,23 @@
                           <% user = User.find(commit.user_id) %>
                           <tr>
                             <td><%= user.username %></td>
-                            <td><%= commit.created_at %></td>
-                            <td><%= commit.commit_text %></td>              
-                              <td>
-                                  <%= button_to "Edit",
-                                                edit_file_path(commit),
-                                                :method => :get,                                                
-                                                :class => 'btn btn-success btn-small'
-                                  %>                                  
-                              </td>
-                            </tr>
+                            <td><%= commit.created_at %></td>            
+                            <td>
+                                <%= button_to "Edit",
+                                              edit_file_path(commit),
+                                              :method => :get,                                                
+                                              :class => 'btn btn-success btn-small'
+                                %>                                  
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3"><%= commit.commit_text %></td>  
+                          </tr>
+                          <tr>
+                            <td colspan="3" bgcolor="#009966"></td>
+                          </tr>
                           <% end %>
+
                       </tbody>
                   </table>
               </div>

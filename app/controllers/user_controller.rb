@@ -4,7 +4,6 @@ require 'vimeo_client'
 class UserController < ApplicationController
 	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
-	respond_to :html, :js
 
 	def index	
 	end
@@ -19,7 +18,8 @@ class UserController < ApplicationController
 
 	def home	# set as root		
 		if session[:user_id]
-			redirect_to index_path and return
+			redirect_to index_path
+			return
 		else
 			render layout: "home_temp"
 			GoogleClient::init
@@ -71,7 +71,8 @@ class UserController < ApplicationController
 
 	    update_session GoogleClient::get_auth   	
 		
-	    redirect_to root_url and return
+	    redirect_to root_url
+	    return
 
    	    rescue ActiveRecord::RecordNotFound
    	    	GoogleClient::reset # effectively deleting access token for current client instance
@@ -94,7 +95,7 @@ class UserController < ApplicationController
 		VimeoClient::reset
 		session[:vimeo_oauth] = VimeoClient::fetch_oauth
 		
-		session[:return_to] = request.referer
+		session[:return_to] = request.referer # save url where login was invoked
 		redirect_to VimeoClient::fetch_url
 	end
 
@@ -121,19 +122,33 @@ class UserController < ApplicationController
 		user.user_id = @request.user_id
 		user.email = @request.email
 		user.username = @request.username
-		user.save!
-		@request.destroy!
-		@requests = Request.all
 
-		render :show
+		begin
+			@request.delete
+			user.save!
+			flash[:success] = "You successfully authorized " + user.username
+		rescue
+			flash[:error] = "Failed to authorize " + user.username
+		end
+
+		@requests = Request.all
+		redirect_to requests_path
+		return
 	end
 
 	def unauthorize
 		user_id = params[:id]
 		user = User.find(user_id)
-		User.find(user_id).delete
 
-		render :text => "You successfully unauthorized" + user.username, :layout => true
+		user.delete
+		if user.destroyed?
+			flash[:success] = "You successfully unauthorized " + user.username
+		else
+			flash[:error] = "Failed to unauthorize " + user.username
+		end
+
+		redirect_to :back
+		return
 	end
 
 end

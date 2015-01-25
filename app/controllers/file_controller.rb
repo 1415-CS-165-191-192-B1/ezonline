@@ -6,14 +6,14 @@ require 'tempfile'
 
 class FileController < ApplicationController
   before_action :check_login_state
-  before_action :authenticate_admin, :only => [:new, :fetch, :compile]
+  before_action :authenticate_admin
   before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
   before_action :save_vlogin_state, :only => [:new]
 
   def new
   end
   
-  def fetch
+  def fetch   # called by new to get gdoc from form
     begin
       refreshed ||= false
 
@@ -59,7 +59,7 @@ class FileController < ApplicationController
       end # end outermost if
 
     rescue 
-      unless refreshed
+      unless refreshed # there was already an attempt to refresh google access token
         refreshed = true
         retry
       end
@@ -68,7 +68,7 @@ class FileController < ApplicationController
     end
   end
 
-  def show
+  def show  # organizes the docs and their corresponding snippets to hash of arrays
   	snippets = Snippet.order(:id)
     docs = Doc.all
     @files = Hash.new
@@ -80,17 +80,12 @@ class FileController < ApplicationController
   end
 
   def history
-    @commits = Commit.where(snippet_id: params[:id]).order(id: :desc )
+    @commits = Commit.where(snippet_id: params[:id])
     @snippet = Snippet.find(params[:id])
   end
 
   def edit
-    @commit = Commit.find(params[:id])
-  	snippet = Snippet.find(@commit.snippet_id)
-  	@title = snippet.title
-    @video_id = snippet.video_id
-  	user = User.find(@commit.user_id)
-  	@username = user.username
+    init_vars
   end
 
   def update
@@ -99,20 +94,30 @@ class FileController < ApplicationController
   	commit.snippet_id = params[:snippet_id]
   	commit.commit_text = params[:text][:commit_text]
 
-    begin
-  	  commit.save!
+    if commit.valid?
+  	  commit.save
       flash[:success] = "Update saved."
       redirect_to history_file_path(params[:snippet_id])
-
-    rescue ActiveRecord::ActiveRecordError
-      flash.now[:error] = "Failed to save commit."
-      render :edit
+    else
+      flash.now[:notice] = "Your commit was empty/too short."
+      @commit_text = commit.commit_text
+      init_vars   #reinitialize variables after failure in edit
+      render :edit #renders edit template
     end
+  end
 
+  def init_vars #initialize needed variables in edit view
+    @commit_id = params[:id]
+    @commit = Commit.find(@commit_id)
+    snippet = Snippet.find(@commit.snippet_id)
+    @title = snippet.title
+    @video_id = snippet.video_id
+    user = User.find(@commit.user_id)
+    @username = user.username
   end
 
   def compile
-    type, message = Filer::write params[:id]
+    type, message = Filer::write params[:id] #creates gdoc with latest commits
     flash[type] = message
     redirect_to file_index_path
   end
@@ -140,8 +145,8 @@ class FileController < ApplicationController
     failures = 0
 
     snippets.each do |s|
-      video_id = VimeoModel::find s.title
-      successes += 1 if VimeoModel::save s.title, video_id
+      video_id = VimeoModel::find s.title #returns nil if none
+      successes += 1 if VimeoModel::save s.title, video_id #returns true if snippet was updated with video_id
     end
 
     case successes
@@ -167,8 +172,8 @@ class FileController < ApplicationController
     redirect_to request.referer
   end
 
-  def refresh_videos
-    VimeoModel::save_latest
+  def refresh_videos #gets latest videos since login
+    VimeoModel::save_latest 
     redirect_to new_file_path
   end
 

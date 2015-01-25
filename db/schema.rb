@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20150103070745) do
     t.string "doc_id",  null: false
     t.string "docname"
     t.string "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree
@@ -37,6 +39,8 @@ ActiveRecord::Schema.define(version: 20150103070745) do
     t.string  "username", limit: 30
     t.string  "email",    limit: 30
     t.boolean "granted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "requests", ["user_id"], name: "index_requests_on_user_id", unique: true, using: :btree

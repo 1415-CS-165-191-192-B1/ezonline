@@ -14,7 +14,13 @@
 
 <%= form_for :text, url: file_update_path, html: {class: "nifty_form"} do |c| %>
   <%= hidden_field_tag :snippet_id, @commit.snippet_id %><br/>
-  <%= c.text_area :commit_text, value: @commit.commit_text, size: "95x5" %>
+  <%= hidden_field_tag :title, @title %><br/>
+  <%= hidden_field_tag :id, @commit_id %><br/>
+  <% if @commit_text.nil? %>
+  	<%= c.text_area :commit_text, value: @commit.commit_text, size: "95x5" %>
+  <% else %>
+  	<%= c.text_area :commit_text, value: @commit_text, size: "95x5" %>
+  <% end %>
   <br/>
   <br/>
   <%= c.submit "Save" %>

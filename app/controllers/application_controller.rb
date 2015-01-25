@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-  def authenticate_admin # called only when user is logged in
+  def authenticate_admin # called only when user is logged in, restrict access to admin
     if session[:user_id]
       @current_user = User.find session[:user_id] # no need for rescue ActiveRecord::RecordNotFound
       GoogleClient::set_access session[:google_access], session[:google_refresh], session[:expires_in], session[:issued_at]
