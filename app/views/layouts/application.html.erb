@@ -36,9 +36,9 @@
       <!--header start-->
 
     <header class="header2 black-bg">
-		<div class="sidebar-toggle-box">
-			<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-		</div>
+    <div class="sidebar-toggle-box">
+      <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+    </div>
         
         <!--logo start-->
         <a href="u_index" class="logo"><b>EZ Online</b></a>
@@ -75,9 +75,9 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-              	  <!--<p class="centered"><a href="profile.html"><img src="user/ez-logo.png" class="img-circle" width="60"></a></p>-->
-              	  <h5 class="centered"><%= @name %></h5>
-              	  	
+                  <!--<p class="centered"><a href="profile.html"><img src="user/ez-logo.png" class="img-circle" width="60"></a></p>-->
+                  <h5 class="centered"><%= @name %></h5>
+                    
                   <li class="sub-menu">
                       <a href="/u_index">
                           <i class="fa fa-dashboard"></i>
@@ -163,21 +163,21 @@
       <%= flash_messages %>
     </div>-->
 
-	<div class="container-fluid">
-		<div class="row">
-		  <div class="col-lg-12">
-		    <%= yield %>
-				<footer>
-					<div class="col-lg-12 text-center">
-						<a href="#top" class="smoothScroll"> Back to top</a>
-						<hr class="small">
-						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
-						<br/><br/><br/>
-					</div>
-				</footer>        
-		  	</div>
-		</div>
-	</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <%= yield %>
+        <footer>
+          <div class="col-lg-12 text-center">
+            <a href="#top" class="smoothScroll"> Back to top</a>
+            <hr class="small">
+            <p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
+            <br/><br/><br/>
+          </div>
+        </footer>        
+        </div>
+    </div>
+  </div>
 </div>
 
   
