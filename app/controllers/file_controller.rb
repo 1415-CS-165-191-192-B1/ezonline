@@ -33,7 +33,8 @@ class FileController < ApplicationController
             result = GoogleClient::download_file download_url
             if result.status == 200
 
-              type, message = Filer::parse result, file.id, file.title, link, session[:user_id]
+              #type, message = Filer::parse result, file.id, file.title, link, session[:user_id]
+              type, message = FilerParse.perform_async result.body, file.id, file.title, link, session[:user_id]
               flash[type] = message
               redirect_to file_index_path
             
@@ -145,7 +146,7 @@ class FileController < ApplicationController
     failures = 0
 
     snippets.each do |s|
-      video_id = VimeoModel::find s.title #returns nil if none
+      video_id = VimeoModel::search s.title #returns nil if none
       successes += 1 if VimeoModel::save s.title, video_id #returns true if snippet was updated with video_id
     end
 

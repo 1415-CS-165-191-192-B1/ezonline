@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'google-api-client', :require => false
 gem 'rest-client', :require => false
+gem 'sidekiq'
 gem 'launchy'
 gem 'json'
 gem 'vimeo', '~> 1.5.4'

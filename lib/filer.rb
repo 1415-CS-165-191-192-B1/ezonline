@@ -5,7 +5,8 @@ module Filer
 		doc.docname = filename
 		doc.link = link
 
-		array = result.body.lines
+		#array = result.body.lines
+		array = result.lines
 		length = array.length
 
 		snippets = Array.new

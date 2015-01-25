@@ -76,7 +76,7 @@ module VimeoModel
 		end
 	end
 
-	def self.find title
+	def self.search title
 		# SEARCH USING ARRAY
 		#unless videos.nil?
 		#	video = videos.find {|v| v[:title].casecmp(title).zero? }
@@ -106,6 +106,15 @@ module VimeoModel
 		return video.read_attribute('video_id')	unless video.nil?
 		
 		return nil
+	end
+
+	def self.find title
+		video = Video.where("lower(title) = ?", title.downcase).first
+		unless video.nil? #video not yet in database
+			return video.read_attribute('video_id')	#return video_id
+		else 
+			return nil
+		end
 	end
 
 	def self.save title, video_id
