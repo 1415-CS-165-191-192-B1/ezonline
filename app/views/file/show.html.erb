@@ -17,59 +17,53 @@
                           </tr>
                       </thead>
                       <tbody>
-                        
                         <% if @files %>
                           <% @files.each do |doc, snippets| %>
 
                             <tr>
-                              <td colspan="2"><strong><%= doc.docname %></strong></td>
-                              <td colspan="2"><button class="show">Show Details/Options</button></td>      
+                              <td><strong><%= doc.docname %></strong></td>
+                              <td>
+                                <%= button_to "Compile",
+                                    compile_file_path(doc.doc_id),
+                                    :method => :get,
+                                    :class => 'btn btn-success btn-small'
+                                %>
+                              </td>
+                              <td>
+                                <%= button_to "Delete",
+                                    delete_file_path(doc.doc_id),
+                                    :method => :get,
+                                    :data => { confirm: 'Delete this file and all its snippets?' },
+                                    :class => 'btn btn-success btn-small'
+                                %>
+                              </td>
+                              <td>
+                                <%= button_to "Fetch Videos for this File",
+                                    fetch_videos_file_path(doc.doc_id),
+                                    :method => :get,
+                                    :class => 'btn btn-success btn-small'
+                                %>
+                              </td>
+                              <td>
+                                <%= link_to 'View Google Doc', doc.link %>
+                              </td>
                             </tr>
                             
-                            <table id="doc" class="table table-hover">
-                              <% snippets.each do |snippet| %>
-                                <tr>
-                                  <td colspan="2"><%= snippet.title %></td>
-                                  <td colspan="2">
-                                    <%= button_to "Show History",
-                                                  history_file_path(snippet),
-                                                  :method => :get,                                                
-                                                  :class => 'btn btn-success btn-small'
-                                    %>                                  
-                                  </td>
-                                </tr>
-                              <% end %>
-
-                              <td>
-                                  <%= button_to "Compile",
-                                      compile_file_path(doc.doc_id),
-                                      :method => :get,
-                                      :class => 'btn btn-success btn-small'
-                                  %>
-                                </td>
+                            <% snippets.each do |snippet| %>
+                              <tr>
+                                <td><%= snippet.title %></td>
                                 <td>
-                                  <%= button_to "Delete",
-                                      delete_file_path(doc.doc_id),
-                                      :method => :get,
-                                      :data => { confirm: 'Delete this file and all its snippets?' },
-                                      :class => 'btn btn-success btn-small'
-                                  %>
+                                  <%= button_to "Show History",
+                                                history_file_path(snippet),
+                                                :method => :get,                                                
+                                                :class => 'btn btn-success btn-small'
+                                  %>                                  
                                 </td>
-                                <td>
-                                  <%= button_to "Fetch Videos",
-                                      fetch_videos_file_path(doc.doc_id),
-                                      :method => :get,
-                                      :class => 'btn btn-success btn-small'
-                                  %>
-                                </td>
-                                <td>
-                                  <%= link_to 'View Google Doc', doc.link %>
-                                </td>
-                            </table>
+                              </tr>
+                            <% end %>
 
                           <% end %>
                         <% end %>
-
                       </tbody>
                   </table>
               </div>

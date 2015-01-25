@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require smoothscroll
 //= require jquery.dcjqaccordion.2.7
@@ -25,10 +24,3 @@
 //= require common-scripts
 //= require turbolinks
 //= require_tree .
-
-$(document).ready(function() {
-	$('.show').on('click', function() {
-		//$('#doc').fadeToggle();
-		$(this).parent().next().toggle();
-	});
-});
