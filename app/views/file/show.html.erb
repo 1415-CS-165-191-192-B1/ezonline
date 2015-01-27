@@ -16,12 +16,21 @@
                           </tr>
                       </thead>
                       <tbody>
-                        <% if @files %>
+                        <% unless @files.empty? %>
                           <% @files.each do |doc, snippets| %>
 
                             <tr>
-                              <td colspan="2"><strong><%= doc.docname %></strong></td>
-                              <td colspan="2"><button>Show/Hide Details</button></td>
+                              <td><strong><%= doc.docname %></strong></td>
+                              <td><button>Show/Hide Details</button></td>
+
+                              <td><strong>Assigned to:</strong><br /> <%= @workers[doc.id] %></td>
+                              <td>
+                                <%= button_to "Assign",
+                                              assign_file_path(doc.id),
+                                              :method => :get,                                                
+                                              :class => 'btn btn-success btn-small'
+                                %>                                  
+                              </td>
                             </tr>
                             
                             <% snippets.each do |snippet| %>
@@ -30,8 +39,7 @@
                                 <td colspan="2">
                                   <%= button_to "Show History",
                                                 history_file_path(snippet),
-                                                :method => :get,                                                
-                                                :class => 'btn btn-success btn-small'
+                                                :method => :get
                                   %>                                  
                                 </td>
                               </tr>

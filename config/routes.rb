@@ -39,6 +39,8 @@ post 'file/update' => 'file#update'
       get 'fetch_video'
       get 'fetch_videos'
       get 'edit'
+      get 'assign'
+      post 'save_task'
     end
   end
 

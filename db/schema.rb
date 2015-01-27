@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103070745) do
+ActiveRecord::Schema.define(version: 20150127072600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20150103070745) do
   end
 
   create_table "docs", id: false, force: true do |t|
-    t.string "doc_id",  null: false
-    t.string "docname"
-    t.string "link"
+    t.string   "doc_id",     null: false
+    t.string   "docname"
+    t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 20150103070745) do
   add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree
 
   create_table "requests", id: false, force: true do |t|
-    t.decimal "user_id",             precision: 21, scale: 0, null: false
-    t.string  "username", limit: 30
-    t.string  "email",    limit: 30
-    t.boolean "granted"
+    t.decimal  "user_id",               precision: 21, scale: 0, null: false
+    t.string   "username",   limit: 30
+    t.string   "email",      limit: 30
+    t.boolean  "granted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20150103070745) do
     t.string "title"
     t.string "video_id"
   end
+
+  create_table "tasks", id: false, force: true do |t|
+    t.string   "doc_id",                                              null: false
+    t.decimal  "user_id",    precision: 21, scale: 0,                 null: false
+    t.boolean  "done",                                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["doc_id"], name: "index_tasks_on_doc_id", unique: true, using: :btree
 
   create_table "users", id: false, force: true do |t|
     t.decimal "user_id",             precision: 21, scale: 0,                 null: false

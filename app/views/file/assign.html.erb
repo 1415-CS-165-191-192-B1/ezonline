@@ -1,0 +1,15 @@
+<h1>EZ Troubleshooter Users</h1><br />
+<h2>Assign "<%= @docname %>" to:</h2>
+
+<%= form_for :user_id, url: save_task_file_path, html: {class: "nifty_form"} do |c| %>
+  <%= hidden_field_tag :doc_id, @doc_id %><br/>
+
+  <% if @users %>
+    <% @users.each do |user| %>
+      <h4><%= radio_button_tag(:user_id, user.user_id) %>
+      <%= c.label(:username, user.username) %><br /></h4>
+    <% end %>
+  <% end %>
+  <br /><br />
+  <%= c.submit 'Assign' %>
+<% end %>

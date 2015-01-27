@@ -6,7 +6,7 @@ require 'tempfile'
 
 class FileController < ApplicationController
   before_action :check_login_state
-  before_action :authenticate_admin
+  before_action :authenticate_admin, :except => [:history, :edit, :update]
   before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
   before_action :save_vlogin_state, :only => [:new]
 
@@ -33,8 +33,8 @@ class FileController < ApplicationController
             result = GoogleClient::download_file download_url
             if result.status == 200
 
-              #type, message = Filer::parse result, file.id, file.title, link, session[:user_id]
-              type, message = FilerParse.perform_async result.body, file.id, file.title, link, session[:user_id]
+              type, message = Filer::parse result.body, file.id, file.title, link, session[:user_id]
+              #type, message = FilerParse.perform_async result.body, file.id, file.title, link, session[:user_id]
               flash[type] = message
               redirect_to file_index_path
             
@@ -55,7 +55,7 @@ class FileController < ApplicationController
         raise
 
       else
-        flash[:error] = "An error occured."
+        flash[:error] = "An error occured. Please try again later."
         redirect_to new_file_path   
       end # end outermost if
 
@@ -64,7 +64,7 @@ class FileController < ApplicationController
         refreshed = true
         retry
       end
-        flash[:error] = "An error occured. Please logout and try again."
+        flash[:error] = "An error occured. Please try again later."
         redirect_to new_file_path   
     end
   end
@@ -73,10 +73,15 @@ class FileController < ApplicationController
   	snippets = Snippet.order(:id)
     docs = Doc.all
     @files = Hash.new
+    @workers = Hash.new
 
     docs.each do |doc|
       id = doc.read_attribute('doc_id')
       @files[doc] = Snippet.where(doc_id: id)
+
+      task = Task.find_by doc_id: id
+      user = User.find_by user_id: task.user_id unless task.nil?
+      @workers[id] = user.username unless user.nil?
     end
   end
 
@@ -177,6 +182,41 @@ class FileController < ApplicationController
     VimeoModel::save_latest 
     redirect_to new_file_path
   end
+
+  def assign
+    @doc_id = params[:id]
+    doc = Doc.find_by doc_id: @doc_id
+    @docname = doc.read_attribute('docname')
+
+    @users = User.all
+  end
+
+  def save_task
+    doc_id = params[:doc_id]
+    user_id = params[:user_id]
+
+    user = User.find(user_id)
+
+    old_task = Task.find_by doc_id: doc_id  #doc can only be assigned to one user
+    unless old_task.nil?
+      if old_task.user_id == user.user_id
+        flash[:notice] = "File was already assigned to " + user.username
+        redirect_to file_index_path 
+        return
+      else
+        old_task.delete
+      end
+    end
+
+    task = Task.new
+    task.user_id = user_id
+    task.doc_id = doc_id
+    task.save
+    flash[:success] = "Successfully assigned file to " + user.username
+
+    redirect_to file_index_path
+  end
+
 
 end
 

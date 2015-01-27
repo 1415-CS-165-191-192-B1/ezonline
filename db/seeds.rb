@@ -8,17 +8,16 @@
 
 
 User.create(user_id: 104044938106898565002,
-			username: 'Christiane Yee',
-			email: 'christiane.yee@gmail.com',
-			admin: true
-			)
+username: 'Christiane Yee',
+email: 'christiane.yee@gmail.com',
+admin: true
+)
 
 User.create(user_id: 104688058010189878683,
-			username: 'Ricardo Pablo de Leon',
-			email: 'ricardopablo.deleon@gmail.com',
-			admin: true
-			)
-
+username: 'Ricardo Pablo de Leon',
+email: 'ricardopablo.deleon@gmail.com',
+admin: true
+)
 
 
 

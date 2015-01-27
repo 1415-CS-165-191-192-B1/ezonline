@@ -6,6 +6,22 @@ class UserController < ApplicationController
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 
 	def index	
+		#tasks = Task.where(user_id: session[:user_id]) # this causes an error, dk why
+		user = User.find(session[:user_id])
+		tasks = Task.where(user_id: user.user_id)
+		@files = Hash.new #hash of doc => snippets
+
+		unless tasks.nil?
+			tasks.each do |task|
+				docs = Doc.where(doc_id: task.doc_id)
+				snippets = Snippet.where(doc_id: task.doc_id)
+
+			    docs.each do |doc|
+			      id = doc.read_attribute('doc_id')
+			      @files[doc] = Snippet.where(doc_id: id)
+			    end
+			end
+	    end
 	end
 
 	def show
