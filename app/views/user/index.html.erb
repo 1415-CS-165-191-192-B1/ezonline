@@ -15,7 +15,11 @@
          	    <tr>
                   <td><strong><%= doc.docname %></strong></td>
                   <td><button>Show/Hide Details</button></td>
-                  <td><button>Report as Done</button>
+                  <td>
+                    <%= button_to "Notify as Done",
+                                  notify_user_path(doc.doc_id),
+                                  :method => :get
+                    %>        
                   </td>
                 </tr>       
                 <% snippets.each do |snippet| %>

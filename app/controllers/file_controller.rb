@@ -209,6 +209,7 @@ class FileController < ApplicationController
     end
 
     task = Task.new
+    task.admin_id = session[:user_id]
     task.user_id = user_id
     task.doc_id = doc_id
     task.save

@@ -1,0 +1,41 @@
+<!--
+<%= check_box_tag(:pet_dog) %>
+<%= label_tag(:pet_dog, "I own a dog") %>
+<%= check_box_tag(:pet_cat) %>
+<%= label_tag(:pet_cat, "I own a cat") %>
+<h1>Notifications</h1><br/>
+-->
+
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="show" class="table table-hover">
+                      <tbody>
+                      	<% unless @notifs.empty? %>  
+                       		<% @notifs.each do |notif| %>
+                      			<tr>
+                      				<td>
+                      					<%= notif[:user].username + " " %>
+                      					completed <%= notif[:doc].docname + "." %>
+                      				</td>
+                      			</tr>
+                      		<% end %>
+                      	<% end %>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+
+
+
+

@@ -3,6 +3,7 @@ class Tasks < ActiveRecord::Migration
   	create_table :tasks, :id => false do |t|
   		t.string :doc_id, :null => false
   		t.decimal :user_id, :precision => 21, :null => false
+      t.decimal :admin_id, :precision => 21, :null => false
   		t.boolean :done, :default => false
   		t.timestamps
   	end

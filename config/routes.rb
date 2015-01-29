@@ -28,6 +28,8 @@ get 'vlogin/user' => 'user#vlogin'
 post 'fetch/file' => 'file#fetch'
 post 'file/update' => 'file#update'
 
+get 'api_get_users' => 'user#api_users'
+
   resources :file do
     collection do
       get 'show'
@@ -50,9 +52,11 @@ post 'file/update' => 'file#update'
       get 'logout'
       get 'requests_list'
       get 'show'
+      get 'admin_index'
     end
     member do 
       get 'unauthorize'
+      get 'notify'
     end
   end
 

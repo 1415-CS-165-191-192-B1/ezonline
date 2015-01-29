@@ -4,8 +4,20 @@ require 'vimeo_client'
 class UserController < ApplicationController
 	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
+	respond_to :xml, :json
+
+	def api_users
+		@users = User.all
+		respond_with(@users)
+	end
 
 	def index	
+		user = User.find(session[:user_id])
+		if user.admin
+			redirect_to admin_index_user_index_path
+			return
+		end
+
 		#tasks = Task.where(user_id: session[:user_id]) # this causes an error, dk why
 		user = User.find(session[:user_id])
 		tasks = Task.where(user_id: user.user_id)
@@ -23,6 +35,22 @@ class UserController < ApplicationController
 			end
 	    end
 	end
+
+	def admin_index
+		#notifs = Notif.find_by from_id: session[:user_id]
+		user = User.find(session[:user_id])
+		notifs = Notif.where(from_id: user.user_id)
+		@notifs = Array.new
+
+		unless notifs.nil?
+			notifs.each do |notif|
+				user = User.find_by user_id: notif.from_id
+				doc = Doc.find_by doc_id: notif.doc_id
+				hash = {:user => user, :doc => doc}
+				@notifs << hash
+			end
+		end
+ 	end
 
 	def show
 		@users = User.all
@@ -165,6 +193,24 @@ class UserController < ApplicationController
 
 		redirect_to :back
 		return
+	end
+
+	def notify
+		user_id = session[:user_id] # currently logged in user
+		doc_id = params[:id] # the file selected as done
+
+		doc = Doc.find(doc_id)
+		user = User.find(user_id)
+		task = Task.find_by doc_id: doc.doc_id, user_id: user.user_id
+		#task = Task.find_by doc_id: doc_id, user_id: user_id # still dk why this fails
+
+		notif = Notif.new
+		notif.from_id = user_id
+		notif.to_id = task.admin_id
+		notif.doc_id = doc_id
+		notif.save
+
+		redirect_to request.referer
 	end
 
 end

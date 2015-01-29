@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127072600) do
+ActiveRecord::Schema.define(version: 20150129045059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(version: 20150127072600) do
 
   add_index "docs", ["doc_id"], name: "index_docs_on_doc_id", unique: true, using: :btree
 
+  create_table "notifs", force: true do |t|
+    t.decimal  "from_id",    precision: 21, scale: 0, null: false
+    t.decimal  "to_id",      precision: 21, scale: 0, null: false
+    t.string   "doc_id",                              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "requests", id: false, force: true do |t|
     t.decimal  "user_id",               precision: 21, scale: 0, null: false
     t.string   "username",   limit: 30
@@ -54,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150127072600) do
   create_table "tasks", id: false, force: true do |t|
     t.string   "doc_id",                                              null: false
     t.decimal  "user_id",    precision: 21, scale: 0,                 null: false
+    t.decimal  "admin_id",   precision: 21, scale: 0,                 null: false
     t.boolean  "done",                                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
