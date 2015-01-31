@@ -28,11 +28,17 @@ get 'vlogin/user' => 'user#vlogin'
 post 'fetch/file' => 'file#fetch'
 post 'file/update' => 'file#update'
 
-get 'api_get_users' => 'user#api_users'
+
+  #constraints subdomain: 'api' do
+  #  namespace :api, path: '/' do
+  #    resources :users
+  #  end
+  #end
 
   resources :file do
     collection do
       get 'show'
+      post 'save_task'
     end
     member do
       get 'history'
@@ -42,7 +48,6 @@ get 'api_get_users' => 'user#api_users'
       get 'fetch_videos'
       get 'edit'
       get 'assign'
-      post 'save_task'
     end
   end
 
@@ -53,6 +58,7 @@ get 'api_get_users' => 'user#api_users'
       get 'requests_list'
       get 'show'
       get 'admin_index'
+      post 'delete_notifs'
     end
     member do 
       get 'unauthorize'

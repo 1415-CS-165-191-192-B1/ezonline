@@ -4,12 +4,6 @@ require 'vimeo_client'
 class UserController < ApplicationController
 	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
-	respond_to :xml, :json
-
-	def api_users
-		@users = User.all
-		respond_with(@users)
-	end
 
 	def index	
 		user = User.find(session[:user_id])
@@ -46,7 +40,7 @@ class UserController < ApplicationController
 			notifs.each do |notif|
 				user = User.find_by user_id: notif.from_id
 				doc = Doc.find_by doc_id: notif.doc_id
-				hash = {:user => user, :doc => doc}
+				hash = {:id => notif.id, :username => user.username, :docname => doc.docname}
 				@notifs << hash
 			end
 		end
@@ -211,6 +205,19 @@ class UserController < ApplicationController
 		notif.save
 
 		redirect_to request.referer
+	end
+
+	def delete_notifs
+		notif_ids = params[:notif_ids]
+		if notif_ids
+			notif_ids.each do |id|
+				Notif.delete(id)
+			end
+			flash[:success] = 'Successfully deleted selected notifications.'
+		else
+			flash[:notice] = 'You did not select any notification to delete.'
+		end
+		redirect_to :back
 	end
 
 end
