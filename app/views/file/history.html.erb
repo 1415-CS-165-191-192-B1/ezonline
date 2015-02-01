@@ -23,7 +23,7 @@
                           <% user = User.find(commit.user_id) %>
                           <tr>
                             <td><%= user.username %></td>
-                            <td><%= commit.created_at %></td>            
+                            <td><%= commit.created_at.to_s(:long) %></td>            
                             <td>
                                 <%= button_to "Edit",
                                               edit_file_path(commit),

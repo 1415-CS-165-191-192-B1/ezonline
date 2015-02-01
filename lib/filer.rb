@@ -66,6 +66,7 @@ module Filer
 			end
 			
 		rescue ActiveRecord::RecordNotUnique # same file, different title
+			snippets.each {|s| Snippet.destroy(s.id)}
 			return :notice, 'The file you are trying to add has already been added previously.'
 
 		else

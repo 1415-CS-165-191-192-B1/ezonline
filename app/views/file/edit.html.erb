@@ -30,6 +30,6 @@
 <br/>
 <h2>This commit:</h2>
 <p>
-	<%= @username %>
-	<%= @commit.created_at %><br/>
+	<%= @username %><br />
+	<%= @commit.created_at.to_s(:long) %>
 </p>

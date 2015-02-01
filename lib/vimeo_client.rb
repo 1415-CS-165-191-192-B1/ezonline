@@ -32,7 +32,7 @@ class VimeoClient
 			return VimeoModel::save_videos response
 
 		rescue Vimeo::Advanced::RequestFailed 
-			VimeoModel:: set_page 1
+			VimeoModel::set_page 1
 			return false	# no more videos to get
 		end
 	end

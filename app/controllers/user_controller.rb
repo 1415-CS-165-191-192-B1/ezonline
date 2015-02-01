@@ -20,8 +20,6 @@ class UserController < ApplicationController
 		unless tasks.nil?
 			tasks.each do |task|
 				docs = Doc.where(doc_id: task.doc_id)
-				snippets = Snippet.where(doc_id: task.doc_id)
-
 			    docs.each do |doc|
 			      id = doc.read_attribute('doc_id')
 			      @files[doc] = Snippet.where(doc_id: id)
@@ -40,8 +38,8 @@ class UserController < ApplicationController
 			notifs.each do |notif|
 				user = User.find_by user_id: notif.from_id
 				doc = Doc.find_by doc_id: notif.doc_id
-				hash = {:id => notif.id, :date => notif.created_at, 
-						:username => user.username, :docname => doc.docname}
+
+				hash = {:id => notif.id, :date => notif.created_at, :username => user.username, :docname => doc.docname}
 				@notifs << hash
 			end
 		end
