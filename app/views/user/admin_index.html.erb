@@ -10,12 +10,14 @@
                       <thead>
                         <tr>
                           <th>Notifications</th>
+                          <th>Date Received</th>
+                          <th>Mark</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <%= form_for :notif_id, url: delete_notifs_user_index_path, 
+                        <% unless @notifs.empty? %>  
+                          <%= form_for :notif_id, url: delete_notifs_user_index_path, 
                                       html: {class: "nifty_form"} do |n| %>
-                        	<% unless @notifs.empty? %>  
                          		<% @notifs.each do |notif| %>
                         			<tr>
                         				<td>
@@ -23,13 +25,21 @@
                         					completed<strong> "<%= notif[:docname] %>".</strong>
                         				</td>
                                 <td>
+                                  <%= notif[:date] %>
+                                </td>
+                                <td>
                                   <%= check_box_tag 'notif_ids[]', notif[:id] %>
                                 </td>
                         			</tr>
                         	 	<% end %>
-                            <tr><%= n.submit 'Delete' %></tr>
-                      	  <% end %>
-                        <% end %>
+
+                            <tr>
+                              <td colspan = "2"></td>
+                              <td><%= n.submit 'Delete' %></td>
+                            </tr>
+                      	  
+                          <% end %> <!-- form_for -->
+                        <% end %> <!-- unless -->
 
                       </tbody>
                   </table>

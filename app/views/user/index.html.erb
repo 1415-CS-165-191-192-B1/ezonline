@@ -18,7 +18,8 @@
                   <td>
                     <%= button_to "Notify as Done",
                                   notify_user_path(doc.doc_id),
-                                  :method => :get
+                                  :method => :get,
+                                  data: { confirm: 'You are about to notify an admin that this file has thoroughly been edited.' }
                     %>        
                   </td>
                 </tr>       

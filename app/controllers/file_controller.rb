@@ -72,6 +72,7 @@ class FileController < ApplicationController
   def show  # organizes the docs and their corresponding snippets to hash of arrays
   	snippets = Snippet.order(:id)
     docs = Doc.all
+
     @files = Hash.new
     @workers = Hash.new
 
@@ -195,28 +196,39 @@ class FileController < ApplicationController
     doc_id = params[:doc_id]
     user_id = params[:user_id]
 
-    user = User.find(user_id)
+    begin
+      old_task = Task.find_by doc_id: doc_id  # doc can only be assigned to one user
+      user = User.find(user_id) # throws exception if user_id = 0 (assigned to None)
 
-    old_task = Task.find_by doc_id: doc_id  #doc can only be assigned to one user
-    unless old_task.nil?
-      if old_task.user_id == user.user_id
-        flash[:notice] = "File was already assigned to " + user.username
-        redirect_to file_index_path 
-        return
-      else
-        old_task.delete
+      unless old_task.nil? # doc was previously unassigned
+        if old_task.user_id == user.user_id
+          flash[:notice] = "File was already assigned to " + user.username
+          redirect_to file_index_path
+          return
+        else
+          old_task.delete
+        end
       end
+
+      # create new task
+      task = Task.new
+      task.admin_id = session[:user_id]
+      task.user_id = user_id
+      task.doc_id = doc_id
+      task.save
+
+      flash[:success] = "Successfully assigned file to " + user.username
+
+    rescue ActiveRecord::RecordNotFound
+      old_task.delete unless old_task.nil?
+      flash[:success] = "Successfully unassigned file."  
+    ensure
+      redirect_to file_index_path
+      return
     end
 
-    task = Task.new
-    task.admin_id = session[:user_id]
-    task.user_id = user_id
-    task.doc_id = doc_id
-    task.save
-    flash[:success] = "Successfully assigned file to " + user.username
-
-    redirect_to file_index_path
   end
+
 
 
 end

@@ -33,14 +33,15 @@ class UserController < ApplicationController
 	def admin_index
 		#notifs = Notif.find_by from_id: session[:user_id]
 		user = User.find(session[:user_id])
-		notifs = Notif.where(from_id: user.user_id)
+		notifs = Notif.where(to_id: user.user_id)
 		@notifs = Array.new
 
 		unless notifs.nil?
 			notifs.each do |notif|
 				user = User.find_by user_id: notif.from_id
 				doc = Doc.find_by doc_id: notif.doc_id
-				hash = {:id => notif.id, :username => user.username, :docname => doc.docname}
+				hash = {:id => notif.id, :date => notif.created_at, 
+						:username => user.username, :docname => doc.docname}
 				@notifs << hash
 			end
 		end
@@ -170,7 +171,7 @@ class UserController < ApplicationController
 		end
 
 		@requests = Request.all
-		redirect_to requests_path
+		redirect_to :back
 		return
 	end
 
@@ -202,9 +203,16 @@ class UserController < ApplicationController
 		notif.from_id = user_id
 		notif.to_id = task.admin_id
 		notif.doc_id = doc_id
-		notif.save
 
-		redirect_to request.referer
+		begin
+			notif.save!
+			flash[:success] = "A notification was sent to the admin."
+		rescue
+			flash[:success] = "Failed to send a notification to the admin."
+		end
+
+		redirect_to :back
+		return
 	end
 
 	def delete_notifs

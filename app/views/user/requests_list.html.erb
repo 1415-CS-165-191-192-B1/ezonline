@@ -26,8 +26,6 @@
                               <td>
                                   <%= button_to "Approve Request",
                                                 user_path(request),
-                                                id: "approve", 
-                                                remote: true, 
                                                 method: :delete,
                                                 data: { confirm: 'You are about to authorize this account to use EZ Troubleshooter File Repository.' } ,
                                                 :class => 'btn btn-primary btn-small'
