@@ -58,9 +58,8 @@
                     <a class="contact smoothScroll" href="/u_contact">
                         <i class="fa fa-envelope"></i>                            
                     </a>
-                </li>
-                
-                <li><a class="login" href="u_logout">Log Out</a></li>
+                </li>                
+                <li><%= link_to "Log Out", {controller: "user", action: "logout"}, id: @logout, class: "login" %></li>
             </ul>
         </div>
     </header>

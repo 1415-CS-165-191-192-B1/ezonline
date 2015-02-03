@@ -4,25 +4,25 @@ root 'user#home'
 
 
 #temporary
-get 'u_home' => 'user#home'
-get 'u_login' => 'user#login'
-get 'u_logout' => 'user#logout'
-get 'u_index' => 'user#index'
-get 'u_show' => 'user#show'
-get 'u_req' => 'user#requests_list'
-get 'u_contact' => 'user#contact'
+get 'user/home' => 'user#home'
+get 'user/login' => 'user#login'
+get 'user/logout' => 'user#logout'
+get 'user/index' => 'user#index'
+get 'user/show' => 'user#show'
+get 'user/req' => 'user#requests_list'
+get 'user/contact' => 'user#contact'
 
-get 'f_new' => 'file#new'
-get 'f_show' => 'file#show'
+get 'file/new' => 'file#new'
+get 'file/show' => 'file#show'
 
-get 'refresh_videos' => 'file#refresh_videos'
+get 'file/refresh_videos' => 'file#refresh_videos'
 
 get 'vauthentication' => 'user#vauthentication'
 get 'authentication' => 'user#authentication'
 
 get 'index' => 'user#index'
-get 'show' => 'user#show'
-get 'requests' => 'user#requests_list'
+#get 'show' => 'user#show'
+#get 'requests' => 'user#requests_list'
 
 get 'vlogin/user' => 'user#vlogin'
 post 'fetch/file' => 'file#fetch'
