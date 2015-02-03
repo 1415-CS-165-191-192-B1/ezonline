@@ -65,127 +65,100 @@
     </header>
     <!--header end-->  
       
-      <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-              
-              	  <!--<p class="centered"><a href="profile.html"><img src="user/ez-logo.png" class="img-circle" width="60"></a></p>-->
-              	  <h5 class="centered"><%= @name %></h5>
-              	  	
-                  <li class="sub-menu">
-                      <a href="/u_index">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
-                      </a>
-                      <ul>                       
-                      </ul>
-                  </li>
+    <!-- **********************************************************************************************************************************************************
+    MAIN SIDEBAR MENU
+    *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar"  class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <h5 class="centered"><%= @name %></h5>
+            	  	
+                <li class="sub-menu">
+                    <a href="/u_index">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <ul>                       
+                    </ul>
+                </li>
 
-                  <li class="sub-menu">
-                      <a href="/u_show" >
-                          <i class="fa fa-desktop"></i>
-                          <span>Authorized Users</span>
-                      </a>
-                  </li>
+                <li class="sub-menu">
+                    <a href="/u_show" >
+                        <i class="fa fa-desktop"></i>
+                        <span>Authorized Users</span>
+                    </a>
+                </li>
 
-                  <li class="sub-menu">
-                      <a href="/u_req">
-                          <i class="fa fa-cogs"></i>
-                          <span>Pending User Requests</span>
+                <li class="sub-menu">
+                    <a href="/u_req">
+                        <i class="fa fa-cogs"></i>
+                        <span>Pending User Requests</span>
 
-                      </a>
-                      <ul class="sub">
-                          <li/>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <!--<a class="active" href="/f_new" >-->
-                      <a href="/f_new" >
-                          <i class="fa fa-book"></i>
-                          <span>Add New Google Doc File</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="/f_show" >
-                          <i class="fa fa-tasks"></i>
-                          <span>All Google Doc Snippets</span>
-                      </a>                      
-                  </li>
-                  <li class="sub-menu">
-                      <a href="/u_contact" >
-                          <i class="fa fa-envelope"></i>
-                          <span>Contact</span>
-                      </a>
-                      <ul class="sub">
-                          <li/>
-                      </ul>
-                  </li>
-                  <!--
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                      </ul>
-                  </li> -->
+                    </a>
+                    <ul class="sub">
+                        <li/>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="/f_new" >
+                        <i class="fa fa-book"></i>
+                        <span>Add New Google Doc File</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/f_show" >
+                        <i class="fa fa-tasks"></i>
+                        <span>All Google Doc Snippets</span>
+                    </a>                      
+                </li>
+                <li class="sub-menu">
+                    <a href="/u_contact" >
+                        <i class="fa fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                    <ul class="sub">
+                        <li/>
+                    </ul>
+                </li>
+               
 
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!--sidebar end-->
 
-<br/><br/><br/><br/><br/>
-  
-<div id="page-wrapper">
+    <br/><br/><br/><br/><br/>
+      
+    <div id="page-wrapper">
 
-   <%= render :partial => "plash", :locals => {:flash => flash} %>
-    <!--<div class="container">    
-      <%= flash_messages %>
-    </div>-->
+       <%= render :partial => "plash", :locals => {:flash => flash} %>
+        <!--<div class="container">    
+          <%= flash_messages %>
+        </div>-->
 
-	<div class="container-fluid">
-		<div class="row">
-		  <div class="col-lg-12">
-		    <%= yield %>
-				<footer>
-					<div class="col-lg-12 text-center">
-						<a href="#top" class="smoothScroll"> Back to top</a>
-						<hr class="small">
-						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
-						<br/><br/><br/>
-					</div>
-				</footer>        
-		  	</div>
-		</div>
-	</div>
-</div>
+    	<div class="container-fluid">
+    		<div class="row">
+    		  <div class="col-lg-12">
+    		    <%= yield %>
+    				<footer>
+    					<div class="col-lg-12 text-center">
+    						<a href="#top" class="smoothScroll"> Back to top</a>
+    						<hr class="small">
+    						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
+    						<br/><br/><br/>
+    					</div>
+    				</footer>        
+    		  	</div>
+    		</div>
+    	</div>
+    </div>  
 
-  
-
- </section>
+  </section>
  <!-- /container -->
-
   <script>
-    
     // Scrolls to the selected menu item on the page
     $(function() {
         $('a[href*=#]:not([href=#])').click(function() {
@@ -203,8 +176,5 @@
         });
     });
     </script>
-
-
-
 </body>
 </html>

@@ -33,28 +33,21 @@
     *********************************************************************************************************************************************************** -->
     <!--header start-->
     <header class="header2 black-bg">
-          
+      
         <!--logo start-->
-        <a href="/u_home" class="logo"><b>EZ Online</b></a>
+        <%= link_to "<b>EZ Online</b>".html_safe, {controller: "user", action: "home"}, id: @home, class: "logo" %>
         <!--logo end-->
-        <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-            <ul class="nav pull-right top-menu">
-               
-              
-            </ul>
-            <!--  notification end -->
-        </div>
-        <div class="top-menu">
 
+       <div class="top-menu">
             <ul class="nav pull-right top-menu">
                  <li>
                     <a class="contact smoothScroll" href="#contact">
                         <i class="fa fa-envelope"></i>                            
                     </a>
+                </li>                
+                <li>
+                    <li><%= link_to "Log In".html_safe, {controller: "user", action: "login"}, id: @login, class: "login" %></li>
                 </li>
-                
-                <li><li><%= link_to "Log In", {controller: "user", action: "login"}, id: @login, class: "login" %></li></li>
             </ul>
         </div>
     </header>
