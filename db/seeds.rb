@@ -19,6 +19,17 @@ email: 'ricardopablo.deleon@gmail.com',
 admin: true
 )
 
+User.create(user_id: 111521329970009467091,
+username: 'EZOnline Development',
+email: 'ezonline.dev@gmail.com',
+admin: true
+)
+
+
+
+
+
+
 
 
 
