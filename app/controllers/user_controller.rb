@@ -112,6 +112,7 @@ class UserController < ApplicationController
 	    return
 
    	    rescue ActiveRecord::RecordNotFound
+   	    	render layout: "home_temp"
    	    	GoogleClient::reset # effectively deleting access token for current client instance
 
    	    	begin 
