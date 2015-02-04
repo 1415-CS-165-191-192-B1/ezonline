@@ -74,56 +74,24 @@
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
                 <h5 class="centered"><%= @name %></h5>
-            	  	
                 <li class="sub-menu">
-                    <a href="/u_index">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <ul>                       
-                    </ul>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="/u_show" >
-                        <i class="fa fa-desktop"></i>
-                        <span>Authorized Users</span>
-                    </a>
-                </li>
-
-                <li class="sub-menu">
-                    <a href="/u_req">
-                        <i class="fa fa-cogs"></i>
-                        <span>Pending User Requests</span>
-
-                    </a>
-                    <ul class="sub">
-                        <li/>
-                    </ul>
+                    <%= link_to (raw('<i class="fa fa-dashboard"></i><span>Dashboard</span></a>')), {controller: "user", action: "index"}, id: @user_index %>
                 </li>
                 <li class="sub-menu">
-                    <a href="/f_new" >
-                        <i class="fa fa-book"></i>
-                        <span>Add New Google Doc File</span>
-                    </a>
+                    <%= link_to (raw('<i class="fa fa-desktop"></i><span>Authorized Users</span></a>')), {controller: "user", action: "show"}, id: @user_show %>
                 </li>
                 <li class="sub-menu">
-                    <a href="/f_show" >
-                        <i class="fa fa-tasks"></i>
-                        <span>All Google Doc Snippets</span>
-                    </a>                      
+                    <%= link_to (raw('<i class="fa fa-cogs"></i><span>Pending User Requests</span></a>')), {controller: "user", action: "requests_list"}, id: @user_request %>
                 </li>
                 <li class="sub-menu">
-                    <a href="/u_contact" >
-                        <i class="fa fa-envelope"></i>
-                        <span>Contact</span>
-                    </a>
-                    <ul class="sub">
-                        <li/>
-                    </ul>
+                    <%= link_to (raw('<i class="fa fa-book"></i><span>Add New Google Doc File</span></a>')), {controller: "file", action: "new"}, id: @file_new %>
                 </li>
-               
-
+                <li class="sub-menu">
+                    <%= link_to (raw('<i class="fa fa-tasks"></i><span>All Google Doc Snippets</span></a>')), {controller: "file", action: "show"}, id: @file_show %>
+                </li>
+                <li class="sub-menu">
+                    <%= link_to (raw('<i class="fa fa-envelope"></i><span>Contact</span></a>')), {controller: "user", action: "contact"}, id: @user_contact %>
+                </li>
             </ul>
             <!-- sidebar menu end-->
         </div>
