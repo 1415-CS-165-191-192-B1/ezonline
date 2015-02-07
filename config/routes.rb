@@ -29,12 +29,6 @@ post 'fetch/file' => 'file#fetch'
 post 'file/update' => 'file#update'
 
 
-  #constraints subdomain: 'api' do
-  #  namespace :api, path: '/' do
-  #    resources :users
-  #  end
-  #end
-
   resources :file do
     collection do
       get 'show'

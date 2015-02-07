@@ -124,7 +124,7 @@ class FileController < ApplicationController
   end
 
   def compile
-    type, message = Filer::write params[:id] #creates gdoc with latest commits
+    type, message = Filer::write params[:id] # creates gdoc with latest commits
     flash[type] = message
     redirect_to file_index_path
   end
@@ -152,7 +152,7 @@ class FileController < ApplicationController
     failures = 0
 
     snippets.each do |s|
-      video_id = VimeoModel::search s.title #returns nil if none
+      video_id = VimeoModel::find s.title #returns nil if none
       successes += 1 if VimeoModel::save s.title, video_id #returns true if snippet was updated with video_id
     end
 
@@ -167,8 +167,8 @@ class FileController < ApplicationController
     redirect_to request.referer
   end
 
-  def fetch_video   #get video for this snippet
-    video_id = VimeoModel::find params[:id] #search by snippet title
+  def fetch_video   # get video for this snippet
+    video_id = VimeoModel::find params[:id] # search by snippet title
 
     if VimeoModel::save params[:id], video_id
       flash[:success] = "Successfully added video for this snippet."
@@ -179,7 +179,7 @@ class FileController < ApplicationController
     redirect_to request.referer
   end
 
-  def refresh_videos #gets latest videos since login
+  def refresh_videos # gets latest videos since login
     VimeoModel::save_latest 
     redirect_to new_file_path
   end
@@ -229,22 +229,4 @@ class FileController < ApplicationController
 
   end
 
-
-
 end
-
-#def compile
-    #Snippet.select("DISTINCT(snippet_id)")
-    #       .where(doc_id: doc_id)
-    #       .merge(Snippet.group("snippet_id")
-    #                     .order("created_at DESC"))
-
-    #latest = Snippet.joins(:commits)
-    #                .select('commits.commit_text AS commit_text')
-    #                .where(doc_id: doc_id)
-    #                .maximum(:created_at, :group => snippet_id)  
-    #p latest.first.commit_text
-    #result = []
-    #latest.each_pair do |t, p|  
-    #  result << Table.find(:first, :conditions => ["type = ? and price = ?", t, p])
-#end

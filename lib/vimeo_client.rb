@@ -17,24 +17,13 @@ class VimeoClient
 		@@base.authorize_url
 	end
 
-	def self.retrieve
+	def self.retrieve_base
 		@@base = Vimeo::Advanced::Base.new(VimeoModel::ID, VimeoModel::SECRET)
 	end
 
-	def self.fetch page 	#retrieves videos in page and saves to database
-		video = Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, 
-										   :token => VimeoModel::token, :secret => VimeoModel::secret)
-		
-		VimeoModel::set_page Integer(page)+1 # to ensure that page is updated after every call
-
-		begin
-			response = video.get_all(VimeoModel::USERNAME, { :page => page, :per_page => "1", :sort => "newest" })
-			return VimeoModel::save_videos response
-
-		rescue Vimeo::Advanced::RequestFailed 
-			VimeoModel::set_page 1
-			return false	# no more videos to get
-		end
+	def self.retrieve_video
+		Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, 
+								   :token => VimeoModel::token, :secret => VimeoModel::secret)
 	end
 
 end

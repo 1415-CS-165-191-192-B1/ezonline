@@ -138,7 +138,7 @@ class UserController < ApplicationController
 	end
 
 	def vauthentication
-		base = VimeoClient::retrieve
+		base = VimeoClient::retrieve_base
 		access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
 
 		session[:vimeo_token] = access_token.token

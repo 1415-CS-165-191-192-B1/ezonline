@@ -14,12 +14,10 @@ module VimeoModel
 
 	@@token = nil
 	@@secret = nil
-	@@page = 1
 
 	def self.reset_session
 		@@token = nil
 		@@secret = nil
-		@@page = 1
 	end
 
 	def self.set_session t, s
@@ -35,83 +33,20 @@ module VimeoModel
 		@@secret
 	end
 
-	def self.set_page page # sets the page to session[:page]
-		@@page = page.nil? ? 1 : page 
-	end
-
-	def self.get_page 	# sets the session[:page]
-		@@page
-	end
-
 	def self.is_logged_in
 		true unless @@token.nil? || @@secret.nil?
 	end
 
 	def self.save_latest	# called upon login or refresh, get latest 5 pages
-		for i in 1..5
-			@@page = i
-			break unless VimeoClient::fetch @@page.to_s #stops when there is nothing new to save in db
+		for page in 1..5
+			VideoGet.perform_async page
 		end
-	end
-
-	def self.save_videos response
-		videos = response['videos']['video']
-		#SAVE USING ARRAY
-		#video_list = []
-		#videos.each do |v|
-		#	hash = {id: v['id'], title: v['title']}
-		#	video_list.push(hash)
-		#end
-		begin 
-			videos.each do |v|
-				video = Video.new
-				video.video_id = v['id']
-				video.title = v['title']
-				video.save!
-			end
-			return true
-		rescue ActiveRecord::RecordNotUnique	# database already contains this 'latest' video
-			# what if only the last video in the list is not unique?
-			return false
-		end
-	end
-
-	def self.search title
-		# SEARCH USING ARRAY
-		#unless videos.nil?
-		#	video = videos.find {|v| v[:title].casecmp(title).zero? }
-		#	unless video.nil? 
-		#		snippet = Snippet.where(title: "#{video[:title]}")
-		#    	snippet.update_attribute(:video_id, "#{video[:id]}")
-		#	end
-		#end
-
-		begin
-			video = Video.where("lower(title) = ?", title.downcase).first
-			unless video.nil? #video not yet in database
-				return video.read_attribute('video_id')	#return video_id
-			else
-				if VimeoClient::fetch @@page.to_s #returns true if new videos were saved
-					raise #pass control to rescue
-				else
-					return nil	# already fetched all videos, stop rechecking
-				end
-			end
-		rescue
-			retry #recheck if video is in db
-		end
-
-		# retry one last time in case save_videos(returned by VimeoClient::fetch) returned false
-		video = Video.where("lower(title) = ?", title.downcase).first
-		return video.read_attribute('video_id')	unless video.nil?
-		
-		return nil
 	end
 
 	def self.find title
 		video = Video.where("lower(title) = ?", title.downcase).first
-		unless video.nil? #video not yet in database
-			return video.read_attribute('video_id')	#return video_id
+		unless video.nil? # video not yet in database
+			return video.read_attribute('video_id')	# return video_id
 		else 
 			return nil
 		end

@@ -8,20 +8,13 @@ class ApplicationController < ActionController::Base
   super(options, response_status)
   end
 
-  before_action :foo_function
+  before_action :set_name
 
-  def foo_function  
+  def set_name 
     # sets the username display
     unless session[:user_id].nil?
       user = User.find(session[:user_id])
       @name = user.read_attribute('username')
-    end
-    # sets the page
-    page = VimeoModel::get_page   # assumes that VimeoModel::page is more likely to be updated
-    unless page.nil?
-      session[:page] = page
-    else
-      VimeoModel::set_page session[:page]
     end
   end
 
