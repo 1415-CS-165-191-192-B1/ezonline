@@ -1,5 +1,3 @@
-require 'vimeo_client'
-
 module VimeoModel
 
 	ID = '265cb46f436a81f5d8a6ea991898df98b1ccb063'
@@ -12,34 +10,31 @@ module VimeoModel
 
 	USERNAME = 'EZOnline Development'
 
-	@@token = nil
-	@@secret = nil
-
 	def self.reset_session
-		@@token = nil
-		@@secret = nil
+		@token = nil
+		@secret = nil
 	end
 
-	def self.set_session t, s
-		@@token = t
-		@@secret = s
+	def self.set_auth t, s
+		@token = t
+		@secret = s
 	end
 
 	def self.token
-		@@token
+		@token
 	end
 
 	def self.secret
-		@@secret
+		@secret
 	end
 
 	def self.is_logged_in
-		true unless @@token.nil? || @@secret.nil?
+		true unless @token.nil? || @secret.nil?
 	end
 
 	def self.save_latest	# called upon login or refresh, get latest 5 pages
 		for page in 1..5
-			VideoGet.perform_async page
+			VideoGet.perform_async page, @token, @secret
 		end
 	end
 

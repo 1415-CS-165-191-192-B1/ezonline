@@ -27,7 +27,7 @@
 <% else %>
   <h4>You are logged in to Vimeo. All associated videos will be added automatically.</h4>
   <%= button_to "Refresh videos list", 
-                refresh_videos_path,
+                file_refresh_videos_path,
                 method: :get, 
                 form_class: "new-thing" %>
 <% end %>

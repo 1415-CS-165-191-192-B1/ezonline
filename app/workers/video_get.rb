@@ -1,10 +1,11 @@
 class VideoGet
 	include Sidekiq::Worker
 
-	def perform page
-		video = VimeoClient::retrieve_video
-		response = video.get_all(VimeoModel::USERNAME, { :page => page, :per_page => "1", :sort => "newest" })
+	def perform page, token, secret
 
+		video = Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, 
+								   		   :token => token, :secret => secret)
+		response = video.get_all(VimeoModel::USERNAME, { :page => page, :per_page => "1", :sort => "newest" })
 		videos = response['videos']['video']
 
 		begin 

@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     unless session[:vimeo_token]
       redirect_to vlogin_user_path
     else
-      VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret]
+      VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret]
     end
     return false
   end
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
 
   protected
   def save_vlogin_state # initialize vimeo client with existing credentials
-    VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret] if session[:vimeo_token]
+    VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret] if session[:vimeo_token]
     return false
   end
 

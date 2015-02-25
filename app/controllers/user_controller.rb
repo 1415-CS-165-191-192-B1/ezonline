@@ -29,7 +29,7 @@ class UserController < ApplicationController
 	end
 
 	def admin_index
-		#notifs = Notif.find_by from_id: session[:user_id]
+		# notifs = Notif.find_by from_id: session[:user_id]
 		user = User.find(session[:user_id])
 		notifs = Notif.where(to_id: user.user_id)
 		@notifs = Array.new
@@ -61,14 +61,12 @@ class UserController < ApplicationController
 			render layout: "home_temp"
 			GoogleClient::init
 		end
-		#redirect_to(:controller => 'user', :action => 'login')	# temporarily automatically redirect user to login
 	end
 
 	def logout
 		render layout: "home_temp"
 		session.clear # only deletes app session, browser is still logged in to account
 		GoogleClient::reset
-		VimeoClient::reset
 		VimeoModel::reset_session
 	end
 
@@ -130,7 +128,6 @@ class UserController < ApplicationController
 	end
 
 	def vlogin
-		VimeoClient::reset
 		session[:vimeo_oauth] = VimeoClient::fetch_oauth
 		
 		session[:return_to] = request.referer # save url where login was invoked
@@ -138,13 +135,13 @@ class UserController < ApplicationController
 	end
 
 	def vauthentication
-		base = VimeoClient::retrieve_base
+		base = VimeoClient::get_base
 		access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
 
 		session[:vimeo_token] = access_token.token
 		session[:vimeo_secret] = access_token.secret
 
-		VimeoModel::set_session session[:vimeo_token], session[:vimeo_secret]
+		VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret]
 		VimeoModel::save_latest
 
 		redirect_to session.delete(:return_to)

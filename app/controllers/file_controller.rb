@@ -55,15 +55,17 @@ class FileController < ApplicationController
         raise
 
       else
+        print "**********RESULT STATUS*********** " + search_result.status
         flash[:error] = "An error occured. Please try again later."
         redirect_to new_file_path   
       end # end outermost if
 
-    rescue 
+    rescue Exception => ex
       unless refreshed # there was already an attempt to refresh google access token
         refreshed = true
         retry
       end
+        print "************ERROR*************" + ex.message
         flash[:error] = "An error occured. Please try again later."
         redirect_to new_file_path   
     end
@@ -108,8 +110,8 @@ class FileController < ApplicationController
     else
       flash.now[:notice] = "Your commit was empty/too short."
       @commit_text = commit.commit_text
-      init_vars   #reinitialize variables after failure in edit
-      render :edit #renders edit template
+      init_vars   # reinitialize variables after failure in edit
+      render :edit # renders edit template
     end
   end
 
@@ -142,7 +144,7 @@ class FileController < ApplicationController
     redirect_to file_index_path
   end
 
-  def fetch_videos #get all videos associated with this file
+  def fetch_videos # get all videos associated with this file
     doc_id = params[:id]
 
     doc = Doc.find_by doc_id: doc_id
@@ -152,8 +154,8 @@ class FileController < ApplicationController
     failures = 0
 
     snippets.each do |s|
-      video_id = VimeoModel::find s.title #returns nil if none
-      successes += 1 if VimeoModel::save s.title, video_id #returns true if snippet was updated with video_id
+      video_id = VimeoModel::find s.title # returns nil if none
+      successes += 1 if VimeoModel::save s.title, video_id # returns true if snippet was updated with video_id
     end
 
     case successes
@@ -181,7 +183,7 @@ class FileController < ApplicationController
 
   def refresh_videos # gets latest videos since login
     VimeoModel::save_latest 
-    redirect_to new_file_path
+    redirect_to :back
   end
 
   def assign
