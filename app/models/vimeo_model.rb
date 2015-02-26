@@ -6,7 +6,7 @@ module VimeoModel
 
 	TOKEN = 'c54317838752b29b6cd05e48b0f85480'
 
-	URI = 'http://localhost:3000/vauthentication'
+	URI = 'http://ezonline-dev.com:3000/vauthentication'
 
 	USERNAME = 'EZOnline Development'
 

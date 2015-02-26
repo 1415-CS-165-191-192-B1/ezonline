@@ -11,7 +11,7 @@ module ApplicationHelper
       "http://www.ezonline.com/"
     else
       # Our dev & test URL
-      "http://localhost:3000"
+      "http://ezonline-dev.com:3000"
     end
   end
 
