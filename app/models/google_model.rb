@@ -4,7 +4,7 @@ module GoogleModel
 
 	SECRET = 'NtYbyXc-1XZNbPyOQKfh-yiu'
 
-	URI = 'http://localhost:3000/authentication'
+	URI = 'http://ezonline-dev.com:3000/authentication'
 
 	SCOPE = ['https://www.googleapis.com/auth/drive',
 			 'https://www.googleapis.com/auth/userinfo.profile',

@@ -3,7 +3,6 @@ require 'vimeo_client'
 require 'filer'
 require 'tempfile'
 
-
 class FileController < ApplicationController
   before_action :check_login_state
   before_action :authenticate_admin, :except => [:history, :edit, :update]
@@ -192,25 +191,37 @@ class FileController < ApplicationController
     @docname = doc.read_attribute('docname')
 
     @users = User.all
+    @current_user = session[:user_id]
   end
 
   def save_task
     doc_id = params[:doc_id]
-    user_id = params[:user_id]
+    user_id = params[:user_id].to_i
 
-    begin
-      old_task = Task.find_by doc_id: doc_id  # doc can only be assigned to one user
-      user = User.find(user_id) # throws exception if user_id = 0 (assigned to None)
+    old_task = Task.find_by doc_id: doc_id  # doc can only be assigned to one user
 
-      unless old_task.nil? # doc was previously unassigned
+    p old_task
+    
+    if user_id == 0
+      old_task.delete if old_task
+      flash[:success] = "Successfully unassigned file."  
+      redirect_to file_index_path
+      return
+
+    else
+      user = User.find(user_id)
+
+      if old_task # doc was previously assigned
+
         if old_task.user_id == user.user_id
           flash[:notice] = "File was already assigned to " + user.username
           redirect_to file_index_path
           return
         else
           old_task.delete
-        end
-      end
+        end # end if old_task user id is selected user_id
+
+      end # end if old_task is not nil
 
       # create new task
       task = Task.new
@@ -220,15 +231,14 @@ class FileController < ApplicationController
       task.save
 
       flash[:success] = "Successfully assigned file to " + user.username
-
-    rescue ActiveRecord::RecordNotFound
-      old_task.delete unless old_task.nil?
-      flash[:success] = "Successfully unassigned file."  
-    ensure
       redirect_to file_index_path
       return
-    end
 
-  end
+    end # end if user_id is 0
+     
+  end # end method save_task
+
+
+
 
 end

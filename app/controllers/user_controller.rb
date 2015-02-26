@@ -193,7 +193,7 @@ class UserController < ApplicationController
 		doc = Doc.find(doc_id)
 		user = User.find(user_id)
 		task = Task.find_by doc_id: doc.doc_id, user_id: user.user_id
-		#task = Task.find_by doc_id: doc_id, user_id: user_id # still dk why this fails
+		#task = Task.find_by doc_id: doc_id, user_id: user_id # fails bec of diff data types
 
 		notif = Notif.new
 		notif.from_id = user_id
