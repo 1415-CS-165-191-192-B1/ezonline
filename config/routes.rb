@@ -57,6 +57,9 @@ post 'file/update' => 'file#update'
     member do 
       get 'unauthorize'
       get 'notify'
+      get 'respond'
+      get 'delete_notif'
+      post 'send_response'
     end
   end
 

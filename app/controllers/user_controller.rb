@@ -15,7 +15,8 @@ class UserController < ApplicationController
 		#tasks = Task.where(user_id: session[:user_id]) # this causes an error, dk why
 		user = User.find(session[:user_id])
 		tasks = Task.where(user_id: user.user_id)
-		@files = Hash.new #hash of doc => snippets
+		@files = Hash.new # hash of doc => snippets
+		@details = Hash.new
 
 		unless tasks.nil?
 			tasks.each do |task|
@@ -23,6 +24,9 @@ class UserController < ApplicationController
 			    docs.each do |doc|
 			      id = doc.read_attribute('doc_id')
 			      @files[doc] = Snippet.where(doc_id: id)
+			    
+			      hash = {:done => task.done, :note => task.note}
+			      @details[doc.doc_id] = hash
 			    end
 			end
 	    end
@@ -39,7 +43,11 @@ class UserController < ApplicationController
 				user = User.find_by user_id: notif.from_id
 				doc = Doc.find_by doc_id: notif.doc_id
 
-				hash = {:id => notif.id, :date => notif.created_at, :username => user.username, :docname => doc.docname}
+				hash = {:id => notif.id, 
+						:date => notif.created_at, 
+						:username => user.username, 
+						:docname => doc.docname,
+						:responded => notif.responded}
 				@notifs << hash
 			end
 		end
@@ -194,6 +202,7 @@ class UserController < ApplicationController
 		user = User.find(user_id)
 		task = Task.find_by doc_id: doc.doc_id, user_id: user.user_id
 		#task = Task.find_by doc_id: doc_id, user_id: user_id # fails bec of diff data types
+		task.update_attribute :done, true
 
 		notif = Notif.new
 		notif.from_id = user_id
@@ -211,16 +220,44 @@ class UserController < ApplicationController
 		return
 	end
 
-	def delete_notifs
-		notif_ids = params[:notif_ids]
-		if notif_ids
-			notif_ids.each do |id|
-				Notif.delete(id)
-			end
-			flash[:success] = 'Successfully deleted selected notifications.'
+	#def delete_notifs
+	#	notif_ids = params[:notif_ids]
+	#	if notif_ids
+	#		notif_ids.each do |id|
+	#			Notif.delete(id)
+	#		end
+	#		flash[:success] = 'Successfully deleted selected notifications.'
+	#	else
+	#		flash[:notice] = 'You did not select any notification to delete.'
+	#	end
+	#	redirect_to :back
+	#end
+
+	def respond
+		@notif_id = params[:id]
+	end
+
+	def send_response
+		notif = Notif.find(params[:notif_id])
+		task = Task.find(notif.doc_id)
+
+		if (params[:approved] == true)
+			task.delete
 		else
-			flash[:notice] = 'You did not select any notification to delete.'
+			task.update_attribute :done, false
+			# temporary
+			task.update_attribute :note, 'Changes are still needed.'
 		end
+
+		notif.update_attribute :responded, true
+
+		flash[:success] = 'Successfully sent your response.'
+		redirect_to admin_index_user_index_path
+		return
+	end
+
+	def delete_notif
+		notif = Notif.delete(params[:id])
 		redirect_to :back
 	end
 

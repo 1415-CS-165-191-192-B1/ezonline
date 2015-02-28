@@ -14,13 +14,14 @@
                         <tr>
                           <th>Notifications</th>
                           <th>Date Received</th>
-                          <th>Mark</th>
+                          <!--<th>Mark</th>-->
+                          <th>Action</td>
                         </tr>
                       </thead>
                       <tbody>
                         <% unless @notifs.empty? %>  
-                          <%= form_for :notif_id, url: delete_notifs_user_index_path, 
-                                      html: {class: "nifty_form"} do |n| %>
+                          <!--<%= form_for :notif_id, url: delete_notifs_user_index_path, 
+                                      html: {class: "nifty_form"} do |n| %>-->
                          		<% @notifs.each do |notif| %>
                         			<tr>
                         				<td>
@@ -30,16 +31,28 @@
                                 <td>
                                   <%= notif[:date].to_s(:long) %>
                                 </td>
-                                <td>
+                                <!--<td>
                                   <%= check_box_tag 'notif_ids[]', notif[:id] %>
+                                </td>-->
+                                <td>
+                                  <% unless notif[:responded] %>
+                                    <%= button_to "Respond",
+                                        respond_user_path(notif[:id]),
+                                        :method => :get
+                                    %>
+                                  <% else %>
+                                    <%= button_to "Delete",
+                                        delete_notif_user_path(notif[:id]),
+                                        :method => :get
+                                    %>
+                                  <% end %>   
                                 </td>
                         			</tr>
                         	 	<% end %>
-
-                            <tr>
+                            <!--<tr>
                               <td colspan = "2"></td>
                               <td><%= n.submit 'Delete' %></td>
-                            </tr>
+                            </tr>-->
                       	  
                           <% end %> <!-- form_for -->
                         <% end %> <!-- unless -->

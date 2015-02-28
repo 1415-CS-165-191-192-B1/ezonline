@@ -13,16 +13,25 @@
 	        <tbody>
               <% @files.each do |doc, snippets| %>
          	    <tr>
-                  <td><strong><%= doc.docname %></strong></td>
-                  <td><button>Show/Hide Details</button></td>
-                  <td>
-                    <%= button_to "Notify as Done",
-                                  notify_user_path(doc.doc_id),
-                                  :method => :get,
-                                  data: { confirm: 'You are about to notify an admin that this file has thoroughly been edited.' }
-                    %>        
+                  <td colspan="2"><strong><%= doc.docname %></strong></td>
+                  <td colspan="2"><button>Show/Hide Details</button></td>
+              </tr>
+              <tr>
+                  <td colspan="1">
+                    <% unless @details[doc.doc_id][:done] %>
+                      <%= button_to "Mark as Done",
+                                    notify_user_path(doc.doc_id),
+                                    :method => :get,
+                                    data: { confirm: 'You are about to notify an admin that this file has thoroughly been edited.' }
+                      %>  
+                      <% else %>
+                        <i>Pending approval</i>
+                    <% end %>      
                   </td>
-                </tr>       
+                  <td colspan="3">
+                    <% @details[doc.doc_id][:note] %>
+                  </td>
+              </tr>       
                 <% snippets.each do |snippet| %>
                   <tr>
                     <td colspan="2"><%= snippet.title %></td>
