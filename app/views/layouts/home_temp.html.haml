@@ -1,0 +1,48 @@
+%html
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => meta_description, :name => "description"}/
+    %meta{:content => meta_author, :name => "author"}/
+    %meta{:content => meta_keywords, :name => "Keywords"}/
+    %title= full_title(yield(:title))
+    / Custom Fonts
+    %link{:href => "font-awesome-4.1.0/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}/
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    / HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    /[if lt IE 9]
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    %a{:href => "#Top"}
+  %body
+    /
+      **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      ***********************************************************************************************************************************************************
+    / header start
+    %header.header2.black-bg
+      / logo start
+      = link_to "<b>EZ Online</b>".html_safe, {controller: "user", action: "home"}, id: @home, class: "logo"
+      / logo end
+      .top-menu
+        %ul.nav.pull-right.top-menu
+          %li
+            %a.contact.smoothScroll{:href => "#contact"}
+              %i.fa.fa-envelope
+          %li
+          %li= link_to "Log In".html_safe, {controller: "user", action: "login"}, id: @login, class: "login"
+    / header end
+    = yield
+    %footer
+      .col-lg-10.col-lg-offset-1.text-center
+        %a.smoothScroll{:href => "#top"} Back to top
+        %hr.small/
+        %p.text-muted
+          Copyright © #{site_name}#{Time.now.year}
+        %br/
+        %br/
+        %br/
+    / /container

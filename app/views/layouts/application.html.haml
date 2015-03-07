@@ -1,0 +1,110 @@
+%html
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => meta_description, :name => "description"}/
+    %meta{:content => meta_author, :name => "author"}/
+    %meta{:content => meta_keywords, :name => "Keywords"}/
+    %title= full_title(yield(:title))
+    / Custom Fonts
+    %link{:href => "font-awesome-4.1.0/css/font-awesome.min.css", :rel => "stylesheet", :type => "text/css"}/
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    / HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+    /[if lt IE 9]
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    %a{:href => "#Top"}
+  %body
+    %section#container
+      /
+        **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        ***********************************************************************************************************************************************************
+      / header start
+      %header.header2.black-bg
+        .sidebar-toggle-box
+          .fa.fa-bars.tooltips{"data-original-title" => "Toggle Navigation", "data-placement" => "right"}
+        / logo start
+        %a.logo{:href => "u_index"}
+          %b EZ Online
+        / logo end
+        #top_menu.nav.notify-row
+          / notification start
+          %ul.nav.pull-right.top-menu
+          / notification end
+        .top-menu
+          %ul.nav.pull-right.top-menu
+            %li
+              %a.contact.smoothScroll{:href => "/u_contact"}
+                %i.fa.fa-envelope
+            %li= link_to "Log Out", {controller: "user", action: "logout"}, id: @logout, class: "login"
+      / header end
+      /
+        **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        ***********************************************************************************************************************************************************
+      / sidebar start
+      %aside
+        #sidebar.nav-collapse
+          / sidebar menu start
+          %ul#nav-accordion.sidebar-menu
+            %h5.centered= @name
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-dashboard"></i><span>Dashboard</span></a>')), {controller: "user", action: "index"}, id: @user_index
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-desktop"></i><span>Authorized Users</span></a>')), {controller: "user", action: "show"}, id: @user_show
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-cogs"></i><span>Pending User Requests</span></a>')), {controller: "user", action: "requests_list"}, id: @user_request
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-book"></i><span>Add New Google Doc File</span></a>')), {controller: "file", action: "new"}, id: @file_new
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-tasks"></i><span>All Google Doc Snippets</span></a>')), {controller: "file", action: "show"}, id: @file_show
+            %li.sub-menu
+              = link_to (raw('<i class="fa fa-envelope"></i><span>Contact</span></a>')), {controller: "user", action: "contact"}, id: @user_contact
+          / sidebar menu end
+      / sidebar end
+      %br/
+      %br/
+      %br/
+      %br/
+      %br/
+      #page-wrapper
+        = render :partial => "plash", :locals => {:flash => flash}
+        /
+          <div class="container">
+          <haml_loud> flash_messages </haml_loud>
+          </div>
+        .container-fluid
+          .row
+            .col-lg-12
+              = yield
+              %footer
+                .col-lg-12.text-center
+                  %a.smoothScroll{:href => "#top"} Back to top
+                  %hr.small/
+                  %p.text-muted
+                    Copyright © #{site_name}#{Time.now.year}
+                  %br/
+                  %br/
+                  %br/
+    / /container
+    :javascript
+      // Scrolls to the selected menu item on the page
+      $(function() {
+          $('a[href*=#]:not([href=#])').click(function() {
+              if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                  var target = $(this.hash);
+                  target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                  if (target.length) {
+                      $('html,body').animate({
+                          scrollTop: target.offset().top
+                      }, 1000);
+                      return false;
+                  }
+              }
+          });
+      });
