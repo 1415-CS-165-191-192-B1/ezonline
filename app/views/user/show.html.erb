@@ -1,0 +1,58 @@
+<h1>Authorized Users</h1><br/>
+<!--<h2>Users</h2>-->
+
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="show" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>User ID</th>
+                              <th>Username</th>
+                              <th>Email Address</th>
+                              <th>Admin Account</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% @users.each do |user| %>
+                            <tr>
+                              <td><%= user.user_id %></td>
+                              <td><%= user.username %></td>
+                              <td><%= user.email %></td>
+                              <td>
+                              <% if user.admin %>
+                                <img src="/assets/check.png" alt="rss feed" height=20/> 
+                              <% else %>
+                                <img src="/assets/cross.png" alt="rss feed" height=20/> 
+                              <% end %>
+                              </td>
+                              <td>
+                                <% unless user.user_id.to_s == @current_user_id or user.admin %>
+                                  <%= button_to "Unauthorize",
+                                      unauthorize_user_path(user.user_id),
+                                      :method => :get,
+                                      :data => { confirm: 'Unauthorize this user?' },
+                                      :class => 'btn btn-success btn-small'
+                                  %>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+
+
+
+

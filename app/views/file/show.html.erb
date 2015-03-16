@@ -1,0 +1,91 @@
+
+<h1>EZ Online Files</h1><br />
+
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="requests" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Title</th>                              
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <% unless @files.empty? %>
+                          <% @files.each do |doc, snippets| %>
+
+                            <tr>
+                              <td><strong><%= doc.docname %></strong></td>
+                              <td><button>Show/Hide Details</button></td>
+
+                              <td><strong>Assigned to:</strong><br /> <%= @workers[doc.id] %></td>
+                              <td>
+                                <%= button_to "Assign",
+                                              assign_file_path(doc.id),
+                                              :method => :get,                                                
+                                              :class => 'btn btn-success btn-small'
+                                %>                                  
+                              </td>
+                            </tr>
+                            
+                            <% snippets.each do |snippet| %>
+                              <tr>
+                                <td colspan="2"><%= snippet.title %></td>
+                                <td colspan="2">
+                                  <%= button_to "Show History",
+                                                history_file_path(snippet),
+                                                :method => :get
+                                  %>                                  
+                                </td>
+                              </tr>
+                            <% end %>
+
+                            <tr>
+                                <td>
+                                  <%= button_to "Compile",
+                                      compile_file_path(doc.doc_id),
+                                      :method => :get,
+                                      :class => 'btn btn-success btn-small'
+                                  %>
+                                </td>
+                                <td>
+                                  <%= button_to "Delete",
+                                      delete_file_path(doc.doc_id),
+                                      :method => :get,
+                                      :data => { confirm: 'Delete this file and all its snippets?' },
+                                      :class => 'btn btn-success btn-small'
+                                  %>
+                                </td>
+                                <td>
+                                  <%= button_to "Fetch Videos",
+                                      fetch_videos_file_path(doc.doc_id),
+                                      :method => :get,
+                                      :class => 'btn btn-success btn-small'
+                                  %>
+                                </td>
+                                <td>
+                                  <%= link_to 'View Google Doc', doc.link %>
+                                </td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" bgcolor="#009966"></td>
+                            </tr>
+                          <% end %>
+                         <% end %>
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+ 
+

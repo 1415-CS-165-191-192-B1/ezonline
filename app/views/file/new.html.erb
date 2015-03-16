@@ -1,0 +1,33 @@
+<div align = center>
+
+<h1>Add a Google Doc</h1>
+
+<%= form_for :title, url: fetch_file_path, html: {class: "nifty_form"} do |c| %>
+  <%= c.text_field :text, value: 'type in exact title', size: 50 %>
+
+  <!--
+  <% if session[:vimeo_access] %>
+	  <%= radio_button_tag(:videos, "available") %>
+  	  <%= label_tag(:videos_available, "Fetch videos from Vimeo") %>
+  	  <%= radio_button_tag(:videos, "unavailable") %>
+  	  <%= label_tag(:videos_unavailable, "Add videos later") %> 
+  <% end %>
+  -->
+
+  <%= c.submit 'Add' %>
+<% end %>
+
+<br /><br />
+
+<% unless session[:vimeo_token] and session[:vimeo_secret] %>
+  <%= button_to "Login to Vimeo", 
+      			    vlogin_user_path,
+      			    method: :get, 
+      			    form_class: "new-thing" %>
+<% else %>
+  <h4>You are logged in to Vimeo. All associated videos will be added automatically.</h4>
+  <%= button_to "Refresh videos list", 
+                file_refresh_videos_path,
+                method: :get, 
+                form_class: "new-thing" %>
+<% end %>

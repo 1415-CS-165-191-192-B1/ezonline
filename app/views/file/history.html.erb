@@ -1,0 +1,54 @@
+
+<h1><%= @snippet.title %></h1><br />
+<h3>List of Commits For This Snippet</h3>
+ 
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="requests" class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th>Commit By</th>
+                              <th>Time Committed</th>
+                              <th>Snippet Text</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <% @commits.each do |commit| %>
+                          <% user = User.find(commit.user_id) %>
+                          <tr>
+                            <td><%= user.username %></td>
+                            <td><%= commit.created_at.to_s(:long) %></td>            
+                            <td>
+                                <%= button_to "Edit",
+                                              edit_file_path(commit),
+                                              :method => :get,                                                
+                                              :class => 'btn btn-success btn-small'
+                                %>                                  
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="3"><%= commit.commit_text %></td>  
+                          </tr>
+                          <tr>
+                            <td colspan="3" bgcolor="#009966"></td>
+                          </tr>
+                          <% end %>
+
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+
+
