@@ -33,10 +33,26 @@
               <ul class="gn-menu">                
                 <li>
                   <ul class="gn-submenu">
-                    <li><%= link_to (raw('<i class="gn-icon fa-desktop"></i><span>Log In</span>')), {controller: "user", action: "login"}, id: @login_sub%></li>
-                    <li><a class="gn-icon gn-icon-photoshop smoothScroll" href="#contact">Contact</a></li>
-                    <li><a class="gn-icon gn-icon-download" href="http://www.eztroubleshooter.com">EZ Troubleshooter</a></li>
-                    <li><%= link_to (raw('<i class="gn-icon gn-icon-photoshop"></i><span>Help</span>')), {controller: "user", action: "login"}, id: @help %></li>
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-sign-in"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Log In</span>')), {controller: "user", action: "login"}, id: @login_sub%></li>
+
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-envelope"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Contact</span>')), "#contact", id: @contact_sub, class: "smoothScroll"%></li>
+
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-desktop"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    EZ Troubleshooter site</span>')), "http://www.eztroubleshooter.com", id: @ezsite_sub%></li>
+
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-question-circle"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Help</span>')), {controller: "user", action: "login"}, id: @help_sub%></li>
+                    
                   </ul>
                 </li>               
             </div><!-- /gn-scroller -->
@@ -52,8 +68,8 @@
       </ul>      
     </div><!-- /container -->
 
-    <%= javascript_include_tag "/assets/javascripts/classie.js" %>
-    <script src="/assets/javascripts/gnmenu.js"></script>
+    <%= javascript_include_tag('classie.js') %>
+    <%= javascript_include_tag('gnmenu.js') %>
 
     <script>
       new gnMenu( document.getElementById( 'gn-menu' ) );
@@ -63,11 +79,5 @@
     <%= yield %> 
   </div>
   <br><br>
-
-  
-
-</div> <!-- /container -->
-
-
 </body>
 </html>
