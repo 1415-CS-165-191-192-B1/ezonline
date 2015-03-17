@@ -102,6 +102,7 @@
 		overflow: hidden;
 		width: 60px;
 		background: transparent;
+		p{background: transparent;}
 		-webkit-transform: translateX(-60px);
 		-moz-transform: translateX(-60px);
 		transform: translateX(-60px);
@@ -321,8 +322,8 @@ input.gn-search:focus {
 }
 
 .gn-menu-wrapper.gn-open-all .gn-submenu li {
-		font-size: 16px;
-		height: 60px
+		font-size: 13px;
+		height: 58px
 }
 
 .name {
