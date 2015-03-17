@@ -6,7 +6,7 @@
 		box-sizing: border-box;
 }
 
-@import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900);
 
 /* Icomoon.com */
 
@@ -14,15 +14,14 @@
 .gn-menu-main ul {
 		margin: 0;
 		padding: 0;
-		background: #FFFFFF;
+		background: #0A0A0A;
 		color: #5f6f81;
 		list-style: none;
 		text-transform: none;
 		font-weight: 300;
-		font-family: 'Ruda', sans-serif;
+		font-family: 'Lato' Arial, sans-serif;
 		line-height: 60px;
 		z-index: 2;
-		border-bottom: 1px solid #c6d0da;
 }
 
 .gn-menu-main {
@@ -37,7 +36,7 @@
 .gn-menu-main a {
 		display: block;
 		height: 100%;
-		color: #5f6f81;
+		color: white;
 		text-decoration: none;
 		cursor: pointer;
 }
@@ -73,7 +72,13 @@
 .gn-menu-main > li:last-child {
 		float: right;
 		border-right: none;
-		border-left: 1px solid #c6d0da;
+		p {border-left: 1px solid #c6d0da;}
+}
+
+.gn-menu-main > li:nth-last-child(2) {
+		float: right;
+		border-right: none;
+		p {border-left: 1px solid #c6d0da;}
 }
 
 .gn-menu-main > li > a {
@@ -113,7 +118,6 @@
 }
 
 .gn-menu {
-		border-bottom: 1px solid #c6d0da;
 		text-align: left;
 		font-size: 18px;
 }
@@ -131,8 +135,17 @@
 		transition: height 0.3s;
 }
 
+.mainmenu{
+		font-size: 23px;
+}
+
+.mainmenu2{
+		background: #db581f;
+}
+
 .gn-submenu li a {
-		color: black
+		background: #595959;
+		color: white
 }
 
 input.gn-search {
@@ -286,7 +299,7 @@ input.gn-search:focus {
 .no-touch .gn-icon-menu:hover::before,
 .no-touch .gn-icon-menu.gn-selected:hover::before {
 		background: white;
-		box-shadow: 0 3px #5f6f81, 0 -6px white, 0 -9px #151515, 0 -12px white;
+		box-shadow: 0 3px #5f6f81, 0 -6px white, 0 -9px #5f6f81, 0 -12px white;
 }
 
 .gn-icon-menu.gn-selected::before {
@@ -309,10 +322,11 @@ input.gn-search:focus {
 
 .gn-menu-wrapper.gn-open-all .gn-submenu li {
 		font-size: 16px;
-		height: 50px
+		height: 60px
 }
 
 @media screen and (max-width: 422px) { 
+	.gn-menu-main > li:last-child { display: none; }
 	.gn-menu-wrapper.gn-open-all {
 			-webkit-transform: translateX(0px);
 			-moz-transform: translateX(0px);
@@ -323,4 +337,6 @@ input.gn-search:focus {
 	.gn-menu-wrapper.gn-open-all .gn-scroller {
 			width: 130%
 	}
+
+	
 }
