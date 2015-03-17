@@ -1,0 +1,55 @@
+%h1 Notifications
+%h5 The following is a list of users to whom you assigned files and are finished editing.
+%br/
+
+.row
+  .col-lg-12
+    .panel.panel-default
+      / /.panel-heading
+      .panel-body
+        .table-responsive
+          %table#show.table.table-hover
+            %thead
+              %tr
+                %th Notifications
+                %th Date Received
+                / <th>Mark</th>
+                %th
+                  Action
+            %tbody
+              - unless @notifs.empty?
+                /
+                  <haml_loud> form_for :notif_id, url: delete_notifs_user_index_path,
+                  html: {class: "nifty_form"} do |n| </haml_loud><haml_block>
+                - @notifs.each do |notif|
+                  %tr
+                    %td
+                      %strong= notif[:username] + " "
+                      completed
+                      %strong
+                        "#{notif[:docname]}".
+                    %td
+                      = notif[:date].to_s(:long)
+                    /
+                      <td>
+                      <haml_loud> check_box_tag 'notif_ids[]', notif[:id] </haml_loud>
+                      </td>
+                    %td
+                      - unless notif[:responded]
+                        = button_to "Respond",
+                          respond_user_path(notif[:id]),
+                          :method => :get
+                      - else
+                        = button_to "Delete",
+                          delete_notif_user_path(notif[:id]),
+                          :method => :get
+                /
+                  <tr>
+                  <td colspan = "2"></td>
+                  <td><haml_loud> n.submit 'Delete' </haml_loud></td>
+                  </tr>
+              / form_for
+              / unless
+        / /.table-responsive
+      / /.panel-body
+    / /.panel

@@ -13,9 +13,6 @@
  *= require bootstrap.min
  *= require style-responsive
  *= require style
- *= require component
- *= require demo
- *= require normalize
  *= require table-responsive
  *= require to-do
  *= require zabuto_calendar
