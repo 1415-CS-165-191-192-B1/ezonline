@@ -438,7 +438,16 @@ ul.sidebar-menu li a.active i {
     margin-left: 210px;
 }
 
-.header2, .footer {
+.footer {
+    min-height: 60px;
+    padding: 0 15px;
+    width: 85%;
+    z-index = 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header2 {
     min-height: 60px;
     padding: 0 15px;
 }

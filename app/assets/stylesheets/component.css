@@ -325,6 +325,14 @@ input.gn-search:focus {
 		height: 60px
 }
 
+.name {
+		padding: 0 30px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-weight: bold;
+		color: white;
+}
+
 @media screen and (max-width: 486px) { 
 	.gn-menu-main > li:last-child { display: none; }
 	.gn-menu-wrapper.gn-open-all {

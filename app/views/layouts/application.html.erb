@@ -12,10 +12,6 @@
 
   <title><%= full_title(yield(:title)) %></title>
 
-  <!-- Custom Fonts -->
-  <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -28,121 +24,82 @@
   <a href="#Top"></a>
 </head>
 <body>
+    <div  class="container">
+      <ul id="gn-menu" class="gn-menu-main">
+        <li class="gn-trigger">
+          <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+          <nav class="gn-menu-wrapper">
+            <div class="gn-scroller">
+              <ul class="gn-menu">                
+                <li>
+                  <ul class="gn-submenu">
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-dashboard"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Dashboard</span>')), {controller: "user", action: "admin_index"}, id: @dashboard_sub%></li>
 
-<section id="container" >
-      <!-- **********************************************************************************************************************************************************
-      TOP BAR CONTENT & NOTIFICATIONS
-      *********************************************************************************************************************************************************** -->
-      <!--header start-->
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-users"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Authorized Users</span>')), {controller: "user", action: "show"}, id: @show_sub%></li>
 
-    <header class="header2 black-bg">
-		<div class="sidebar-toggle-box">
-			<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-		</div>
-        
-        <!--logo start-->
-        <a href="u_index" class="logo"><b>EZ Online</b></a>
-        <!--logo end-->
-        <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-            <ul class="nav pull-right top-menu">
-               
-              
-            </ul>
-            <!--  notification end -->
-        </div>
-        <div class="top-menu">
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-user-plus"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Pending Authentication Requests</span>')), {controller: "user", action: "requests_list"}, id: @requests_sub%></li>
 
-            <ul class="nav pull-right top-menu">
-                 <li>
-                    <a class="contact smoothScroll" href="/u_contact">
-                        <i class="fa fa-envelope"></i>                            
-                    </a>
-                </li>                
-                <li><%= link_to "Log Out", {controller: "user", action: "logout"}, id: @logout, class: "login" %></li>
-            </ul>
-        </div>
-    </header>
-    <!--header end-->  
-      
-    <!-- **********************************************************************************************************************************************************
-    MAIN SIDEBAR MENU
-    *********************************************************************************************************************************************************** -->
-    <!--sidebar start-->
-    <aside>
-        <div id="sidebar"  class="nav-collapse ">
-            <!-- sidebar menu start-->
-            <ul class="sidebar-menu" id="nav-accordion">
-                <h5 class="centered"><%= @name %></h5>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-dashboard"></i><span>Dashboard</span></a>')), {controller: "user", action: "index"}, id: @user_index %>
-                </li>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-desktop"></i><span>Authorized Users</span></a>')), {controller: "user", action: "show"}, id: @user_show %>
-                </li>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-cogs"></i><span>Pending User Requests</span></a>')), {controller: "user", action: "requests_list"}, id: @user_request %>
-                </li>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-book"></i><span>Add New Google Doc File</span></a>')), {controller: "file", action: "new"}, id: @file_new %>
-                </li>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-tasks"></i><span>All Google Doc Snippets</span></a>')), {controller: "file", action: "show"}, id: @file_show %>
-                </li>
-                <li class="sub-menu">
-                    <%= link_to (raw('<i class="fa fa-envelope"></i><span>Contact</span></a>')), {controller: "user", action: "contact"}, id: @user_contact %>
-                </li>
-            </ul>
-            <!-- sidebar menu end-->
-        </div>
-    </aside>
-    <!--sidebar end-->
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-tasks"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Google Docs and Snippets</span>')), {controller: "file", action: "show"}, id: @filehow_sub%></li>
 
-    <br/><br/><br/><br/><br/>
-      
-    <div id="page-wrapper">
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-desktop"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    EZ Troubleshooter site</span>')), "http://www.eztroubleshooter.com", id: @ezsite_sub%></li>
 
-       <%= render :partial => "plash", :locals => {:flash => flash} %>
-        <!--<div class="container">    
-          <%= flash_messages %>
-        </div>-->
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-question-circle"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Help</span>')), {controller: "user", action: "login"}, id: @help_sub%></li>
 
-    	<div class="container-fluid">
-    		<div class="row">
-    		  <div class="col-lg-12">
-    		    <%= yield %>
-    				<footer>
-    					<div class="col-lg-12 text-center">
-    						<a href="#top" class="smoothScroll"> Back to top</a>
-    						<hr class="small">
-    						<p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
-    						<br/><br/><br/>
-    					</div>
-    				</footer>        
-    		  	</div>
-    		</div>
-    	</div>
-    </div>  
+                    <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
+                    <i class="fa fa-sign-out"></i><span>
+                    &emsp;&nbsp;&nbsp;
+                    Log Out</span>')), {controller: "user", action: "logout"}, id: @logout_sub%></li>
+                    
+                  </ul>
+                </li>               
+            </div><!-- /gn-scroller -->
+          </nav>
+        </li>
+        <li><%= link_to "EZ ONLINE".html_safe, {controller: "user", action: "home"}, id: @home, class: "mainmenu" %></li>        
+        <li><%= link_to "<span>Log Out</span>".html_safe, {controller: "user", action: "logout"}, id: @logout, class: "mainmenu2" %></li>
+        <li><div class = "name"><span><%= @name %></span></div></li>
+      </ul>      
+    </div><!-- /container -->
 
-  </section>
- <!-- /container -->
-  <script>
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+    <%= javascript_include_tag('classie.js') %>
+    <%= javascript_include_tag('gnmenu.js') %>
 
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
+    <script>
+      new gnMenu( document.getElementById( 'gn-menu' ) );
     </script>
+
+  <div class = "display2">
+    <br/><br/><br/><br/><br/>
+    <%= yield %> 
+  </div>
+  <br><br>
 </body>
+
+<footer>
+    <div class="col-lg-10 col-lg-offset-1 text-center">
+      <a href="#top" class="smoothScroll"> Back to top</a>
+      <hr class="small">
+      <p class="text-muted">Copyright &copy; <%= site_name %> <%= Time.now.year %></p>
+      <br/><br/><br/>
+    </div>
+</footer>
+
 </html>
