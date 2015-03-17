@@ -25,14 +25,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'google-api-client', :require => false
 gem 'rest-client', :require => false
-gem 'vimeo', '~> 1.5.4'
-
 gem 'sidekiq'
 gem 'launchy'
-
 gem 'json'
-gem 'haml'
-
+gem 'vimeo', '~> 1.5.4'
 gem 'gemcutter', '~> 0.7.1'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require smoothscroll
+//= require gnmenu
+//= require classie
+//= require modernizr.custom
 //= require jquery.dcjqaccordion.2.7
 //= require jquery.nicescroll
 //= require jquery-ui-1.9.2.custom.min
