@@ -61,6 +61,13 @@ class UserController < ApplicationController
 	end
 
 	def contact
+		user = User.find(session[:user_id])
+		if !user.admin
+			render layout: "application_user"
+			return
+		else
+			render layout: "application"
+		end
 	end
 
 	def home	# set as root		
