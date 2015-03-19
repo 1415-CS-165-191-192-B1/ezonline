@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-19 22:38+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../README.rdoc:1
+msgid "== README"
+msgstr ""
+
+#: ../README.rdoc:3
+msgid "* Project Name:\n"
+"  EZ Troubleshooter File Repository"
+msgstr ""
+
+#: ../README.rdoc:6
+msgid "* Collaborators:\n"
+"  1. Garcia, Jose Daniel\n"
+"  2. Jalique, Ricardo\n"
+"  3. Nazario, Michelle\n"
+"  4. Yee, Christiane"
+msgstr ""
+
+#: ../README.rdoc:13
+msgid "* Ruby version\n"
+"  * ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-darwin13.0]"
+msgstr ""
+
+#: ../README.rdoc:16
+msgid "* Rails version\n"
+"  * Rails 4.1.5"
+msgstr ""
+
+#: ../README.rdoc:19
+msgid "* PostgreSQL version\n"
+"  * postgres (PostgreSQL) 9.3.5"
+msgstr ""
+
+#: ../README.rdoc:22
+msgid "* System dependencies"
+msgstr ""
+
+#: ../README.rdoc:24
+msgid "* Configuration"
+msgstr ""
+
+#: ../README.rdoc:26
+msgid "* Database creation"
+msgstr ""
+
+#: ../README.rdoc:28
+msgid "* Database initialization"
+msgstr ""
+
+#: ../README.rdoc:30
+msgid "* How to run the test suite"
+msgstr ""
+
+#: ../README.rdoc:32
+msgid "* Services (job queues, cache servers, search engines, etc.)"
+msgstr ""
+
+#: ../README.rdoc:34
+msgid "* Deployment instructions"
+msgstr ""
+
+# ApplicationController#redirect_to
+#: ../app/controllers/application_controller.rb:7
+msgid "for debug purposes"
+msgstr ""
+
+# ApplicationController#update_session
+#: ../app/controllers/application_controller.rb:22
+msgid "save credentials (after login, refresh token)"
+msgstr ""
+
+# ApplicationController#authenticate_admin
+#: ../app/controllers/application_controller.rb:48
+msgid "called only when user is logged in, restrict access to admin"
+msgstr ""
+
+# ApplicationController#save_login_state
+#: ../app/controllers/application_controller.rb:63
+msgid "skip login if already logged in, initialize google client with existing credentials"
+msgstr ""
+
+# ApplicationController#save_vlogin_state
+#: ../app/controllers/application_controller.rb:74
+msgid "initialize vimeo client with existing credentials"
+msgstr ""
+
+# FileController#fetch
+#: ../app/controllers/file_controller.rb:16
+msgid "called by new to get gdoc from form"
+msgstr ""
+
+# FileController#show
+#: ../app/controllers/file_controller.rb:74
+msgid "organizes the docs and their corresponding snippets to hash of arrays"
+msgstr ""
+
+# FileController#init_vars
+#: ../app/controllers/file_controller.rb:118
+msgid "initialize needed variables in edit view"
+msgstr ""
+
+# FileController#fetch_videos
+#: ../app/controllers/file_controller.rb:147
+msgid "get all videos associated with this file"
+msgstr ""
+
+# FileController#fetch_video
+#: ../app/controllers/file_controller.rb:172
+msgid "get video for this snippet"
+msgstr ""
+
+# FileController#refresh_videos
+#: ../app/controllers/file_controller.rb:184
+msgid "gets latest videos since login"
+msgstr ""
+
+# UserController#home
+#: ../app/controllers/user_controller.rb:65
+msgid "set as root"
+msgstr ""
+
+# UserController#authentication
+#: ../app/controllers/user_controller.rb:87
+msgid "exchange code for access token, called upon redirection from google"
+msgstr ""
+
+# UserController#verify_credentials
+#: ../app/controllers/user_controller.rb:95
+msgid "after user logs in, store state in session"
+msgstr ""
+
+# UserController#requests_list
+#: ../app/controllers/user_controller.rb:159
+msgid "lists all requests received by app"
+msgstr ""
+
+# UserController#destroy
+#: ../app/controllers/user_controller.rb:163
+msgid "add user from requests - destroy from requests"
+msgstr ""
+
+# UserController#respond
+#: ../app/controllers/user_controller.rb:224
+msgid "def delete_notifs\n"
+"notif_ids = params[:notif_ids]\n"
+"if notif_ids\n"
+"	notif_ids.each do |id|\n"
+"		Notif.delete(id)\n"
+"	end\n"
+"	flash[:success] = 'Successfully deleted selected notifications.'\n"
+"else\n"
+"	flash[:notice] = 'You did not select any notification to delete.'\n"
+"end\n"
+"redirect_to :back\n"
+"end"
+msgstr ""
+
+# ApplicationHelper#full_title
+#: ../app/helpers/application_helper.rb:34
+msgid "Returns the full title on a per-page basis.\n"
+"No need to change any of this we set page_title and site_name elsewhere."
+msgstr ""
+
+# VimeoModel.save_latest
+#: ../app/models/vimeo_model.rb:36
+msgid "called upon login or refresh, get latest 5 pages"
+msgstr ""
+
+# GoogleClient.reset
+#: ../lib/google_client.rb:7
+msgid "used to reset client instance"
+msgstr ""
+
+# GoogleClient.set_access
+#: ../lib/google_client.rb:27
+msgid "initialize client with existing credentials"
+msgstr ""
+
+# GoogleClient.authorize
+#: ../lib/google_client.rb:34
+msgid "redirect to google login page"
+msgstr ""
+
+# GoogleClient.fetch_token
+#: ../lib/google_client.rb:43
+msgid "set access token"
+msgstr ""
+
+# GoogleClient.fetch_user
+#: ../lib/google_client.rb:70
+msgid "get authenticated users's credentials"
+msgstr ""
+
+# GoogleClient.fetch_file
+#: ../lib/google_client.rb:75
+msgid "get google doc given exact title"
+msgstr ""
+
+# GoogleClient.download_file
+#: ../lib/google_client.rb:82
+msgid "download google doc content"
+msgstr ""
+

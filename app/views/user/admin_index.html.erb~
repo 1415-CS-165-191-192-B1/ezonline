@@ -1,0 +1,58 @@
+<h1>Welcome to your Dashboard!</h1><br/>
+<h3>Notifications</h3>
+<div class="row">
+  <div class="col-lg-12">
+      <div class="panel panel-default">
+          
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+              <div class="table-responsive">
+                  <table id="show" class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Notifications</th>
+                          <th>Date Received</th>
+                          <th>Mark</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% unless @notifs.empty? %>  
+                          <%= form_for :notif_id, url: delete_notifs_user_index_path, 
+                                      html: {class: "nifty_form"} do |n| %>
+                         		<% @notifs.each do |notif| %>
+                        			<tr>
+                        				<td>
+                        					<strong><%= notif[:username] + " " %></strong>
+                        					completed<strong> "<%= notif[:docname] %>".</strong>
+                        				</td>
+                                <td>
+                                  <%= notif[:date].to_s(:long) %>
+                                </td>
+                                <td>
+                                  <%= check_box_tag 'notif_ids[]', notif[:id] %>
+                                </td>
+                        			</tr>
+                        	 	<% end %>
+
+                            <tr>
+                              <td colspan = "2"></td>
+                              <td><%= n.submit 'Delete' %></td>
+                            </tr>
+                      	  
+                          <% end %> <!-- form_for -->
+                        <% end %> <!-- unless -->
+
+                      </tbody>
+                  </table>
+              </div>
+              <!-- /.table-responsive -->
+          </div>
+          <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+  </div>
+</div>
+
+
+
+

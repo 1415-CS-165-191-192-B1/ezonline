@@ -1,0 +1,49 @@
+<h1>Tasklist:</h1>
+
+<div class="panel-body">
+  <div class="table-responsive">
+      <table id="requests" class="table table-hover">
+
+        <% unless @files.empty? %>
+           	<thead>
+              <tr>
+                  <th>Title</th>                              
+              </tr>
+	        </thead>
+	        <tbody>
+              <% @files.each do |doc, snippets| %>
+         	    <tr>
+                  <td><strong><%= doc.docname %></strong></td>
+                  <td><button>Show/Hide Details</button></td>
+                  <td>
+                    <%= button_to "Notify as Done",
+                                  notify_user_path(doc.doc_id),
+                                  :method => :get,
+                                  data: { confirm: 'You are about to notify an admin that this file has thoroughly been edited.' }
+                    %>        
+                  </td>
+                </tr>       
+                <% snippets.each do |snippet| %>
+                  <tr>
+                    <td colspan="2"><%= snippet.title %></td>
+                    <td colspan="2">
+                      <%= button_to "Show History",
+                                    history_file_path(snippet),
+                                    :method => :get
+                      %>                                  
+                  </tr>
+                <% end %>
+                <tr>
+                  <td colspan="4" bgcolor="#009966"></td>
+                </tr>
+              <% end %>
+            </tbody>
+
+        <% else %>
+            <h3>You have no assigned files yet.</h3> 	
+        <% end %>
+      </table>
+  </div>
+  <!-- /.table-responsive -->
+</div>
+<!-- /.panel-body -->
