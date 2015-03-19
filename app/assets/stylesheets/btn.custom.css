@@ -230,17 +230,37 @@ body {
 }
 
 footer {
+    display: block;
+    min-height: 60px;
+    width: auto%;
+    z-index = 0;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.footer2 {
+    display: block;
     min-height: 60px;
     padding: 0 15px;
-    width: 100%;
+    width: auto;
     z-index = 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 280px;
+    margin-right: 20px;
+}
+
+.plash {
+    padding-top: 50px;
 }
 
 @media screen and (max-width: 360px) { 
     .text-vertical-center { display: none; }
     .header { display: none; }
+}
+
+@media screen and (max-width: 486px) { 
+    .footer2 {
+        margin-left: 20px;
+    }
 }
 
 

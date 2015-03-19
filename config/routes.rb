@@ -15,6 +15,7 @@ get 'user/contact' => 'user#contact'
 get 'file/new' => 'file#new'
 get 'file/show' => 'file#show'
 
+get 'file/voptions' => 'file#voptions'
 get 'file/refresh_videos' => 'file#refresh_videos'
 
 get 'vauthentication' => 'user#vauthentication'

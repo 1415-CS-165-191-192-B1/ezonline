@@ -1,5 +1,29 @@
+<div>
+<h1 align = center>Google Doc Options </h1>
+<h5 align = center>Use the options below to add, edit, and compile your Google Docs files.</h5>
+<br/>
+<br/>
+<h1>Add a Google Doc</h1>
 
-<h1>EZ Online Files</h1><br />
+<%= form_for :title, url: fetch_file_path, html: {class: "nifty_form"} do |c| %>
+  <%= c.text_field :text, value: 'Please type in the exact title', size: 50 %>
+
+  <!--
+  <% if session[:vimeo_access] %>
+    <%= radio_button_tag(:videos, "available") %>
+      <%= label_tag(:videos_available, "Fetch videos from Vimeo") %>
+      <%= radio_button_tag(:videos, "unavailable") %>
+      <%= label_tag(:videos_unavailable, "Add videos later") %> 
+  <% end %>
+  -->
+
+  <%= c.submit 'Add' %>
+<% end %>
+</div>
+
+
+<br /><br />
+<h1>All Google Docs and Snippets</h1>
 
 <div class="row">
   <div class="col-lg-12">

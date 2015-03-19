@@ -111,10 +111,32 @@
 		transition: transform 0.3s, width 0.3s;
 }
 
+.gn-menu-wrapper2 {
+		position: fixed;
+		top: 60px;
+		bottom: 0;
+		left: 0;
+		width: 60px;
+		background: transparent;
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
+		-webkit-transition: -webkit-transform 0.3s, width 0.3s;
+		-moz-transition: -moz-transform 0.3s, width 0.3s;
+		transition: transform 0.3s, width 0.3s;
+}
+
 .gn-scroller {
 		position: absolute;
 		overflow-y: scroll;
 		width: 370px;
+		height: 100%;
+}
+
+.gn-scroller2 {
+		background: #595959;
+		position: absolute;
+		width: 260px;
 		height: 100%;
 }
 
@@ -136,6 +158,16 @@
 		transition: height 0.3s;
 }
 
+.gn-submenu2 li {
+	background: transparent;
+		font-size: 13px;
+		height: 58px;
+		width: 260px;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		transition: height 0.3s, width 0.2s;
+}
+
 .mainmenu{
 		font-size: 23px;
 }
@@ -145,6 +177,11 @@
 }
 
 .gn-submenu li a {
+		background: #595959;
+		color: white
+}
+
+.gn-submenu2 li a {
 		background: #595959;
 		color: white
 }
@@ -326,6 +363,28 @@ input.gn-search:focus {
 		height: 58px
 }
 
+.gn-menu-wrapper2.gn-open-all .gn-submenu2 li {
+		font-size: 13px;
+		height: 58px;
+		width: 260px;
+}
+
+.gn-menu-wrapper2.gn-open-all,
+.gn-menu-wrapper2.gn-open-part {
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
+}
+
+.gn-menu-wrapper2.gn-open-all {
+		width: 340px
+}
+
+.gn-menu-wrapper2.gn-open-all .gn-submenu2 li {
+		font-size: 13px;
+		height: 58px
+}
+
 .name {
 		padding: 0 30px;
 		text-transform: uppercase;
@@ -345,9 +404,39 @@ input.gn-search:focus {
 
 	.gn-menu-wrapper.gn-open-all .gn-scroller {
 			width: 130%
+	}
+
+	.gn-menu-wrapper2.gn-open-all {
+			-webkit-transform: translateX(0px);
+			-moz-transform: translateX(0px);
+			transform: translateX(0px);
+			width: 100%;
+	}
+
+	.gn-scroller2 {
+			background: transparent;
+	}
+
+	.gn-menu-wrapper2 {
+			overflow: hidden;
+			width: 100%;
+	}
+
+	.gn-submenu2 li{
+			overflow: hidden;
+			height: 0;
+	}
+
+	.gn-menu-wrapper2.gn-open-all .gn-scroller2 {
+			width: 130%
 	}	
+
+	.gn-menu-wrapper2.gn-open-all .gn-submenu2 li {
+			width: 130%
+	}
+
 }
 
-@media screen and (max-width: 360px) { 
+@media screen and (max-width: 369px) { 
 	.gn-menu-main > li:nth-last-child(2) { display: none; }
 }

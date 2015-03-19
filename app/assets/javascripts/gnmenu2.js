@@ -1,5 +1,5 @@
 /**
- * gnmenu.js v1.0.0
+ * gnMenu2.js v1.0.0
  * http://www.codrops.com
  *
  * Licensed under the MIT license.
@@ -19,15 +19,15 @@
 		return check;
 	}
 
-	function gnMenu( el, options ) {	
+	function gnMenu2( el, options ) {	
 		this.el = el;
 		this._init();
 	}
 
-	gnMenu.prototype = {
+	gnMenu2.prototype = {
 		_init : function() {
 			this.trigger = this.el.querySelector( 'a.gn-icon-menu' );
-			this.menu = this.el.querySelector( 'nav.gn-menu-wrapper' );
+			this.menu = this.el.querySelector( 'nav.gn-menu-wrapper2' );
 			this.isMenuOpen = true;
 			this.eventtype = mobilecheck() ? 'touchstart' : 'click';
 			this._initEvents();
@@ -87,6 +87,6 @@
 	}
 
 	// add to global namespace
-	window.gnMenu = gnMenu;
+	window.gnMenu2 = gnMenu2;
 
 } )( window );

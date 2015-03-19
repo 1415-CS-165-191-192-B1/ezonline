@@ -9,4 +9,5 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( btn.custom.css )
 Rails.application.config.assets.precompile += %w( classie.js )
 Rails.application.config.assets.precompile += %w( gnmenu.js )
+Rails.application.config.assets.precompile += %w( gnmenu2.js )
 

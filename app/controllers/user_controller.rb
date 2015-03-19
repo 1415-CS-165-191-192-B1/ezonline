@@ -5,7 +5,7 @@ class UserController < ApplicationController
 	before_action :save_login_state, :only => [:login]	# if user already logged in, redirect somewhere else
 	before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
 
-	def index	
+	def index		
 		user = User.find(session[:user_id])
 		if user.admin
 			redirect_to admin_index_user_index_path
@@ -17,6 +17,8 @@ class UserController < ApplicationController
 		tasks = Task.where(user_id: user.user_id)
 		@files = Hash.new # hash of doc => snippets
 		@details = Hash.new
+
+		render layout: "application_user"
 
 		unless tasks.nil?
 			tasks.each do |task|

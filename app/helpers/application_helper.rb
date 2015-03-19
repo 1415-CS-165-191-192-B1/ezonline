@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def site_name
     # Change the value below between the quotes.
-    "EZOnline"
+    "EZ Online"
   end
 
   def site_url

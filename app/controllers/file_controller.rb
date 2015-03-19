@@ -11,6 +11,9 @@ class FileController < ApplicationController
 
   def new
   end
+
+  def voptions
+  end
   
   def fetch   # called by new to get gdoc from form
     begin

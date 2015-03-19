@@ -1,0 +1,21 @@
+<h1 align = center>Vimeo Options</h1>
+<h5 align = center>This module allows you to Log in to your Vimeo account and refresh your videos list.</h5>
+<br/>
+
+<center>
+<% unless session[:vimeo_token] and session[:vimeo_secret] %>
+  <%= button_to "Login to Vimeo", 
+                vlogin_user_path,
+                method: :get, 
+                form_class: "new-thing" %>
+<% else %>
+  <h4>You are already logged in to Vimeo.</h4>
+  <h4>All associated videos will be added automatically.</h4>
+  <%= button_to "Refresh videos list", 
+                file_refresh_videos_path,
+                method: :get, 
+                form_class: "new-thing" %>
+<% end %>
+</center>
+ 
+

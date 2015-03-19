@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require smoothscroll
 //= require gnmenu
+//= require gnmenu2
 //= require classie
 //= require modernizr.custom
 //= require jquery.dcjqaccordion.2.7
