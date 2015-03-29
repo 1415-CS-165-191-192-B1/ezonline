@@ -88,8 +88,7 @@ class UserController < ApplicationController
 	end
 
 	def login
-		render layout: "home_temp"
-		GoogleClient::authorize	# redirect to google login
+		redirect_to GoogleClient::authorize	# redirect to google login
 	end
 
 	def authentication	# exchange code for access token, called upon redirection from google

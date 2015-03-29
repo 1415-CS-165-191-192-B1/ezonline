@@ -31,8 +31,7 @@ class GoogleClient
 	end
 
 	def self.authorize	# redirect to google login page
-		uri = build_auth_uri
-		Launchy.open(uri)
+		build_auth_uri
 	end
 
 	def self.build_auth_uri
