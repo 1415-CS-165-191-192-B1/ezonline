@@ -4,8 +4,8 @@
 <%= form_for :approved, url: send_response_user_path, html: {class: "nifty_form"} do |c| %>
   <%= hidden_field_tag :notif_id, @notif_id %><br/>
 
-  	<h4><%= radio_button_tag(:approved, true, true) %>
-      	<%= c.label(:message, "This task is complete.") %><br />
+    <h4><%= radio_button_tag(:approved, true, true) %>
+        <%= c.label(:message, "This task is complete.") %><br />
     </h4>
 
     <h4><%= radio_button_tag(:approved, false) %>

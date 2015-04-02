@@ -97,10 +97,11 @@
     </script>
 
   <div class = "display2">
-    <br/><br/><br/><br/>    <%= yield %> 
+    <br/>
+    <%= render :partial => "plash", :locals => {:flash => flash} %>
+    <br/>    <%= yield %> 
   </div>
   <br><br>
-
 
 <div class = "footer2">
     <div class="col-lg-10 col-lg-offset-1 text-center">

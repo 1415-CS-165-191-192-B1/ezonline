@@ -10,14 +10,14 @@
       <table id="requests" class="table table-hover">
 
         <% unless @files.empty? %>
-           	<thead>
+             <thead>
               <tr>
                   <th>Title</th>                              
               </tr>
-	        </thead>
-	        <tbody>
+          </thead>
+          <tbody>
               <% @files.each do |doc, snippets| %>
-         	    <tr>
+               <tr>
                   <td colspan="2"><strong><%= doc.docname %></strong></td>
                   <td colspan="2"><button>Show/Hide Details</button></td>
               </tr>
@@ -54,7 +54,7 @@
             </tbody>
 
         <% else %>
-            <h3>You have no assigned files yet.</h3> 	
+            <h3>You have no assigned files yet.</h3>   
         <% end %>
       </table>
   </div>

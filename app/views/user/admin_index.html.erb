@@ -22,12 +22,12 @@
                         <% unless @notifs.empty? %>  
                           <!--<%= form_for :notif_id, url: delete_notifs_user_index_path, 
                                       html: {class: "nifty_form"} do |n| %>-->
-                         		<% @notifs.each do |notif| %>
-                        			<tr>
-                        				<td>
-                        					<strong><%= notif[:username] + " " %></strong>
-                        					completed<strong> "<%= notif[:docname] %>".</strong>
-                        				</td>
+                             <% @notifs.each do |notif| %>
+                              <tr>
+                                <td>
+                                  <strong><%= notif[:username] + " " %></strong>
+                                  completed<strong> "<%= notif[:docname] %>".</strong>
+                                </td>
                                 <td>
                                   <%= notif[:date].to_s(:long) %>
                                 </td>
@@ -47,13 +47,13 @@
                                     %>
                                   <% end %>   
                                 </td>
-                        			</tr>
-                        	 	<% end %>
+                              </tr>
+                             <% end %>
                             <!--<tr>
                               <td colspan = "2"></td>
                               <td><%= n.submit 'Delete' %></td>
                             </tr>-->
-                      	  
+                          
                           <% end %> <!-- form_for -->
                         <% end %> <!-- unless -->
 

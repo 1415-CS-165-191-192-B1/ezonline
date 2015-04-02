@@ -16,61 +16,9 @@ class FileController < ApplicationController
   end
   
   def fetch   # called by new to get gdoc from form
-    begin
-      refreshed ||= false
-
-      #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
-      search_result = GoogleClient::fetch_file params[:title][:text].squish unless params[:title][:text].blank?
-      if search_result.nil?
-        flash[:notice] = "Please enter a title."
-        redirect_to :back
-      elsif search_result.status == 200
-        file = search_result.data['items'].first
-
-        unless file.nil?
-          download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
-          link = file['alternateLink']
-          
-          if download_url
-            result = GoogleClient::download_file download_url
-            if result.status == 200
-
-              type, message = Filer::parse result.body, file.id, file.title, link, session[:user_id]
-              #type, message = FilerParse.perform_async result.body, file.id, file.title, link, session[:user_id]
-              flash[type] = message
-              redirect_to file_index_path
-            
-            else
-              flash[:error] = "An error occurred: #{result.data['error']['message']}"
-              redirect_to new_file_path
-            end # end if result.status == 200
-          end # end if download_url
-
-        else # unless
-          flash[:error] = "Sorry, EZ Online cannot find a Google Doc with that title."
-          redirect_to new_file_path
-        end # end unless 
-
-      elsif search_result.status == 401 # The access token is either expired or invalid.
-        GoogleClient::refresh_token
-        update_session GoogleClient::get_auth
-        raise
-
-      else
-        print "**********RESULT STATUS*********** " + search_result.status
-        flash[:error] = "An error occured. Please try again later."
-        redirect_to new_file_path   
-      end # end outermost if
-
-    rescue Exception => ex
-      unless refreshed # there was already an attempt to refresh google access token
-        refreshed = true
-        retry
-      end
-        print "************ERROR*************" + ex.message
-        flash[:error] = "An error occured. Please try again later."
-        redirect_to new_file_path   
-    end
+    type, message, url = GoogleClient::add_file(session[:user_id], params[:title][:text])
+    flash[type] = message
+    redirect_to url.nil? ? :back : eval(url) # allows easy redirection to returned string path
   end
 
   def show  # organizes the docs and their corresponding snippets to hash of arrays
@@ -100,10 +48,7 @@ class FileController < ApplicationController
   end
 
   def update
-  	commit = Commit.new
-  	commit.user_id = session[:user_id]
-  	commit.snippet_id = params[:snippet_id]
-  	commit.commit_text = params[:text][:commit_text]
+  	commit = Commit.new(user_id: session[:user_id], snippet_id: params[:snippet_id], commit_text: params[:text][:commit_text])
 
     if commit.valid?
   	  commit.save
@@ -227,11 +172,7 @@ class FileController < ApplicationController
       end # end if old_task is not nil
 
       # create new task
-      task = Task.new
-      task.admin_id = session[:user_id]
-      task.user_id = user_id
-      task.doc_id = doc_id
-      task.save
+      task = Task.new(admin_id: session[:user_id], user_id: user_id, doc_id: doc_id)
 
       flash[:success] = "Successfully assigned file to " + user.username
       redirect_to file_index_path
@@ -240,8 +181,6 @@ class FileController < ApplicationController
     end # end if user_id is 0
      
   end # end method save_task
-
-
 
 
 end

@@ -12,9 +12,6 @@ get 'user/show' => 'user#show'
 get 'user/req' => 'user#requests_list'
 get 'user/contact' => 'user#contact'
 
-get 'file/new' => 'file#new'
-get 'file/show' => 'file#show'
-
 get 'file/voptions' => 'file#voptions'
 get 'file/refresh_videos' => 'file#refresh_videos'
 
@@ -22,8 +19,6 @@ get 'vauthentication' => 'user#vauthentication'
 get 'authentication' => 'user#authentication'
 
 get 'index' => 'user#index'
-#get 'show' => 'user#show'
-#get 'requests' => 'user#requests_list'
 
 get 'vlogin/user' => 'user#vlogin'
 post 'fetch/file' => 'file#fetch'
