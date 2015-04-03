@@ -16,9 +16,9 @@ class FileController < ApplicationController
   end
   
   def fetch   # called by new to get gdoc from form
-    type, message, url = GoogleClient::add_file(session[:user_id], params[:title][:text])
+    type, message = GoogleClient::add_file(session[:user_id], params[:title][:text])
     flash[type] = message
-    redirect_to url.nil? ? :back : eval(url) # allows easy redirection to returned string path
+    redirect_to :back
   end
 
   def show  # organizes the docs and their corresponding snippets to hash of arrays
@@ -48,28 +48,29 @@ class FileController < ApplicationController
   end
 
   def update
-  	commit = Commit.new(user_id: session[:user_id], snippet_id: params[:snippet_id], commit_text: params[:text][:commit_text])
+    saved, type, message = Commit.create_new(session[:user_id], params[:snippet_id], params[:text][:commit_text])
 
-    if commit.valid?
-  	  commit.save
-      flash[:success] = "Update saved."
-      redirect_to history_file_path(params[:snippet_id])
-    else
-      flash.now[:notice] = "Your commit was empty/too short."
-      @commit_text = commit.commit_text
+    unless saved
       init_vars   # reinitialize variables after failure in edit
+      @commit_text = params[:text][:commit_text]
+      flash.now[type] = message
       render :edit # renders edit template
+    else 
+      flash[type] = message
+  	  redirect_to history_file_path(params[:snippet_id])
     end
+    
   end
 
   def init_vars #initialize needed variables in edit view
-    @commit_id = params[:id]
-    @commit = Commit.find(@commit_id)
-    snippet = Snippet.find(@commit.snippet_id)
+    @commit = Commit.find(params[:id])
+    #snippet = Snippet.find(@commit.snippet_id)
+    snippet = @commit.snippet
     @title = snippet.title
     @video_id = snippet.video_id
-    user = User.find(@commit.user_id)
-    @username = user.username
+
+    #user = User.find(@commit.user_id)
+    @username = @commit.user.username
   end
 
   def compile
@@ -79,15 +80,9 @@ class FileController < ApplicationController
   end
 
   def delete
-    doc_id = params[:id]
-
-    doc = Doc.find_by doc_id: doc_id
-    docname = doc.read_attribute('docname')
-
-    Doc.destroy_all(:doc_id => doc_id)
-
+    docname = Doc.get_name(params[:id])
+    Doc.destroy_all(:doc_id => params[:id])
     flash[:success] = "The file '#{docname}' was successfully removed from the database."
-
     redirect_to file_index_path
   end
 
@@ -98,7 +93,6 @@ class FileController < ApplicationController
     snippets = Snippet.where(doc_id: doc_id)
 
     successes = 0
-    failures = 0
 
     snippets.each do |s|
       video_id = VimeoModel::find s.title # returns nil if none
@@ -117,14 +111,8 @@ class FileController < ApplicationController
   end
 
   def fetch_video   # get video for this snippet
-    video_id = VimeoModel::find params[:id] # search by snippet title
-
-    if VimeoModel::save params[:id], video_id
-      flash[:success] = "Successfully added video for this snippet."
-    else
-      flash[:error] = "Failed to retrieve video for this snippet." 
-    end
-
+    type, message = Video.create_new(params[:id])
+    flash[type] = message
     redirect_to request.referer
   end
 
@@ -135,7 +123,7 @@ class FileController < ApplicationController
 
   def assign
     @doc_id = params[:id]
-    doc = Doc.find_by doc_id: @doc_id
+    doc = Doc.find_by(doc_id: @doc_id)
     @docname = doc.read_attribute('docname')
 
     @users = User.all
@@ -143,44 +131,10 @@ class FileController < ApplicationController
   end
 
   def save_task
-    doc_id = params[:doc_id]
-    user_id = params[:user_id].to_i
-
-    old_task = Task.find_by doc_id: doc_id  # doc can only be assigned to one user
-
-    p old_task
-    
-    if user_id == 0
-      old_task.delete if old_task
-      flash[:success] = "Successfully unassigned file."  
-      redirect_to file_index_path
-      return
-
-    else
-      user = User.find(user_id)
-
-      if old_task # doc was previously assigned
-
-        if old_task.user_id == user.user_id
-          flash[:notice] = "File was already assigned to " + user.username
-          redirect_to file_index_path
-          return
-        else
-          old_task.delete
-        end # end if old_task user id is selected user_id
-
-      end # end if old_task is not nil
-
-      # create new task
-      task = Task.new(admin_id: session[:user_id], user_id: user_id, doc_id: doc_id)
-
-      flash[:success] = "Successfully assigned file to " + user.username
-      redirect_to file_index_path
-      return
-
-    end # end if user_id is 0
-     
-  end # end method save_task
+    type, message = Task.create_new(params[:user_id].to_i, params[:doc_id])
+    flash[type] = message
+    redirect_to file_index_path  
+  end
 
 
 end

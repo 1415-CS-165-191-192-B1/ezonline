@@ -54,7 +54,7 @@ class GoogleClient
     #auth.client_id = GoogleModel::ID
     #auth.client_secret = GoogleModel::SECRET
     #auth.grant_type = 'refresh_token'
-      #auth.refresh!
+    #auth.refresh!
       refresh_token = @@client.authorization.refresh_token
 
       client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
@@ -108,7 +108,7 @@ class GoogleClient
       search_result = fetch_file title.squish unless title.blank?
 
       if search_result.nil?
-        return :notice, "Please enter a title.", nil
+        return :notice, "Please enter a title."
 
       elsif search_result.status == 200
         file = search_result.data['items'].first
@@ -120,16 +120,15 @@ class GoogleClient
           if download_url
             result = download_file(download_url)
             if result.status == 200
-              type, message = Filer::parse result.body, file.id, file.title, link, user_id
+              return (Filer::parse result.body, file.id, file.title, link, user_id)
               #type, message = FilerParse.perform_async result.body, file.id, file.title, link, session[:user_id]
-              return type, message, nil
             else
-              return :error, "An error occurred: #{result.data['error']['message']}", nil
+              return :error, "An error occurred: #{result.data['error']['message']}"
             end # end if result.status == 200
           end # end if download_url
 
         else # unless
-          return :error, "Sorry, EZ Online cannot find a Google Doc with that title.", nil
+          return :error, "Sorry, EZ Online cannot find a Google Doc with that title."
         end # end unless 
 
       elsif search_result.status >= 401 # The access token is either expired or invalid.
@@ -139,7 +138,7 @@ class GoogleClient
 
       else
         print "**********RESULT STATUS***********\n" + search_result.status
-        return :error, "An error occured. Please try again later.", nil   
+        return :error, "An error occured. Please try again later."
       end # end outermost if
 
     rescue Exception => ex
@@ -148,7 +147,7 @@ class GoogleClient
         retry
       end
         print "************ERROR*************\n" + ex.message
-        return :error, "An error occured. Please try again later.", nil
+        return :error, "An error occured. Please try again later."
     end
   end
 

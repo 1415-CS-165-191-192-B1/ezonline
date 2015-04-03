@@ -6,11 +6,9 @@ class Doc < ActiveRecord::Base
   validates :docname, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: true }
   default_scope { order('created_at DESC') }
 
-  def initialize(attributes = {})
-    super
-  	@doc_id = attributes[:doc_id]
-  	@docname = attributes[:docname]
-  	@link = attributes[:link]
-  end
+  def self.get_name(doc_id)
+  	doc = find_by(doc_id: doc_id)
+  	return doc.docname
+  end 
 
 end
