@@ -36,6 +36,7 @@ gem 'launchy'
 gem 'sidekiq'
 gem 'vimeo', '~> 1.5.4'
 
+gem 'thin'
 
 # to manage env variables
 gem 'figaro'
