@@ -17,12 +17,12 @@ class GoogleClient
   end
 
   def self.init
-    @@client.authorization.client_id = Rails.application.secrets.google_id
-    @@client.authorization.client_secret = Rails.application.secrets.google_secret
+    @@client.authorization.client_id = ENV["google_id"]
+    @@client.authorization.client_secret = ENV["google_secret"]
     @@client.authorization.scope = ['https://www.googleapis.com/auth/drive',
                     'https://www.googleapis.com/auth/userinfo.profile',
                     'https://www.googleapis.com/auth/userinfo.email']
-    @@client.authorization.redirect_uri = 'http://ezonline-dev.com:3000/authentication'
+    @@client.authorization.redirect_uri = ENV["google_redirect_uri"]
   end
 
   def self.set_access access_token, refresh_token, expires_in, issued_at # initialize client with existing credentials
@@ -58,8 +58,8 @@ class GoogleClient
       refresh_token = @@client.authorization.refresh_token
 
       client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
-      client.authorization.client_id = Rails.application.secrets.google_id
-      client.authorization.client_secret = Rails.application.secrets.google_secret
+      client.authorization.client_id = ENV["google_id"]
+      client.authorization.client_secret = ENV["google_secret"]
       client.authorization.grant_type = 'refresh_token'
       client.authorization.refresh_token = refresh_token
 

@@ -23,13 +23,22 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
+
+gem 'gemcutter', '~> 0.7.1'
+gem 'json'
+
+# google api and dependencies
 gem 'google-api-client', :require => false
 gem 'rest-client', :require => false
-gem 'sidekiq'
 gem 'launchy'
-gem 'json'
+
+# vimeo api
+gem 'sidekiq'
 gem 'vimeo', '~> 1.5.4'
-gem 'gemcutter', '~> 0.7.1'
+
+
+# to manage env variables
+gem 'figaro'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

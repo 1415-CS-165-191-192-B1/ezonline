@@ -1,14 +1,14 @@
 module VimeoModel
 
-  ID = Rails.application.secrets.vimeo_id
+  ID = ENV["vimeo_id"]
 
-  SECRET = Rails.application.secrets.vimeo_secret
+  SECRET = ENV["vimeo_secret"]
 
-  TOKEN = Rails.application.secrets.vimeo_token
+  TOKEN = ENV["vimeo_token"]
 
-  URI = 'http://ezonline-dev.com:3000/vauthentication'
+  URI = ENV["vimeo_redirect_uri"]
 
-  USERNAME = Rails.application.secrets.vimeo_username
+  USERNAME = ENV["vimeo_username"]
 
   def self.reset_session
     @token = nil
