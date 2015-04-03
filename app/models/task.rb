@@ -24,6 +24,7 @@ class Task < ActiveRecord::Base
 
       # create new task
       task = new(admin_id: user_id, user_id: user.user_id, doc_id: doc_id)
+      task.save
       return :success, "Successfully assigned file to " + user.username
 
     end # end if user_id is 0
