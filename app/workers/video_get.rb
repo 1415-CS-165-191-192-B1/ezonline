@@ -1,24 +1,18 @@
 class VideoGet
   include Sidekiq::Worker
 
-  def perform page, token, secret
-
-    video = Vimeo::Advanced::Video.new(VimeoModel::ID, VimeoModel::SECRET, 
-                          :token => token, :secret => secret)
-    response = video.get_all(VimeoModel::USERNAME, { :page => page, :per_page => "1", :sort => "newest" })
-    videos = response['videos']['video']
-
-    begin 
-      videos.each do |v|
-        video = Video.new
-        video.video_id = v['id']
-        video.title = v['title']
-        video.save!
+  def perform token, secret
+    catch(:done) do
+      for page in 1...10
+        video = Vimeo::Advanced::Video.new(ENV["vimeo_id"], ENV["vimeo_secret"], :token => token, :secret => secret)
+        response = video.get_all(ENV["vimeo_username"], { :page => "#{page}", :per_page => "10", :sort => "newest" })
+        videos = response['videos']['video']
+   
+        videos.each do |v|
+         throw :done if !Video.create_new(v['id'], v['title'])
+        end
       end
-
-    rescue ActiveRecord::RecordNotUnique  # database already contains this 'latest' video
     end
-    
   end
 
 end

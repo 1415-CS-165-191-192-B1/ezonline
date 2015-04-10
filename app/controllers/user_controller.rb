@@ -65,9 +65,8 @@ class UserController < ApplicationController
     if !user.admin
       render layout: "application_user"
       return
-    else
-      render layout: "application"
     end
+    render layout: "application"
   end
 
   def home  # set as root    
@@ -83,8 +82,8 @@ class UserController < ApplicationController
   def logout
     render layout: "home_temp"
     session.clear # only deletes app session, browser is still logged in to account
-    GoogleClient::reset
-    VimeoModel::reset_session
+    GoogleClient::reset 
+    #VimeoClient::delete_credentials
   end
 
   def login
@@ -100,39 +99,22 @@ class UserController < ApplicationController
   end
 
   def verify_credentials  # after user logs in, store state in session
-    result = GoogleClient::fetch_user
-    user_info = nil
+    user_info = GoogleClient::get_user_info
 
-    if result.status == 200
-      user_info = result.data
-    else
-      puts "An error occurred: #{result.data['error']['message']}"
-    end
-
-    if user_info != nil && user_info.id != nil
-      begin
-        user = User.find(user_info.id)  # if user is authorized to use app
-        session[:user_id] = user_info.id
-        session[:user_admin] = user.admin
-        update_session GoogleClient::get_auth     
-        redirect_to root_url
-        return
-      rescue ActiveRecord::RecordNotFound
+    unless user_info == nil
+      user = User.find_if_exists(user_info.id)  # if user is authorized to use app
+      if user.nil?
         render layout: "home_temp"
         GoogleClient::reset # effectively deleting access token for current client instance
-
-        request = Request.new(user_id: user_info.id, email: user_info.email, username: user_info.name)
-        if request.valid?
-          request.save
-          @message = 'Sorry, you have no permission to use this application. A request was sent to grant access.'
-        else
-          @message = 'A request was already sent to the application. Please try again later.'
-        end
-
+        @message = Request.create_new(user_info.id, user_info.email, user_info.name)
+        return
       end
-
+      update_user_session user.user_id, user.admin
+      update_google_session GoogleClient::get_auth     
+      redirect_to root_url
+      return
     end
-
+    redirect_to user_login_path
   end
 
   def vlogin
@@ -146,11 +128,10 @@ class UserController < ApplicationController
     base = VimeoClient::get_base
     access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
 
-    session[:vimeo_token] = access_token.token
-    session[:vimeo_secret] = access_token.secret
+    update_vimeo_session access_token.token, access_token.secret
 
-    VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret]
-    VimeoModel::save_latest
+    VimeoClient::save_credentials(session[:vimeo_token], session[:vimeo_secret])
+    VimeoClient::save_latest
 
     redirect_to session.delete(:return_to)
   end
@@ -161,55 +142,22 @@ class UserController < ApplicationController
 
   def destroy # add user from requests - destroy from requests
     @request = Request.find(params[:id])
-    user = User.new(user_id: @request.user_id, username: @request.username, email: @request.email)
-
-    begin
-      @request.delete
-      user.save!
-      flash[:success] = "You successfully authorized " + user.username
-    rescue
-      flash[:error] = "Failed to authorize " + user.username
-    end
-
     @requests = Request.all
+    type, message = User.create_new(params[:id])
+    flash[type] = message
     redirect_to :back
-    return
   end
 
   def unauthorize
-    user_id = params[:id]
-    user = User.find(user_id)
-
-    user.delete
-    if user.destroyed?
-      flash[:success] = "You successfully unauthorized " + user.username
-    else
-      flash[:error] = "Failed to unauthorize " + user.username
-    end
-
+    type, message = User.delete_and_respond(params[:id])
+    flash[type] = message
     redirect_to :back
     return
   end
 
   def notify
-    user_id = session[:user_id] # currently logged in user
-    doc_id = params[:id] # the file selected as done
-
-    doc = Doc.find(doc_id)
-    user = User.find(user_id)
-    task = Task.find_by doc_id: doc.doc_id, user_id: user.user_id
-    #task = Task.find_by doc_id: doc_id, user_id: user_id # fails bec of diff data types
-    task.update_attribute :done, true
-
-    notif = Notif.new(from_id: user_id, to_id: task.admin_id, doc_id: doc_id)
-
-    begin
-      notif.save!
-      flash[:success] = "A notification was sent to the admin."
-    rescue
-      flash[:success] = "Failed to send a notification to the admin."
-    end
-
+    type, message = Notif.create_new(session[:user_id], params[:id])
+    flash[type] = message
     redirect_to :back
     return
   end

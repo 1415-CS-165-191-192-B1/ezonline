@@ -22,20 +22,7 @@ class FileController < ApplicationController
   end
 
   def show  # organizes the docs and their corresponding snippets to hash of arrays
-  	snippets = Snippet.order(:id)
-    docs = Doc.all
-
-    @files = Hash.new
-    @workers = Hash.new
-
-    docs.each do |doc|
-      id = doc.read_attribute('doc_id')
-      @files[doc] = Snippet.where(doc_id: id)
-
-      task = Task.find_by doc_id: id
-      user = User.find_by user_id: task.user_id unless task.nil?
-      @workers[id] = user.username unless user.nil?
-    end
+    @files, @workers = Doc.get_all
   end
 
   def history
@@ -64,12 +51,9 @@ class FileController < ApplicationController
 
   def init_vars #initialize needed variables in edit view
     @commit = Commit.find(params[:id])
-    #snippet = Snippet.find(@commit.snippet_id)
     snippet = @commit.snippet
     @title = snippet.title
     @video_id = snippet.video_id
-
-    #user = User.find(@commit.user_id)
     @username = @commit.user.username
   end
 
@@ -80,53 +64,31 @@ class FileController < ApplicationController
   end
 
   def delete
-    docname = Doc.get_name(params[:id])
-    Doc.destroy_all(:doc_id => params[:id])
-    flash[:success] = "The file '#{docname}' was successfully removed from the database."
+    type, message = Doc.delete_and_respond(params[:id])
     redirect_to file_index_path
   end
 
   def fetch_videos # get all videos associated with this file
-    doc_id = params[:id]
-
-    doc = Doc.find_by doc_id: doc_id
-    snippets = Snippet.where(doc_id: doc_id)
-
-    successes = 0
-
-    snippets.each do |s|
-      video_id = VimeoModel::find s.title # returns nil if none
-      successes += 1 if VimeoModel::save s.title, video_id # returns true if snippet was updated with video_id
-    end
-
-    case successes
-    when snippets.size
-      flash[:success] = "Successfully added all videos for this file."
-    when 0
-      flash[:error] = "Failed to add any video for this file."
-    when 1..snippets.size
-      flash[:notice] = "Some videos were not found for this file."
-    end
+    type, message = Snippet.update_video_ids(params[:id]) # pass doc_id
+    flash[type] = message
     redirect_to request.referer
   end
 
   def fetch_video   # get video for this snippet
-    type, message = Video.create_new(params[:id])
+    type, message = Snippet.update_video_id(params[:id])
     flash[type] = message
     redirect_to request.referer
   end
 
   def refresh_videos # gets latest videos since login
-    VimeoModel::save_latest 
+    VimeoClient::save_latest 
     redirect_to :back
   end
 
   def assign
     @doc_id = params[:id]
-    doc = Doc.find_by(doc_id: @doc_id)
-    @docname = doc.read_attribute('docname')
-
-    @users = User.all
+    @docname = Doc.get_name(@doc_id)
+    @users = User.where.not(admin: true)
     @current_user = session[:user_id]
   end
 

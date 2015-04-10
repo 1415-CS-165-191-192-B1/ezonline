@@ -19,17 +19,15 @@ class GoogleClient
   def self.init
     @@client.authorization.client_id = ENV["google_id"]
     @@client.authorization.client_secret = ENV["google_secret"]
-    @@client.authorization.scope = ['https://www.googleapis.com/auth/drive',
-                    'https://www.googleapis.com/auth/userinfo.profile',
-                    'https://www.googleapis.com/auth/userinfo.email']
+    @@client.authorization.scope = ['https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/userinfo.profile','https://www.googleapis.com/auth/userinfo.email']
     @@client.authorization.redirect_uri = ENV["google_redirect_uri"]
   end
 
   def self.set_access access_token, refresh_token, expires_in, issued_at # initialize client with existing credentials
     @@client.authorization.access_token = access_token 
-      @@client.authorization.refresh_token = refresh_token
-      @@client.authorization.expires_in = expires_in
-      @@client.authorization.issued_at = issued_at
+    @@client.authorization.refresh_token = refresh_token
+    @@client.authorization.expires_in = expires_in
+    @@client.authorization.issued_at = issued_at
   end
 
   def self.authorize  # redirect to google login page
@@ -69,7 +67,14 @@ class GoogleClient
 
   def self.fetch_user  # get authenticated users's credentials
     oauth2 = @@client.discovered_api('oauth2', 'v2')
-      @@client.execute!(:api_method => oauth2.userinfo.get)
+    @@client.execute!(:api_method => oauth2.userinfo.get)
+  end
+
+  def self.get_user_info
+    result = fetch_user
+    return result.data if result.status == 200
+    puts "An error occurred: #{result.data['error']['message']}"
+    return nil
   end
 
   def self.fetch_file file_title  # get google doc given exact title

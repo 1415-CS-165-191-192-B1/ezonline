@@ -7,16 +7,6 @@
 
 <%= form_for :title, url: fetch_file_path, html: {class: "nifty_form"} do |c| %>
   <%= c.text_field :text, value: 'Please type in the exact title', size: 50 %>
-
-  <!--
-  <% if session[:vimeo_access] %>
-    <%= radio_button_tag(:videos, "available") %>
-      <%= label_tag(:videos_available, "Fetch videos from Vimeo") %>
-      <%= radio_button_tag(:videos, "unavailable") %>
-      <%= label_tag(:videos_unavailable, "Add videos later") %> 
-  <% end %>
-  -->
-
   <%= c.submit 'Add' %>
 <% end %>
 </div>

@@ -13,16 +13,25 @@ class ApplicationController < ActionController::Base
   def set_name 
     # sets the username display
     unless session[:user_id].nil?
-      user = User.find(session[:user_id])
-      @name = user.read_attribute('username')
+      @name = User.get_username(session[:user_id])
     end
   end
 
-  def update_session auth # save credentials (after login, refresh token)
+  def update_user_session user_id, user_admin
+    session[:user_id] = user_id
+    session[:user_admin] = user_admin
+  end
+
+  def update_google_session auth # save credentials (after login, refresh token)
     session[:google_access] = auth.access_token 
     session[:google_refresh] = auth.refresh_token
     session[:expires_in] = auth.expires_in
     session[:issued_at] = auth.issued_at
+  end
+
+  def update_vimeo_session token, secret
+    session[:vimeo_token] = token
+    session[:vimeo_secret] = secret
   end
 
   protected
@@ -33,17 +42,15 @@ class ApplicationController < ActionController::Base
     return false
   end
 
-  protected
   def check_vlogin_state
     unless session[:vimeo_token]
       redirect_to vlogin_user_path
     else
-      VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret]
+      VimeoClient::save_credentials(session[:vimeo_token], session[:vimeo_secret])
     end
     return false
   end
 
-  protected
   def authenticate_admin # called only when user is logged in, restrict access to admin
     if session[:user_id]
       @current_user = User.find session[:user_id] # no need for rescue ActiveRecord::RecordNotFound
@@ -58,7 +65,6 @@ class ApplicationController < ActionController::Base
     end # end if condition
   end
 
-  protected
   def save_login_state # skip login if already logged in, initialize google client with existing credentials
     if session[:user_id]
       GoogleClient::set_access session[:google_access], session[:google_refresh], session[:expires_in], session[:issued_at]
@@ -69,9 +75,8 @@ class ApplicationController < ActionController::Base
   	end
   end
 
-  protected
   def save_vlogin_state # initialize vimeo client with existing credentials
-    VimeoModel::set_auth session[:vimeo_token], session[:vimeo_secret] if session[:vimeo_token]
+    VimeoClient::save_credentials(session[:vimeo_token], session[:vimeo_secret]) if session[:vimeo_token]
     return false
   end
 

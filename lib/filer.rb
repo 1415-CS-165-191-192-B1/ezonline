@@ -15,6 +15,7 @@ module Filer
 
           snippet = Snippet.new(doc_id: doc_id, title: text.chomp!)
           doc.snippets << snippet if snippet.valid?
+          Snippet.update_video_id(snippet.title);
 
           commit = Commit.new(user_id: user_id, snippet_id: snippet.id)
 
