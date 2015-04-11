@@ -11,9 +11,6 @@ class FileController < ApplicationController
 
   def new
   end
-
-  def voptions
-  end
   
   def fetch   # called by new to get gdoc from form
     type, message = GoogleClient::add_file(session[:user_id], params[:title][:text])
@@ -93,7 +90,7 @@ class FileController < ApplicationController
   end
 
   def save_task
-    type, message = Task.create_new(params[:user_id].to_i, params[:doc_id])
+    type, message = Task.create_new(session[:user_id], params[:user_id].to_i, params[:doc_id])
     flash[type] = message
     redirect_to file_index_path  
   end

@@ -53,16 +53,16 @@ class GoogleClient
     #auth.client_secret = GoogleModel::SECRET
     #auth.grant_type = 'refresh_token'
     #auth.refresh!
-      refresh_token = @@client.authorization.refresh_token
+    refresh_token = @@client.authorization.refresh_token
 
-      client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
-      client.authorization.client_id = ENV["google_id"]
-      client.authorization.client_secret = ENV["google_secret"]
-      client.authorization.grant_type = 'refresh_token'
-      client.authorization.refresh_token = refresh_token
+    client = Google::APIClient.new({:application_name => "ezonline",:application_version => "1.0"})
+    client.authorization.client_id = ENV["google_id"]
+    client.authorization.client_secret = ENV["google_secret"]
+    client.authorization.grant_type = 'refresh_token'
+    client.authorization.refresh_token = refresh_token
 
-      client.authorization.fetch_access_token!
-      @@client = client    
+    client.authorization.fetch_access_token!
+    @@client.authorization = client.authorization    
   end
 
   def self.fetch_user  # get authenticated users's credentials

@@ -12,26 +12,8 @@ class UserController < ApplicationController
       return
     end
 
-    #tasks = Task.where(user_id: session[:user_id]) # this causes an error, dk why
-    user = User.find(session[:user_id])
-    tasks = Task.where(user_id: user.user_id)
-    @files = Hash.new # hash of doc => snippets
-    @details = Hash.new
-
+    @files, @details = Task.get_all(session[:user_id])
     render layout: "application_user"
-
-    unless tasks.nil?
-      tasks.each do |task|
-        docs = Doc.where(doc_id: task.doc_id)
-          docs.each do |doc|
-            id = doc.read_attribute('doc_id')
-            @files[doc] = Snippet.where(doc_id: id)
-          
-            hash = {:done => task.done, :note => task.note}
-            @details[doc.doc_id] = hash
-          end
-      end
-      end
   end
 
   def admin_index
@@ -54,6 +36,9 @@ class UserController < ApplicationController
       end
     end
    end
+
+  def voptions
+  end
 
   def show
     @users = User.all
