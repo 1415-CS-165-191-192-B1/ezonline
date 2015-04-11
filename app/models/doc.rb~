@@ -18,7 +18,7 @@ class Doc < ActiveRecord::Base
   # Responds to the user about the result of the deletion
   #
   # @param doc_id [Decimal] The doc_id of the document which we want to delete
-  # @return [Symbol, String] "The file '#{doc.docname}' was successfully removed from the database.", if the document was successfully deleted,
+  # @return [String] "The file '#{doc.docname}' was successfully removed from the database.", if the document was successfully deleted,
   # 	or "Unable to delete file '#{doc.docname}'" if the document was not deleted
   def self.delete_and_respond(doc_id)
     doc = find(doc_id)

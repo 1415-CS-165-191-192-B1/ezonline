@@ -9,7 +9,7 @@
             <% if session[:user_id] %>
                 <a class="btn btn-dark btn-lg">You are already logged in.</a>                    
             <% else %>
-                <%= link_to "Log In with your Google account".html_safe, {controller: "user", action: "login"}, id: @login_big, class: "btn btn-dark btn-lg" %>
+                <%= link_to "Log In with your Google account.".html_safe, {controller: "user", action: "login"}, id: @login_big, class: "btn btn-dark btn-lg" %>
             <% end %>
         </div>           
     </div>

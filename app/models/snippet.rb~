@@ -5,7 +5,7 @@ class Snippet < ActiveRecord::Base
   # Adds/Updates the video for a certain snippet
   #
   # @param title [String] The title of the video and the snippet
-  # @return [Symbol, String] "Successfully added video for this snippet." if the video was sucessfully added to the snippet,
+  # @return [FlashMessage, String] "Successfully added video for this snippet." if the video was sucessfully added to the snippet,
   # 	or "Failed to add video for this snippet." If the video was not added to the snippet
   def self.update_video_id(title)
   	snippet = where("lower(title) = ?", title.downcase).first

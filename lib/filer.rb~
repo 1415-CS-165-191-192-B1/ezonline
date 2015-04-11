@@ -62,11 +62,6 @@ module Filer
 
   end
 
-  # Compiles the file snippets
-  #
-  # @param doc_id [Decimal] if of the document to be compiled into snippets
-  # @return [Symbol, String] "Successfully compiled snippets." if the file was successfully compiles,
-  # 	or "An error occurred:' if the file was not compiled
   def self.write doc_id
       doc = Doc.find_by doc_id: doc_id
       #snippets = Snippet.where(doc_id: doc_id)

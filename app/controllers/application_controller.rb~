@@ -5,9 +5,8 @@ class ApplicationController < ActionController::Base
 
   # For debug purposes
   #
-  # @param options
-  # @param response_status
-  # @return [void]
+  # @param options [{}]
+  # @param response_status [{}]
   def redirect_to(options = {}, response_status = {})
   ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
   super(options, response_status)
@@ -17,7 +16,6 @@ class ApplicationController < ActionController::Base
 
   # Sets the username display
   #
-  # @return [void]
   def set_name 
     unless session[:user_id].nil?
       @name = User.get_username(session[:user_id])
@@ -26,9 +24,8 @@ class ApplicationController < ActionController::Base
 
   # Updates the user session
   #
-  # @param user_id [Decimal]
-  # @param user_admin [Decimal]
-  # @return [void]
+  # @param user_id
+  # @param user_admin
   def update_user_session user_id, user_admin
     session[:user_id] = user_id
     session[:user_admin] = user_admin
@@ -37,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Saves credentials (after login, refresh token)
   #
   # @param auth 
-  # @return [void]
+  # @return
   def update_google_session auth
     session[:google_access] = auth.access_token 
     session[:google_refresh] = auth.refresh_token
