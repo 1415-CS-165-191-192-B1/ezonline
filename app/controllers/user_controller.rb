@@ -21,10 +21,6 @@ class UserController < ApplicationController
   #
   # @return [void]
   def admin_index
-<<<<<<< HEAD
-=======
-    #notifs = Notif.find_by from_id: session[:user_id]
->>>>>>> origin/master
     user = User.find(session[:user_id])
     notifs = Notif.where(to_id: user.user_id)
     @notifs = Array.new

@@ -34,8 +34,6 @@ class ApplicationController < ActionController::Base
     session[:user_admin] = user_admin
   end
 
-<<<<<<< HEAD
-=======
   # Saves credentials (after login, refresh token)
   #
   # @param auth 
@@ -59,8 +57,6 @@ class ApplicationController < ActionController::Base
   # Checks the login state of the user to Google
   #
   # @return [false] if the user is not logged in to Google
-  protected
->>>>>>> origin/master
   def check_login_state
     redirect_to login_user_index_path unless session[:user_id]
     return false
@@ -78,10 +74,9 @@ class ApplicationController < ActionController::Base
     return false
   end
 
-<<<<<<< HEAD
   def restrict_non_admin
     redirect_to root_url unless session[:user_admin]
-=======
+  end
   # Authenticates a user (admin only)
   #
   # @return [true, false] true or false whether the user is authenticated or not
@@ -122,7 +117,6 @@ class ApplicationController < ActionController::Base
   # @note Initialize vimeo client with existing credentials
   def save_vlogin_state
     VimeoClient::save_credentials(session[:vimeo_token], session[:vimeo_secret]) if session[:vimeo_token]
->>>>>>> origin/master
     return false
   end
 
