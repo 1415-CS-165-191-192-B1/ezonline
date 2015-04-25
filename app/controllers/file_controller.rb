@@ -5,9 +5,7 @@ require 'tempfile'
 
 class FileController < ApplicationController
   before_action :check_login_state
-  before_action :authenticate_admin, :except => [:history, :edit, :update]
   before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
-  before_action :save_vlogin_state, :only => [:new]
 
   def new
   end

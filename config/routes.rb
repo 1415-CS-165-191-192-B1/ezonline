@@ -12,7 +12,6 @@ get 'user/show' => 'user#show'
 get 'user/req' => 'user#requests_list'
 get 'user/contact' => 'user#contact'
 
-get 'file/voptions' => 'file#voptions'
 get 'file/refresh_videos' => 'file#refresh_videos'
 
 get 'vauthentication' => 'user#vauthentication'
@@ -48,6 +47,7 @@ post 'file/update' => 'file#update'
       get 'requests_list'
       get 'show'
       get 'admin_index'
+      get 'voptions'
       post 'delete_notifs'
     end
     member do 

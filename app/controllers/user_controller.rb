@@ -2,22 +2,19 @@ require 'google_client'
 require 'vimeo_client'
 
 class UserController < ApplicationController
-  before_action :save_login_state, :only => [:login]  # if user already logged in, redirect somewhere else
-  before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
+  before_action :check_login_state, :except => [:login, :authentication, :verify_credentials, :logout]
+  before_action :restrict_non_admin, :only => [:admin_index]
 
   def index    
-    user = User.find(session[:user_id])
-    if user.admin
+    if session[:user_admin]
       redirect_to admin_index_user_index_path
       return
     end
-
     @files, @details = Task.get_all(session[:user_id])
     render layout: "application_user"
   end
 
   def admin_index
-    # notifs = Notif.find_by from_id: session[:user_id]
     user = User.find(session[:user_id])
     notifs = Notif.where(to_id: user.user_id)
     @notifs = Array.new
@@ -60,19 +57,18 @@ class UserController < ApplicationController
       return
     else
       render layout: "home_temp"
-      GoogleClient::init
     end
   end
 
   def logout
     render layout: "home_temp"
     session.clear # only deletes app session, browser is still logged in to account
-    GoogleClient::reset 
-    #VimeoClient::delete_credentials
+    GoogleClient::delete_credentials
+    VimeoClient::delete_credentials
   end
 
   def login
-    redirect_to GoogleClient::authorize  # redirect to google login
+    redirect_to GoogleClient::build_auth_uri  # redirect to google login
   end
 
   def authentication  # exchange code for access token, called upon redirection from google
@@ -90,12 +86,11 @@ class UserController < ApplicationController
       user = User.find_if_exists(user_info.id)  # if user is authorized to use app
       if user.nil?
         render layout: "home_temp"
-        GoogleClient::reset # effectively deleting access token for current client instance
+        GoogleClient::delete_credentials # effectively deleting access token for current client instance
         @message = Request.create_new(user_info.id, user_info.email, user_info.name)
         return
       end
-      update_user_session user.user_id, user.admin
-      update_google_session GoogleClient::get_auth     
+      update_user_session(user.user_id, user.admin)
       redirect_to root_url
       return
     end
