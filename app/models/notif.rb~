@@ -10,7 +10,7 @@ class Notif < ActiveRecord::Base
   #
   # @param user_id [Decimal] The user_id of the user who sent the notification
   # @param doc_id [Decimal] The doc_id of the document which was edited and sent by the user
-  # @return [Symbol, String] "A notification was sent to the admin." if the notification was sent successfully to the admin,
+  # @return [String] "A notification was sent to the admin." if the notification was sent successfully to the admin,
   # 	or "Failed to send a notification to the admin.", if the notification was not sent to the admin
   def self.create_new(user_id, doc_id)
     task = Task.find_by(doc_id: doc_id, user_id: user_id)

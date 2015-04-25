@@ -9,7 +9,7 @@ class Task < ActiveRecord::Base
   # @param admin_id [Decimal] id of the admin who will create the task
   # @param user_id [Decimal] id of the user to whom the task will be assigned to
   # @param doc_id [Decimal] id of the document which will be assigned
-  # @return [Symbol, String] flash message and string depending on the outcome of the creation of the task
+  # @return [FlashMessage, String] flash message and string depending on the outcome of the creation of the task
   # @note Doc can only be assigned to one user  
   def self.create_new(admin_id, user_id, doc_id)
     old_task = find_by(doc_id: doc_id)
