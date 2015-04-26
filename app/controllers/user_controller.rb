@@ -2,7 +2,7 @@ require 'google_client'
 require 'vimeo_client'
 
 class UserController < ApplicationController
-  before_action :check_login_state, :except => [:login, :authentication, :verify_credentials, :logout]
+  before_action :check_login_state, :except => [:home, :login, :authentication, :verify_credentials, :logout]
   before_action :restrict_non_admin, :only => [:admin_index]
 
   #
