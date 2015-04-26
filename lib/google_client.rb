@@ -17,14 +17,22 @@ class GoogleClient
     @client
   end
 
-  def self.save_credentials access_token, refresh_token
+  def self.save_access access_token
     $redis.set('google_token', access_token)
-    $redis.set('google_refresh', refresh_token)
   end
 
-  def self.delete_credentials
+  def self.delete_access
     $redis.del('google_token')
-    $redis.del('google_refresh')
+  end
+
+  def self.save_refresh(refresh_token)
+    $redis.set('google_refresh', refresh_token) unless refresh_token.blank?
+  end
+
+  def self.have_refresh
+    refresh = $redis.get('google_refresh')
+    return true unless refresh.blank?
+    return false
   end
 
   def self.refresh_token
@@ -32,19 +40,24 @@ class GoogleClient
     @client.authorization.refresh_token = $redis.get('google_refresh')
 
     @client.authorization.fetch_access_token!
-    save_credentials @client.authorization.access_token, @client.authorization.refresh_token
+    save_access @client.authorization.access_token
   end
 
   def self.build_auth_uri
     init
-    return @client.authorization.authorization_uri(:approval_prompt => :auto).to_s 
+    if have_refresh
+      return @client.authorization.authorization_uri(:approval_prompt => :auto).to_s 
+    else
+      return @client.authorization.authorization_uri(:access_type => :offline, :approval_prompt => :force).to_s 
+    end
   end
 
   def self.fetch_token code  # set access token
     @client.authorization.code = code
 
     @client.authorization.fetch_access_token!
-    save_credentials @client.authorization.access_token, @client.authorization.refresh_token
+    save_refresh @client.authorization.refresh_token
+    save_access @client.authorization.access_token
   end
 
   def self.fetch_user  # get authenticated users's credentials

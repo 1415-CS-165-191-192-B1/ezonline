@@ -69,7 +69,7 @@ class UserController < ApplicationController
   def logout
     render layout: "home_temp"
     session.clear # only deletes app session, browser is still logged in to account
-    GoogleClient::delete_credentials
+    GoogleClient::delete_access
     VimeoClient::delete_credentials
   end
 
@@ -85,8 +85,7 @@ class UserController < ApplicationController
   # @return [void]
   def authentication
     if params[:code]
-      code = params[:code]
-      GoogleClient::fetch_token code
+      GoogleClient::fetch_token params[:code]
       verify_credentials
     end
   end
