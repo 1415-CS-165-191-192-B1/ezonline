@@ -75,7 +75,7 @@ module Filer
       result = Hash.new
       snippets.each do |snippet|
         #result[s.title] = Commit.where(snippet_id: s.id).order(created_at: :desc).first.commit_text
-        result[snippet.title] = snippet.commits.first
+        result[snippet.title] = snippet.commits.first.commit_text
       end
 
       tmp = Tempfile.new(doc.docname, Rails.root.join('tmp'))

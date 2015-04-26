@@ -138,6 +138,7 @@ class GoogleClient
     rescue Exception => ex
       unless refreshed # there was already an attempt to refresh google access token
         refreshed = true
+        print ex.message
         retry
       end
         print "************ERROR*************\n" + ex.message

@@ -21,24 +21,9 @@ class UserController < ApplicationController
   #
   # @return [void]
   def admin_index
-    user = User.find(session[:user_id])
-    notifs = Notif.where(to_id: user.user_id)
-    @notifs = Array.new
-
-    unless notifs.nil?
-      notifs.each do |notif|
-        user = User.find_by user_id: notif.from_id
-        doc = Doc.find_by doc_id: notif.doc_id
-
-        hash = {:id => notif.id, 
-            :date => notif.created_at, 
-            :username => user.username, 
-            :docname => doc.docname,
-            :responded => notif.responded}
-        @notifs << hash
-      end
-    end
-   end
+    p session[:user_id]
+    @notifs = Notif.get_all(session[:user_id])  
+  end
 
   #
   #
