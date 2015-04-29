@@ -19,6 +19,7 @@ vimeo_secret: d7b7f66bfd4a565fcad1b3b9c23446e2b32f8f04
 vimeo_token: c54317838752b29b6cd05e48b0f85480
 vimeo_username: EZOnline Development
 
+
 REDISTOGO_URL: 'redis://redistogo:e70c78075fc102bbed92674e5475c725@scat.redistogo.com:10374/'
 
 development:

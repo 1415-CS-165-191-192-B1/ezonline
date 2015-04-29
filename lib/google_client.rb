@@ -4,7 +4,7 @@ class GoogleClient
 
   def self.init_client_if_nil
     @client ||= init
-    @client.authorization.access_token = $redis.get('google_token')
+    @client.authorization.access_token = $redis.get(@id)
     @client.authorization.refresh_token = $redis.get('google_refresh')
   end
 
@@ -18,11 +18,11 @@ class GoogleClient
   end
 
   def self.save_access access_token
-    $redis.set('google_token', access_token)
+    $redis.set(@id, access_token)
   end
 
   def self.delete_access
-    $redis.del('google_token')
+    $redis.del(@id)
   end
 
   def self.save_refresh(refresh_token)
@@ -57,25 +57,28 @@ class GoogleClient
 
     @client.authorization.fetch_access_token!
     save_refresh @client.authorization.refresh_token
-    save_access @client.authorization.access_token
   end
 
   def self.fetch_user  # get authenticated users's credentials
-    @client.authorization.access_token = $redis.get('google_token')
+    #@client.authorization.access_token = $redis.get(@id)
     oauth2 = @client.discovered_api('oauth2', 'v2')
     @client.execute!(:api_method => oauth2.userinfo.get)
   end
 
   def self.get_user_info
     result = fetch_user
-    return result.data if result.status == 200
+    if result.status == 200
+      @id = result.data.id
+      save_access @client.authorization.access_token
+      return result.data 
+    end
     puts "An error occurred: #{result.data['error']['message']}"
     return nil
   end
 
   def self.fetch_file file_title  # get google doc given exact title
     init_client_if_nil
-    @client.authorization.access_token = $redis.get('google_token')
+    @client.authorization.access_token = $redis.get(@id)
     drive = @client.discovered_api('drive', 'v2')
     @client.execute(
       api_method: drive.files.list,
@@ -84,13 +87,13 @@ class GoogleClient
 
   def self.download_file download_url  # download google doc content
     init_client_if_nil
-    @client.authorization.access_token = $redis.get('google_token')
+    @client.authorization.access_token = $redis.get(@id)
     @client.execute(uri: download_url)
   end
 
   def self.upload tmp, title
     init_client_if_nil
-    @client.authorization.access_token = $redis.get('google_token')
+    @client.authorization.access_token = $redis.get(@id)
     media = Google::APIClient::UploadIO.new(tmp, 'text/plain', title + '.txt')
     drive = @client.discovered_api('drive', 'v2')
       file = drive.files.insert.request_schema.new({

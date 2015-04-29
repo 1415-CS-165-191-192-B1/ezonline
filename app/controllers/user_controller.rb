@@ -101,7 +101,7 @@ class UserController < ApplicationController
       user = User.find_if_exists(user_info.id)  # if user is authorized to use app
       if user.nil?
         render layout: "home_temp"
-        GoogleClient::delete_credentials # effectively deleting access token for current client instance
+        GoogleClient::delete_access
         @message = Request.create_new(user_info.id, user_info.email, user_info.name)
         return
       end
