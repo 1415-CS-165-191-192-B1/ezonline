@@ -1,15 +1,17 @@
-<div>
-<h1 align = center>Google Doc Options </h1>
-<h5 align = center>Use the options below to add, edit, and compile your Google Docs files.</h5>
-<br/>
-<br/>
-<h1>Add a Google Doc</h1>
+<section id="top">
+  <div>
+  <h1 align = center>Google Doc Options </h1>
+  <h5 align = center>Use the options below to add, edit, and compile your Google Docs files.</h5>
+  <br/>
+  <br/>
+  <h1>Add a Google Doc</h1>
 
-<%= form_for :title, url: fetch_file_path, html: {class: "nifty_form"} do |c| %>
-  <%= c.text_field :text, value: 'Please type in the exact title', size: 50 %>
-  <%= c.submit 'Add' %>
-<% end %>
-</div>
+  <%= form_for :title, url: fetch_file_path, html: {class: "nifty_form"} do |c| %>
+    <%= c.text_field :text, value: 'Please type in the exact title', size: 50 %>
+    <%= c.submit 'Add' %>
+  <% end %>
+  </div>
+</section>
 
 
 <br /><br />
@@ -39,9 +41,33 @@
                     </h4>
                   </div>
                   <div id="collapse<%= @fileCount %>" class="panel-collapse collapse">
-                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    <div class="panel-body">
+
+                    <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. -->
+                    <table id="snippets" class="table table-hover">
+                      <thead>
+                         <tr>
+                             <th>Snippet Title</th>
+                             <th></th>
+                         </tr>
+                      </thead>
+                        <% snippets.each do |snippet| %>
+                          <tbody>
+                            <tr>
+                              <td colspan="2"><%= snippet.title %></td>
+                              <td colspan="2">
+                                <%= button_to "Show History",
+                                              history_file_path(snippet),
+                                              :method => :get
+                                %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        <% end %>
+                      </table>
+                    </div>
                   </div>
                 </div>
                 <% @fileCount = @fileCount + 1 %>

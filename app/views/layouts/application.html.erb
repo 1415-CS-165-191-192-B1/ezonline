@@ -21,7 +21,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
-  <a href="#Top"></a>
+  <a href="#top"></a>
 </head>
 <body>
     <div  class="container">
@@ -30,7 +30,7 @@
           <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
           <nav class="gn-menu-wrapper2">
             <div class="gn-scroller2">
-              <ul class="gn-menu">                
+              <ul class="gn-menu">
                 <li>
                   <ul class="gn-submenu2">
                     <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
@@ -77,16 +77,16 @@
                     <i class="fa fa-sign-out"></i><span>
                     &emsp;&nbsp;&nbsp;
                     Log Out</span>')), {controller: "user", action: "logout"}, id: @logout_sub%></li>
-                    
+
                   </ul>
-                </li>               
+                </li>
             </div><!-- /gn-scroller -->
           </nav>
         </li>
-        <li><%= link_to "EZ ONLINE".html_safe, {controller: "user", action: "home"}, id: @home, class: "mainmenu" %></li>        
+        <li><%= link_to "EZ ONLINE".html_safe, {controller: "user", action: "home"}, id: @home, class: "mainmenu" %></li>
         <li><%= link_to "<span>Log Out</span>".html_safe, {controller: "user", action: "logout"}, id: @logout, class: "mainmenu2" %></li>
         <li><div class = "name"><span><%= @name %></span></div></li>
-      </ul>      
+      </ul>
     </div><!-- /container -->
 
     <%= javascript_include_tag('classie.js') %>
@@ -99,7 +99,7 @@
   <div class = "display2">
     <br/>
     <%= render :partial => "plash", :locals => {:flash => flash} %>
-    <br/>    <%= yield %> 
+    <br/>    <%= yield %>
   </div>
   <br><br>
 

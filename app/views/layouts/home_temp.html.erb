@@ -21,7 +21,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
   <![endif]-->
-  <a href="#Top"></a>
+  <a href="#top"></a>
 </head>
 <body>
     <div  class="container">
@@ -30,7 +30,7 @@
           <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
           <nav class="gn-menu-wrapper">
             <div class="gn-scroller">
-              <ul class="gn-menu">                
+              <ul class="gn-menu">
                 <li>
                   <ul class="gn-submenu">
                     <li><%= link_to (raw('&emsp;&nbsp;&nbsp;
@@ -52,20 +52,20 @@
                     <i class="fa fa-question-circle"></i><span>
                     &emsp;&nbsp;&nbsp;
                     Help</span>')), {controller: "user", action: "login"}, id: @help_sub%></li>
-                    
+
                   </ul>
-                </li>               
+                </li>
             </div><!-- /gn-scroller -->
           </nav>
         </li>
-        <li><%= link_to "EZ ONLINE", {controller: "user", action: "home"}, id: @home, class: "mainmenu" %></li>        
+        <li><%= link_to "EZ ONLINE", {controller: "user", action: "home"}, id: @home, class: "mainmenu" %></li>
         <li><%= link_to "<span>Log In</span>".html_safe, {controller: "user", action: "login"}, id: @login, class: "mainmenu2" %></li>
         <li>
             <a class="smoothScroll" href="#contact">
-                <span>Contact</span>                           
+                <span>Contact</span>
             </a>
         </li>
-      </ul>      
+      </ul>
     </div><!-- /container -->
 
     <%= javascript_include_tag('classie.js') %>
@@ -76,7 +76,7 @@
     </script>
 
   <div class = "display">
-    <%= yield %> 
+    <%= yield %>
   </div>
   <br><br>
 </body>

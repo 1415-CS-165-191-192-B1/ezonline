@@ -1,29 +1,29 @@
 <% provide(:title, '') %>
 
-<header id="top" class="header">
+<section id="top" class="header">
     <div class="text-vertical-center">
         <div class="col md-4">
             <h1>EZ Online</h1>
             <h3>Work Management System for <br> EZ Troubleshooter</h3>
             <br>
             <% if session[:user_id] %>
-                <a class="btn btn-dark btn-lg">You are already logged in.</a>                    
+                <a class="btn btn-dark btn-lg">You are already logged in.</a>
             <% else %>
                 <%= link_to "Log In with your Google account".html_safe, {controller: "user", action: "login"}, id: @login_big, class: "btn btn-dark btn-lg" %>
             <% end %>
-        </div>           
+        </div>
     </div>
-</header>
+</section>
 
-<section id="contact">    
+<section id="contact">
     <div class="col-lg-10 col-lg-offset-1 text-center">
         <br/><br/><br/><br/>
-         <div class="col-md-6 text-center">            
+         <div class="col-md-6 text-center">
             <h4><strong>EZ Troubleshooter</strong></h4>
             <p>ITS OK LLC<br>Orlando, Florida, USA</p>
             <ul class="list-unstyled">
              <!-- <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li> -->
-            <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:hector.sierra@eztroubleshooter.com">info@eztroubleshooter.com</a>
+            <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:hector.sierra@eztroubleshooter.com">hector.sierra@eztroubleshooter.com</a>
             </li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
             </li>
             <br/>
              </ul>
-        </div> 
+        </div>
     </div>
 </section>
 
@@ -49,5 +49,3 @@
       <br/><br/><br/>
     </div>
 </footer>
-
-
