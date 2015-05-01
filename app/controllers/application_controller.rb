@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   # @return [void]
   def update_google_session
     session[:google_access] = GoogleClient::get_access
-    cookie[:google_refresh] = GoogleClient::get_refresh
+    cookies.permanent[:google_refresh] = GoogleClient::get_refresh
   end
 
 

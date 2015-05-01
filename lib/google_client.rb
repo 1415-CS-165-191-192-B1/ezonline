@@ -34,12 +34,14 @@ class GoogleClient
 
   def self.refresh_token
     init
-    print "REFRESH TOKEN: " + @refresh_token
     @client.authorization.grant_type = 'refresh_token'
     @client.authorization.refresh_token = @refresh_token
 
     @client.authorization.fetch_access_token!
     set_access(@client.authorization.access_token)
+    print "REFRESHED!\n"
+    print "NEW ACCESS TOKEN: " + @access_token + "\n"
+    print "REFRESH TOKEN: " + @refresh_token + "\n"
   end
 
   def self.build_auth_uri
@@ -145,10 +147,8 @@ class GoogleClient
         retry
       end
         print ex.message
-        return :error, "An error occured. Please try again later."
+        return :error, "An error occured. Please log out first and try again."
     end
   end
-
-
 
 end

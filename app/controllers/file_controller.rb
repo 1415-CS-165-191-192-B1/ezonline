@@ -6,6 +6,7 @@ require 'tempfile'
 class FileController < ApplicationController
   before_action :check_login_state
   before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
+  before_action :set_access_from_session, :only => [:fetch, :compile]
 
   #
   #
@@ -23,7 +24,7 @@ class FileController < ApplicationController
   end
 
   # Organizes the docs and their corresponding snippets to hash of arrays
-  # 
+  #
   # @return [void]
   def show
     @files, @workers = Doc.get_all
@@ -55,11 +56,11 @@ class FileController < ApplicationController
       @commit_text = params[:text][:commit_text]
       flash.now[type] = message
       render :edit # renders edit template
-    else 
+    else
       flash[type] = message
   	  redirect_to history_file_path(params[:snippet_id])
     end
-    
+
   end
 
   # Initializes needed variables in edit view
@@ -112,7 +113,7 @@ class FileController < ApplicationController
   #
   # @return [void]
   def refresh_videos
-    VimeoClient::save_latest 
+    VimeoClient::save_latest
     redirect_to :back
   end
 
@@ -132,7 +133,7 @@ class FileController < ApplicationController
   def save_task
     type, message = Task.create_new(session[:user_id], params[:user_id].to_i, params[:doc_id])
     flash[type] = message
-    redirect_to file_index_path  
+    redirect_to file_index_path
   end
 
 

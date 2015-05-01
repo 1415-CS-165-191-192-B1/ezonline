@@ -5,7 +5,6 @@ class UserController < ApplicationController
   before_action :check_login_state, :except => [:home, :login, :authentication, :verify_credentials, :logout]
   before_action :restrict_non_admin, :only => [:admin_index]
   before_action :set_access_from_session, :only => [:login]
-  after_filter :update_google_session, :only => [:verify_credentials]
   #
   #
   # @return [void]
@@ -105,7 +104,10 @@ class UserController < ApplicationController
         @message = Request.create_new(user_info.id, user_info.email, user_info.name)
         return
       end
+
       update_user_session(user.user_id, user.admin)
+      update_google_session
+      
       redirect_to root_url
       return
     end
