@@ -18,11 +18,26 @@ class ApplicationController < ActionController::Base
   # Sets the username display
   #
   # @return [void]
-  def set_name 
+  def set_name
     unless session[:user_id].nil?
       @name = User.get_username(session[:user_id])
     end
   end
+
+  def set_access_from_session
+    GoogleClient::set_access(session[:google_access])
+    GoogleClient::set_refresh(cookies[:google_refresh])
+  end
+
+  # Saves credentials (after login, refresh token)
+  #
+  # @param auth
+  # @return [void]
+  def update_google_session
+    session[:google_access] = GoogleClient::get_access
+    cookie[:google_refresh] = GoogleClient::get_refresh
+  end
+
 
   # Updates the user session
   #
@@ -32,17 +47,6 @@ class ApplicationController < ActionController::Base
   def update_user_session user_id, user_admin
     session[:user_id] = user_id
     session[:user_admin] = user_admin
-  end
-
-  # Saves credentials (after login, refresh token)
-  #
-  # @param auth 
-  # @return [void]
-  def update_google_session auth
-    session[:google_access] = auth.access_token 
-    session[:google_refresh] = auth.refresh_token
-    session[:expires_in] = auth.expires_in
-    session[:issued_at] = auth.issued_at
   end
 
   # Updates the Vimeo session

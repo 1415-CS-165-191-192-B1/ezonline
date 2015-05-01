@@ -4,11 +4,12 @@ require 'vimeo_client'
 class UserController < ApplicationController
   before_action :check_login_state, :except => [:home, :login, :authentication, :verify_credentials, :logout]
   before_action :restrict_non_admin, :only => [:admin_index]
-
+  before_action :set_access_from_session, :only => [:login]
+  after_filter :update_google_session, :only => [:verify_credentials]
   #
   #
   # @return [void]
-  def index    
+  def index
     if session[:user_admin]
       redirect_to admin_index_user_index_path
       return
@@ -22,7 +23,7 @@ class UserController < ApplicationController
   # @return [void]
   def admin_index
     p session[:user_id]
-    @notifs = Notif.get_all(session[:user_id])  
+    @notifs = Notif.get_all(session[:user_id])
   end
 
   #
@@ -53,8 +54,8 @@ class UserController < ApplicationController
   #
   #
   # @return [void]
-  # @note Set as root 
-  def home   
+  # @note Set as root
+  def home
     if session[:user_id]
       redirect_to index_path
       return
@@ -69,7 +70,6 @@ class UserController < ApplicationController
   def logout
     render layout: "home_temp"
     session.clear # only deletes app session, browser is still logged in to account
-    GoogleClient::delete_access
     VimeoClient::delete_credentials
   end
 
@@ -117,7 +117,7 @@ class UserController < ApplicationController
   # @return [void]
   def vlogin
     session[:vimeo_oauth] = VimeoClient::fetch_oauth
-    
+
     session[:return_to] = request.referer # save url where login was invoked
     redirect_to VimeoClient::fetch_url
   end

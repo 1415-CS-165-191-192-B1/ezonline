@@ -1,11 +1,10 @@
 require 'google/api_client'
 
-class GoogleClient 
+class GoogleClient
 
   def self.init_client_if_nil
     @client ||= init
-    @client.authorization.access_token = $redis.get(@id)
-    @client.authorization.refresh_token = $redis.get('google_refresh')
+    @client.authorization.access_token = @access_token if @client.authorization.access_token.blank?
   end
 
   def self.init
@@ -17,38 +16,38 @@ class GoogleClient
     @client
   end
 
-  def self.save_access access_token
-    $redis.set(@id, access_token)
+  def self.get_access
+    @access_token
   end
 
-  def self.delete_access
-    $redis.del(@id)
+  def self.set_access access_token
+    @access_token = access_token unless access_token.blank?
   end
 
-  def self.save_refresh(refresh_token)
-    $redis.set('google_refresh', refresh_token) unless refresh_token.blank?
+  def self.get_refresh
+    @refresh_token
   end
 
-  def self.have_refresh
-    refresh = $redis.get('google_refresh')
-    return true unless refresh.blank?
-    return false
+  def self.set_refresh refresh_token
+    @refresh_token = refresh_token unless refresh_token.blank?
   end
 
   def self.refresh_token
+    init
+    print "REFRESH TOKEN: " + @refresh_token
     @client.authorization.grant_type = 'refresh_token'
-    @client.authorization.refresh_token = $redis.get('google_refresh')
+    @client.authorization.refresh_token = @refresh_token
 
     @client.authorization.fetch_access_token!
-    save_access @client.authorization.access_token
+    set_access(@client.authorization.access_token)
   end
 
   def self.build_auth_uri
     init
-    if have_refresh
-      return @client.authorization.authorization_uri(:approval_prompt => :auto).to_s 
+    unless @refresh_token.blank?
+      return @client.authorization.authorization_uri(:approval_prompt => :auto).to_s
     else
-      return @client.authorization.authorization_uri(:access_type => :offline, :approval_prompt => :force).to_s 
+      return @client.authorization.authorization_uri(:access_type => :offline, :approval_prompt => :force).to_s
     end
   end
 
@@ -56,29 +55,24 @@ class GoogleClient
     @client.authorization.code = code
 
     @client.authorization.fetch_access_token!
-    save_refresh @client.authorization.refresh_token
+    set_access(@client.authorization.access_token)
+    set_refresh(@client.authorization.refresh_token)
   end
 
   def self.fetch_user  # get authenticated users's credentials
-    #@client.authorization.access_token = $redis.get(@id)
     oauth2 = @client.discovered_api('oauth2', 'v2')
     @client.execute!(:api_method => oauth2.userinfo.get)
   end
 
   def self.get_user_info
     result = fetch_user
-    if result.status == 200
-      @id = result.data.id
-      save_access @client.authorization.access_token
-      return result.data 
-    end
+    return result.data if result.status == 200
     puts "An error occurred: #{result.data['error']['message']}"
     return nil
   end
 
   def self.fetch_file file_title  # get google doc given exact title
     init_client_if_nil
-    @client.authorization.access_token = $redis.get(@id)
     drive = @client.discovered_api('drive', 'v2')
     @client.execute(
       api_method: drive.files.list,
@@ -87,13 +81,11 @@ class GoogleClient
 
   def self.download_file download_url  # download google doc content
     init_client_if_nil
-    @client.authorization.access_token = $redis.get(@id)
     @client.execute(uri: download_url)
   end
 
   def self.upload tmp, title
     init_client_if_nil
-    @client.authorization.access_token = $redis.get(@id)
     media = Google::APIClient::UploadIO.new(tmp, 'text/plain', title + '.txt')
     drive = @client.discovered_api('drive', 'v2')
       file = drive.files.insert.request_schema.new({
@@ -115,7 +107,7 @@ class GoogleClient
     begin
       refreshed ||= false
       #squish: remove whitespaces from both ends, compress multiple to one, blank: check if nil or whitespaces
-      search_result = fetch_file title.squish unless title.blank?
+      search_result = fetch_file(title.squish) unless title.blank?
 
       if search_result.nil?
         return :notice, "Please enter a title."
@@ -124,9 +116,9 @@ class GoogleClient
         file = search_result.data['items'].first
 
         unless file.nil?
-          download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl' 
+          download_url = file['exportLinks']['text/plain'] # docs do not have 'downloadUrl'
           link = file['alternateLink']
-          
+
           if download_url
             result = download_file(download_url)
             if result.status == 200
@@ -139,25 +131,20 @@ class GoogleClient
 
         else # unless
           return :error, "Sorry, EZ Online cannot find a Google Doc with that title."
-        end # end unless 
-
-      elsif search_result.status >= 401 # The access token is either expired or invalid.
-        refresh_token
-        update_session get_auth
-        raise
+        end # end unless
 
       else
-        print "**********RESULT STATUS***********\n" + search_result.status
-        return :error, "An error occured. Please try again later."
+        print search_result.status
+        raise
       end # end outermost if
 
     rescue Exception => ex
       unless refreshed # there was already an attempt to refresh google access token
+        refresh_token
         refreshed = true
-        print ex.message
         retry
       end
-        print "************ERROR*************\n" + ex.message
+        print ex.message
         return :error, "An error occured. Please try again later."
     end
   end
