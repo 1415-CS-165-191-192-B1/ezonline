@@ -100,14 +100,14 @@ class UserController < ApplicationController
       user = User.find_if_exists(user_info.id)  # if user is authorized to use app
       if user.nil?
         render layout: "home_temp"
-        GoogleClient::delete_access
+        session.clear
         @message = Request.create_new(user_info.id, user_info.email, user_info.name)
         return
       end
 
       update_user_session(user.user_id, user.admin)
       update_google_session
-      
+
       redirect_to root_url
       return
     end
