@@ -37,7 +37,22 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= @fileCount %>"><%= doc.docname %></a>
+                      <span class="fileleft" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= @fileCount %>">
+                        <%= doc.docname %>
+                      </span>
+                      <span class="fileright">
+
+                        <!-- <%= link_to (raw('<i class="fa fa-times"></i>')), delete_file_path(doc.doc_id), id: @login_sub%> -->
+
+                        <%= link_to (raw('<i class="fa fa-times"></i>')), delete_file_path(doc.doc_id),
+                        :method => :get,
+                        :data => { confirm: 'Delete this file and all its snippets?' },
+                        :class => :fileright
+                        %>
+
+
+
+                      </span>
                     </h4>
                   </div>
                   <div id="collapse<%= @fileCount %>" class="panel-collapse collapse">
@@ -47,24 +62,24 @@
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. -->
                     <table id="snippets" class="table table-hover">
-                      <thead>
+                      <!-- <thead>
                          <tr>
                              <th>Snippet Title</th>
                              <th></th>
                          </tr>
-                      </thead>
+                      </thead> -->
                         <% snippets.each do |snippet| %>
-                          <tbody>
+                          <!-- <tbody> -->
                             <tr>
                               <td colspan="2"><%= snippet.title %></td>
                               <td colspan="2">
-                                <%= button_to "Show History",
+                                <%= button_to "Show Commits",
                                               history_file_path(snippet),
                                               :method => :get
                                 %>
                               </td>
                             </tr>
-                          </tbody>
+                          <!-- </tbody> -->
                         <% end %>
                       </table>
                     </div>
