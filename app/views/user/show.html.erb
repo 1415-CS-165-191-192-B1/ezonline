@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-lg-12">
       <div class="panel panel-default">
-          
+
           <!-- /.panel-heading -->
           <div class="panel-body">
               <div class="table-responsive">
@@ -14,7 +14,7 @@
                               <th>User ID</th>
                               <th>Username</th>
                               <th>Email Address</th>
-                              <th>Admin Account</th>
+                              <th><center>Admin Account</center></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -25,9 +25,9 @@
                               <td><%= user.email %></td>
                               <td>
                               <% if user.admin %>
-                                <img src="/assets/check.png" alt="rss feed" height=20/> 
+                                <center><i class="fa fa-check"></i></center>
                               <% else %>
-                                <img src="/assets/cross.png" alt="rss feed" height=20/> 
+                                <center><i class="fa fa-times"></i></center>
                               <% end %>
                               </td>
                               <td>
@@ -52,7 +52,3 @@
       <!-- /.panel -->
   </div>
 </div>
-
-
-
-
