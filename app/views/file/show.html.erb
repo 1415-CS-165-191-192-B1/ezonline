@@ -42,15 +42,40 @@
                       </span>
                       <span class="fileright">
 
-                        <!-- <%= link_to (raw('<i class="fa fa-times"></i>')), delete_file_path(doc.doc_id), id: @login_sub%> -->
-
+                        <span title = "Delete this file and all its snippets">
                         <%= link_to (raw('<i class="fa fa-times"></i>')), delete_file_path(doc.doc_id),
                         :method => :get,
-                        :data => { confirm: 'Delete this file and all its snippets?' },
+                        :data => { confirm: 'Are you sure you want to delete this file and all its snippets?' },
                         :class => :fileright
                         %>
+                        </span>
 
+                        <span title = "Fetch all videos for each of this file's snippets">
+                        <%= link_to (raw('<i class="fa fa-vimeo-square"></i>&emsp;&emsp;&emsp;')), fetch_videos_file_path(doc.doc_id),
+                        :method => :get,
+                        :class => :fileright
+                        %>
+                        </span>
 
+                        <span title = "View the original Google Doc">
+                        <%= link_to (raw('<i class="fa fa-google"></i>&emsp;&emsp;&emsp;')), doc.link,
+                        :class => :fileright
+                        %>
+                        </span>
+
+                        <span title = "Compile this file's snippets into one Google Doc">
+                        <%= link_to (raw('<i class="fa fa-database"></i>&emsp;&emsp;&emsp;')), compile_file_path(doc.doc_id),
+                        :method => :get,
+                        :class => :fileright
+                        %>
+                        </span>
+
+                        <span title = "Assign this file to a user for editing">
+                        <%= link_to (raw('<i class="fa fa-user"></i>&emsp;&emsp;&emsp;')), assign_file_path(doc.id),
+                        :method => :get,
+                        :class => :fileright
+                        %>
+                        </span>
 
                       </span>
                     </h4>
@@ -68,19 +93,25 @@
                              <th></th>
                          </tr>
                       </thead> -->
-                        <% snippets.each do |snippet| %>
-                          <!-- <tbody> -->
-                            <tr>
-                              <td colspan="2"><%= snippet.title %></td>
-                              <td colspan="2">
-                                <%= button_to "Show Commits",
-                                              history_file_path(snippet),
-                                              :method => :get
-                                %>
-                              </td>
-                            </tr>
-                          <!-- </tbody> -->
-                        <% end %>
+                      <% if (@workers[doc.id] != nil) %>
+                        <strong>This Google Doc is assigned to: <%= @workers[doc.id] %><br/><br/></strong>
+                      <% else %>
+                        <strong> No user is assigned to work on this Google Doc.<br/><br/></strong>
+                      <% end %>
+
+                      <% snippets.each do |snippet| %>
+                        <!-- <tbody> -->
+                          <tr>
+                            <td class="col-sm-8"><%= snippet.title %></td>
+                            <td>
+                              <%= button_to "Show Commits",
+                                            history_file_path(snippet),
+                                            :method => :get
+                              %>
+                            </td>
+                          </tr>
+                        <!-- </tbody> -->
+                      <% end %>
                       </table>
                     </div>
                   </div>
