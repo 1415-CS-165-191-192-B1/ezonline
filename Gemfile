@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'capybara'
 gem 'rcov'
 gem 'rspec'
+gem 'rspec-rails'
 
 # helper gems
 gem 'gemcutter', '~> 0.7.1'
