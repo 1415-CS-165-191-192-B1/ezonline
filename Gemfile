@@ -24,10 +24,13 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # testing
-gem 'capybara'
-gem 'rcov'
-gem 'rspec'
-gem 'rspec-rails'
+
+group :test, :development do
+  gem 'capybara', :require => false
+  gem 'rspec-rails', :require => false
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+end
 
 # helper gems
 gem 'gemcutter', '~> 0.7.1'
