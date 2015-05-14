@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 feature 'User edits a snippet' do
   scenario 'they see the foobar on the page' do
     visit 'http://ezonline.herokuapp.com/file/21/edit'
