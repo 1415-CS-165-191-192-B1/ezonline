@@ -40,8 +40,7 @@ class Task < ActiveRecord::Base
   # Gets all the assigned task to a user
   #
   # @param user_id [Decimal] id of the user which we want to get all assigned task
-  # @return [Hash] files the doc snippets 
-  # @return [Hash] details the details of the doc
+  # @return [Hash, Hash] files - the doc snippets, details - the details of the doc
   def self.get_all(user_id)
     tasks = where(user_id: user_id) # this causes an error, dk why
     files = Hash.new # hash of doc => snippets

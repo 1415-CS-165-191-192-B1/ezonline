@@ -10,9 +10,7 @@ class Commit < ActiveRecord::Base
   # @param user_id [Decimal] User ID of the user who made the commit
   # @param snippet_id [Decimal] Snippet ID of the edited snippet
   # @param commit_text [String] The text committed by the user to the snippet
-  # @return [true] to indicate the commit was successfully created
-  # @return [Symbol] to indicate the commit was successfully created
-  # @return [String] "Update saved"
+  # @return [true, Symbol, String] to indicate the commit was successfully created, to indicate the commit was successfully created, "Update saved"
   def self.create_new(user_id, snippet_id, commit_text)
   	commit = new(user_id: user_id, snippet_id: snippet_id, commit_text: commit_text)
     return true, :success, "Update saved." if commit.save

@@ -153,7 +153,7 @@ Google account of the user.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#build_auth_uri-class_method" title="build_auth_uri (class method)">+ (Object) <strong>build_auth_uri</strong> </a>
+      <a href="#build_auth_uri-class_method" title="build_auth_uri (class method)">+ (String) <strong>build_auth_uri</strong> </a>
     
 
     
@@ -177,7 +177,7 @@ Google account of the user.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#download_file-class_method" title="download_file (class method)">+ (Object) <strong>download_file</strong>(download_url) </a>
+      <a href="#download_file-class_method" title="download_file (class method)">+ (void) <strong>download_file</strong>(download_url) </a>
     
 
     
@@ -192,7 +192,7 @@ Google account of the user.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>download google doc content.</p>
+<p>Downloads google doc content.</p>
 </div></span>
   
 </li>
@@ -561,10 +561,6 @@ title.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
 164
 165
 166
@@ -605,10 +601,14 @@ title.</p>
 201
 202
 203
-204</pre>
+204
+205
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_add_file'>add_file</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span>
   <span class='kw'>begin</span>
@@ -663,7 +663,7 @@ title.</p>
       <div class="method_details ">
   <h3 class="signature " id="build_auth_uri-class_method">
   
-    + (<tt>Object</tt>) <strong>build_auth_uri</strong> 
+    + (<tt>String</tt>) <strong>build_auth_uri</strong> 
   
 
   
@@ -674,13 +674,24 @@ title.</p>
     
 <p>Build the authorization URI for the client</p>
 
-<p>return [String]</p>
-
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -716,7 +727,7 @@ title.</p>
       <div class="method_details ">
   <h3 class="signature " id="download_file-class_method">
   
-    + (<tt>Object</tt>) <strong>download_file</strong>(download_url) 
+    + (<tt>void</tt>) <strong>download_file</strong>(download_url) 
   
 
   
@@ -724,14 +735,29 @@ title.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>download google doc content</p>
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Downloads google doc content</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>download_url</span>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -739,13 +765,13 @@ title.</p>
       <pre class="lines">
 
 
-126
-127
-128
-129</pre>
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_download_file'>download_file</span> <span class='id identifier rubyid_download_url'>download_url</span>  <span class='comment'># download google doc content
 </span>  <span class='id identifier rubyid_init_client_if_nil'>init_client_if_nil</span>
@@ -1400,10 +1426,6 @@ authorization access token</p>
       <pre class="lines">
 
 
-136
-137
-138
-139
 140
 141
 142
@@ -1417,10 +1439,14 @@ authorization access token</p>
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/google_client.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_upload'>upload</span> <span class='id identifier rubyid_tmp'>tmp</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span>
   <span class='id identifier rubyid_init_client_if_nil'>init_client_if_nil</span>
@@ -1450,7 +1476,7 @@ authorization access token</p>
 </div>
 
     <div id="footer">
-  Generated on Sat May 16 23:19:43 2015 by
+  Generated on Sun May 17 00:43:59 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>

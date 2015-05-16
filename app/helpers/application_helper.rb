@@ -45,8 +45,9 @@ module ApplicationHelper
     "ezonline, ez troubleshooter, repository"
   end
 
-  # Returns the full title on a per-page basis.
-  #	No need to change any of this we set page_title and site_name elsewhere.
+  # Returns the full title on a per-page basis.	No need to change any of this we set page_title and site_name elsewhere.
+  #
+  # @return [void]
   def full_title(page_title)
     if page_title.empty?
       site_name

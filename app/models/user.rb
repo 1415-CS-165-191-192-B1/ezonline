@@ -31,8 +31,7 @@ class User < ActiveRecord::Base
   # Tells if the user exist or not given its user_id (adnmin only)
   #
   # @param user_id [Decimal] id of the user we want to find
-  # return [User] user if it exist
-  # return [Null] if user does not exist
+  # @return [User] user if it exist, [nil] if user does not exist
   def self.find_if_exists(user_id)
   	begin
   	  user = find(user_id)

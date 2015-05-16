@@ -1,4 +1,4 @@
-# Class for the documents added by the admins. Contains the method for getting and deleting documents
+# Class for the documents added by the admins. Contains the methods for getting and deleting documents
 class Doc < ActiveRecord::Base
   self.primary_key = :doc_id
   has_many :snippets, :dependent => :destroy
@@ -30,8 +30,7 @@ class Doc < ActiveRecord::Base
 
   # Gets all the documents
   #
-  # @return [Hash] files The snippets of the files
-  # @return [Hash] workers The users in charge of the file
+  # @return [Hash, Hash] files The snippets of the files, workers The users in charge of the file
   def self.get_all
     docs = all
     files = Hash.new

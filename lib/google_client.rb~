@@ -70,7 +70,7 @@ class GoogleClient
 
   # Build the authorization URI for the client
   #
-  # return [String] 
+  # @return [String] 
   def self.build_auth_uri
     init
     unless @refresh_token.blank?

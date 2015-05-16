@@ -179,7 +179,7 @@ users.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_if_exists-class_method" title="find_if_exists (class method)">+ (Object) <strong>find_if_exists</strong>(user_id) </a>
+      <a href="#find_if_exists-class_method" title="find_if_exists (class method)">+ (User) <strong>find_if_exists</strong>(user_id) </a>
     
 
     
@@ -397,15 +397,15 @@ user was not removed</p>
       <pre class="lines">
 
 
+49
 50
 51
 52
 53
-54
-55</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete_and_respond'>delete_and_respond</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -421,7 +421,7 @@ user was not removed</p>
       <div class="method_details ">
   <h3 class="signature " id="find_if_exists-class_method">
   
-    + (<tt>Object</tt>) <strong>find_if_exists</strong>(user_id) 
+    + (<tt><span class='object_link'><a href="" title="User (class)">User</a></span></tt>) <strong>find_if_exists</strong>(user_id) 
   
 
   
@@ -431,8 +431,6 @@ user was not removed</p>
   <div class="discussion">
     
 <p>Tells if the user exist or not given its user_id (adnmin only)</p>
-
-<p>return [User] user if it exist return [Null] if user does not exist</p>
 
 
   </div>
@@ -459,6 +457,24 @@ user was not removed</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="User (class)">User</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>user if it exist, [nil] if user does not exist</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -466,17 +482,17 @@ user was not removed</p>
       <pre class="lines">
 
 
+35
 36
 37
 38
 39
 40
 41
-42
-43</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app/models/user.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_if_exists'>find_if_exists</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
 	<span class='kw'>begin</span>
@@ -557,7 +573,7 @@ user was not removed</p>
 </div>
 
     <div id="footer">
-  Generated on Sat May 16 23:19:43 2015 by
+  Generated on Sun May 17 00:43:59 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>

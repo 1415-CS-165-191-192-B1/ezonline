@@ -11,6 +11,7 @@ class FileController < ApplicationController
 
   # Controller for making the new file
   #
+  # @return [void]
   def new
   end
 

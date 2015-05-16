@@ -30,8 +30,7 @@ class Doc < ActiveRecord::Base
 
   # Gets all the documents
   #
-  # @return [Hash] files The snippets of the files
-  # @return [Hash] workers The users in charge of the file
+  # @return [Hash, Hash] files - The snippets of the files, workers - The users in charge of the file
   def self.get_all
     docs = all
     files = Hash.new

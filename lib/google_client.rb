@@ -70,7 +70,7 @@ class GoogleClient
 
   # Build the authorization URI for the client
   #
-  # return [String] 
+  # @return [String] 
   def self.build_auth_uri
     init
     unless @refresh_token.blank?
@@ -123,6 +123,10 @@ class GoogleClient
       parameters: {q: "title = '" + "#{file_title}" + "'" , maxResults: 1, trashed: false})
   end
 
+  # Downloads google doc content
+  #
+  # @param download_url
+  # @return [void]
   def self.download_file download_url  # download google doc content
     init_client_if_nil
     @client.execute(uri: download_url)

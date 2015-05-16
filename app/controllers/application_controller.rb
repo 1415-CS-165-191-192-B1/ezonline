@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   # Sets access from session. Sets access to google access and sets refresh as cookies, google refresh
   #
+  # @return [void]
   def set_access_from_session
     GoogleClient::set_access(session[:google_access])
     GoogleClient::set_refresh(cookies[:google_refresh])
