@@ -62,6 +62,11 @@ module Filer
 
   end
 
+  # Compiles the file snippets
+  #
+  # @param doc_id [Decimal] if of the document to be compiled into snippets
+  # @return [Symbol, String] "Successfully compiled snippets." if the file was successfully compiles,
+  # 	or "An error occurred:' if the file was not compiled
   def self.write doc_id
       doc = Doc.find_by doc_id: doc_id
       #snippets = Snippet.where(doc_id: doc_id)
@@ -70,7 +75,7 @@ module Filer
       result = Hash.new
       snippets.each do |snippet|
         #result[s.title] = Commit.where(snippet_id: s.id).order(created_at: :desc).first.commit_text
-        result[snippet.title] = snippet.commits.first
+        result[snippet.title] = snippet.commits.first.commit_text
       end
 
       tmp = Tempfile.new(doc.docname, Rails.root.join('tmp'))

@@ -2,59 +2,47 @@ require 'google_client'
 require 'vimeo_client'
 
 class UserController < ApplicationController
-  before_action :save_login_state, :only => [:login]  # if user already logged in, redirect somewhere else
-  before_action :authenticate_admin, :only => [:requests_list, :show] # if user not admin, restrict access
-
+  before_action :check_login_state, :except => [:home, :login, :authentication, :verify_credentials, :logout]
+  before_action :restrict_non_admin, :only => [:admin_index]
+  before_action :set_access_from_session, :only => [:login]
+  
+  # Redirects the user to admin_index_user_index_path if the user is an admin. Ges all task given a user id and renders layout as "application_user"
   #
-  #
-  def index    
-    user = User.find(session[:user_id])
-    if user.admin
+  # @return [void]
+  def index
+    if session[:user_admin]
       redirect_to admin_index_user_index_path
       return
     end
-
     @files, @details = Task.get_all(session[:user_id])
     render layout: "application_user"
   end
 
+  # Gets all the notifications for the admin
   #
-  #
+  # @return [void]
   def admin_index
-    #notifs = Notif.find_by from_id: session[:user_id]
-    user = User.find(session[:user_id])
-    notifs = Notif.where(to_id: user.user_id)
-    @notifs = Array.new
+    p session[:user_id]
+    @notifs = Notif.get_all(session[:user_id])
+  end
 
-    unless notifs.nil?
-      notifs.each do |notif|
-        user = User.find_by user_id: notif.from_id
-        doc = Doc.find_by doc_id: notif.doc_id
-
-        hash = {:id => notif.id, 
-            :date => notif.created_at, 
-            :username => user.username, 
-            :docname => doc.docname,
-            :responded => notif.responded}
-        @notifs << hash
-      end
-    end
-   end
-
+  # Controller for the vimeo options
   #
-  #
+  # @return [void]
   def voptions
   end
 
+  # Gets all the users and sets the current_user_id to the sessions user_id
   #
-  #
+  # @return [void]
   def show
     @users = User.all
     @current_user_id = session[:user_id]
   end
 
+  # Finds the user given the sessions user_id and chooses the render layout
   #
-  #
+  # @return [void]
   def contact
     user = User.find(session[:user_id])
     if !user.admin
@@ -64,46 +52,48 @@ class UserController < ApplicationController
     render layout: "application"
   end
 
+  # Redirects the user to index_path if the user id not an admin, and sets the render layout to "home_temp" otherwise
   #
-  #
-  # @note Set as root 
-  def home   
+  # @return [void]
+  # @note Set as root
+  def home
     if session[:user_id]
       redirect_to index_path
       return
     else
       render layout: "home_temp"
-      GoogleClient::init
     end
   end
 
   # Logout, Makes the user offline
   #
+  # @return [void]
   def logout
     render layout: "home_temp"
     session.clear # only deletes app session, browser is still logged in to account
-    GoogleClient::reset 
-    #VimeoClient::delete_credentials
+    VimeoClient::delete_credentials
   end
 
   # Login, Makes the user online
   #
+  # @return [void]
   def login
-    redirect_to GoogleClient::authorize  # redirect to google login
+    redirect_to GoogleClient::build_auth_uri  # redirect to google login
   end
 
   # Exchanges code for access token, called upon redirection from google
   #
+  # @return [void]
   def authentication
     if params[:code]
-      code = params[:code]
-      GoogleClient::fetch_token code
+      GoogleClient::fetch_token params[:code]
       verify_credentials
     end
   end
 
   # Verifies the credentials of the user
   #
+  # @return [void]
   # @note After user logs in, store state in session
   def verify_credentials
     user_info = GoogleClient::get_user_info
@@ -112,12 +102,14 @@ class UserController < ApplicationController
       user = User.find_if_exists(user_info.id)  # if user is authorized to use app
       if user.nil?
         render layout: "home_temp"
-        GoogleClient::reset # effectively deleting access token for current client instance
+        session.clear
         @message = Request.create_new(user_info.id, user_info.email, user_info.name)
         return
       end
-      update_user_session user.user_id, user.admin
-      update_google_session GoogleClient::get_auth     
+
+      update_user_session(user.user_id, user.admin)
+      update_google_session
+
       redirect_to root_url
       return
     end
@@ -126,15 +118,17 @@ class UserController < ApplicationController
 
   # Handles Vimeo login
   #
+  # @return [void]
   def vlogin
     session[:vimeo_oauth] = VimeoClient::fetch_oauth
-    
+
     session[:return_to] = request.referer # save url where login was invoked
     redirect_to VimeoClient::fetch_url
   end
 
   # Handles Vimeo authentication
   #
+  # @return [void]
   def vauthentication
     base = VimeoClient::get_base
     access_token = base.get_access_token(params[:oauth_token], session[:vimeo_oauth], params[:oauth_verifier])
@@ -149,12 +143,14 @@ class UserController < ApplicationController
 
   # Lists all requests received by app
   #
+  # @return [void]
   def requests_list
     @requests = Request.all
   end
 
   # Adds user from requests - destroys from requests
   #
+  # @return [void]
   def destroy
     @request = Request.find(params[:id])
     @requests = Request.all
@@ -165,6 +161,7 @@ class UserController < ApplicationController
 
   # Unauthorizes the user
   #
+  # @return [void]
   def unauthorize
     type, message = User.delete_and_respond(params[:id])
     flash[type] = message
@@ -172,8 +169,9 @@ class UserController < ApplicationController
     return
   end
 
+  # Makes a notification for this user
   #
-  #
+  # @return [void]
   def notify
     type, message = Notif.create_new(session[:user_id], params[:id])
     flash[type] = message
@@ -196,12 +194,14 @@ class UserController < ApplicationController
 
   # Responds to a notification
   #
+  # @return [void]
   def respond
     @notif_id = params[:id]
   end
 
   # Sends response
   #
+  # @return [void]
   def send_response
     notif = Notif.find(params[:notif_id])
     task = Task.find(notif.doc_id)
@@ -223,6 +223,7 @@ class UserController < ApplicationController
 
   # Deletes a notification
   #
+  # @return [void]
   def delete_notif
     notif = Notif.delete(params[:id])
     redirect_to :back

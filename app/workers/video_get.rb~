@@ -5,6 +5,7 @@ class VideoGet
   #
   # @param token
   # @param secret
+  # @return [void]
   def perform token, secret
     catch(:done) do
       for page in 1...10

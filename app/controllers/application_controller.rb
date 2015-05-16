@@ -1,3 +1,5 @@
+
+# Controller class for the application EzOnline.
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -24,6 +26,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Sets access from session. Sets access to google access and sets refresh as cookies, google refresh
+  #
   def set_access_from_session
     GoogleClient::set_access(session[:google_access])
     GoogleClient::set_refresh(cookies[:google_refresh])
@@ -31,7 +35,6 @@ class ApplicationController < ActionController::Base
 
   # Saves credentials (after login, refresh token)
   #
-  # @param auth
   # @return [void]
   def update_google_session
     session[:google_access] = GoogleClient::get_access
@@ -39,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
 
-  # Updates the user session
+  # Updates the user session. Sets user_id and user_admin depending on parameters
   #
   # @param user_id [Decimal]
   # @param user_admin [Decimal]
@@ -49,16 +52,17 @@ class ApplicationController < ActionController::Base
     session[:user_admin] = user_admin
   end
 
-  # Updates the Vimeo session
+  # Updates the Vimeo session. Sets parameters as vimeo token and secret
   #
   # @param token
   # @param secret
+  # @return [void]
   def update_vimeo_session token, secret
     session[:vimeo_token] = token
     session[:vimeo_secret] = secret
   end
 
-  # Checks the login state of the user to Google
+  # Checks the login state of the user to Google 
   #
   # @return [false] if the user is not logged in to Google
   def check_login_state
@@ -78,9 +82,13 @@ class ApplicationController < ActionController::Base
     return false
   end
 
+  # Restrict application to non-admin user. Redirects to root if 
+  #
+  # @return [void]
   def restrict_non_admin
     redirect_to root_url unless session[:user_admin]
   end
+
   # Authenticates a user (admin only)
   #
   # @return [true, false] true or false whether the user is authenticated or not
@@ -103,8 +111,7 @@ class ApplicationController < ActionController::Base
   # Saves the login state
   #
   # @return [true, false]
-  # @note Skip login if already logged in,
-  #	initialize google client with existing credentials
+  # @note Skip login if already logged in, initialize google client with existing credentials
   def save_login_state
     if session[:user_id]
       GoogleClient::set_access session[:google_access], session[:google_refresh], session[:expires_in], session[:issued_at]

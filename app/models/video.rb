@@ -1,3 +1,4 @@
+# Class for the videos. Contains the methods for adding and getting the videos.
 class Video < ActiveRecord::Base
   self.primary_key = :video_id
   validates :title, presence: true, length: { maximum: 255 }, uniqueness: { case_sensitive: false }

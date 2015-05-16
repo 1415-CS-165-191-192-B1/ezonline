@@ -1,3 +1,4 @@
+# Class for the users. Contains the methods for adding, getting, and finding users.
 class User < ActiveRecord::Base
   self.primary_key = :user_id
   has_many :commits

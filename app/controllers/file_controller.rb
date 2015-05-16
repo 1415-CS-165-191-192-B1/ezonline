@@ -3,12 +3,13 @@ require 'vimeo_client'
 require 'filer'
 require 'tempfile'
 
+# Controller class for the files in the application
 class FileController < ApplicationController
   before_action :check_login_state
   before_action :check_vlogin_state, :only => [:fetch_video, :fetch_videos]
   before_action :set_access_from_session, :only => [:fetch, :compile]
 
-  #
+  # Controller for making the new file
   #
   def new
   end
@@ -74,7 +75,7 @@ class FileController < ApplicationController
     @username = @commit.user.username
   end
 
-  # Creates gdoc with latest commits
+  # Creates gdoc with latest commits. Compiles all the snippets for this file.
   #
   # @return [void]
   def compile
@@ -117,7 +118,7 @@ class FileController < ApplicationController
     redirect_to :back
   end
 
-  # Assigns this snippet
+  # Assigns this file/snippets to a user
   #
   # @return [void]
   def assign

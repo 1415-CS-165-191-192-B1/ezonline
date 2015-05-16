@@ -1,3 +1,4 @@
+# Class for the commits made by the users. Contains the method for creating new commits
 class Commit < ActiveRecord::Base
   belongs_to :user
   belongs_to :snippet
@@ -6,7 +7,7 @@ class Commit < ActiveRecord::Base
 
   # Creates a new commit
   #
-  # @param user_id [Decimanl] User ID of the user who made the commit
+  # @param user_id [Decimal] User ID of the user who made the commit
   # @param snippet_id [Decimal] Snippet ID of the edited snippet
   # @param commit_text [String] The text committed by the user to the snippet
   # @return [true] to indicate the commit was successfully created

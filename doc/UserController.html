@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Controller class for the users using the application</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -135,7 +146,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets all the notifications for the admin.</p>
+</div></span>
   
 </li>
 
@@ -181,7 +194,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Finds the user given the sessions user_id and chooses the render layout.</p>
+</div></span>
   
 </li>
 
@@ -251,7 +266,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Redirects the user to index_path if the user id not an admin, and sets the
+render layout to “home_temp” otherwise.</p>
+</div></span>
   
 </li>
 
@@ -273,7 +291,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Redirects the user to admin_index_user_index_path if the user is an admin.</p>
+</div></span>
   
 </li>
 
@@ -343,7 +363,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Makes a notification for this user.</p>
+</div></span>
   
 </li>
 
@@ -437,7 +459,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets all the users and sets the current_user_id to the sessions user_id.</p>
+</div></span>
   
 </li>
 
@@ -541,7 +565,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#voptions-instance_method" title="#voptions (instance method)">- (Object) <strong>voptions</strong> </a>
+      <a href="#voptions-instance_method" title="#voptions (instance method)">- (void) <strong>voptions</strong> </a>
     
 
     
@@ -555,7 +579,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Controller for the vimeo options.</p>
+</div></span>
   
 </li>
 
@@ -573,7 +599,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#redirect_to-instance_method" title="ApplicationController#redirect_to (method)">#redirect_to</a></span>, <span class='object_link'><a href="ApplicationController.html#set_name-instance_method" title="ApplicationController#set_name (method)">#set_name</a></span>, <span class='object_link'><a href="ApplicationController.html#update_google_session-instance_method" title="ApplicationController#update_google_session (method)">#update_google_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_user_session-instance_method" title="ApplicationController#update_user_session (method)">#update_user_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_vimeo_session-instance_method" title="ApplicationController#update_vimeo_session (method)">#update_vimeo_session</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#authenticate_admin-instance_method" title="ApplicationController#authenticate_admin (method)">#authenticate_admin</a></span>, <span class='object_link'><a href="ApplicationController.html#check_login_state-instance_method" title="ApplicationController#check_login_state (method)">#check_login_state</a></span>, <span class='object_link'><a href="ApplicationController.html#check_vlogin_state-instance_method" title="ApplicationController#check_vlogin_state (method)">#check_vlogin_state</a></span>, <span class='object_link'><a href="ApplicationController.html#redirect_to-instance_method" title="ApplicationController#redirect_to (method)">#redirect_to</a></span>, <span class='object_link'><a href="ApplicationController.html#restrict_non_admin-instance_method" title="ApplicationController#restrict_non_admin (method)">#restrict_non_admin</a></span>, <span class='object_link'><a href="ApplicationController.html#save_login_state-instance_method" title="ApplicationController#save_login_state (method)">#save_login_state</a></span>, <span class='object_link'><a href="ApplicationController.html#save_vlogin_state-instance_method" title="ApplicationController#save_vlogin_state (method)">#save_vlogin_state</a></span>, <span class='object_link'><a href="ApplicationController.html#set_access_from_session-instance_method" title="ApplicationController#set_access_from_session (method)">#set_access_from_session</a></span>, <span class='object_link'><a href="ApplicationController.html#set_name-instance_method" title="ApplicationController#set_name (method)">#set_name</a></span>, <span class='object_link'><a href="ApplicationController.html#update_google_session-instance_method" title="ApplicationController#update_google_session (method)">#update_google_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_user_session-instance_method" title="ApplicationController#update_user_session (method)">#update_user_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_vimeo_session-instance_method" title="ApplicationController#update_vimeo_session (method)">#update_vimeo_session</a></span></p>
 
   
 
@@ -593,6 +619,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
+<p>Gets all the notifications for the admin</p>
+
 
   </div>
 </div>
@@ -608,46 +636,14 @@
 25
 26
 27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre>
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_admin_index'>admin_index</span>
- <span class='comment'>#notifs = Notif.find_by from_id: session[:user_id]
-</span> <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
- <span class='id identifier rubyid_notifs'>notifs</span> <span class='op'>=</span> <span class='const'>Notif</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>to_id:</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
- <span class='ivar'>@notifs</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-
- <span class='kw'>unless</span> <span class='id identifier rubyid_notifs'>notifs</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-   <span class='id identifier rubyid_notifs'>notifs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_notif'>notif</span><span class='op'>|</span>
-     <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find_by'>find_by</span> <span class='label'>user_id:</span> <span class='id identifier rubyid_notif'>notif</span><span class='period'>.</span><span class='id identifier rubyid_from_id'>from_id</span>
-     <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='const'>Doc</span><span class='period'>.</span><span class='id identifier rubyid_find_by'>find_by</span> <span class='label'>doc_id:</span> <span class='id identifier rubyid_notif'>notif</span><span class='period'>.</span><span class='id identifier rubyid_doc_id'>doc_id</span>
-
-     <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='symbol'>:id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_notif'>notif</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> 
-         <span class='symbol'>:date</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_notif'>notif</span><span class='period'>.</span><span class='id identifier rubyid_created_at'>created_at</span><span class='comma'>,</span> 
-         <span class='symbol'>:username</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> 
-         <span class='symbol'>:docname</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_doc'>doc</span><span class='period'>.</span><span class='id identifier rubyid_docname'>docname</span><span class='comma'>,</span>
-         <span class='symbol'>:responded</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_notif'>notif</span><span class='period'>.</span><span class='id identifier rubyid_responded'>responded</span><span class='rbrace'>}</span>
-     <span class='ivar'>@notifs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_hash'>hash</span>
-   <span class='kw'>end</span>
- <span class='kw'>end</span>
+  <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
+  <span class='ivar'>@notifs</span> <span class='op'>=</span> <span class='const'>Notif</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -680,21 +676,19 @@
       <pre class="lines">
 
 
-105
-106
-107
-108
-109
-110
-111</pre>
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_authentication'>authentication</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:code</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_code'>code</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:code</span><span class='rbracket'>]</span>
-    <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_fetch_token'>fetch_token</span> <span class='id identifier rubyid_code'>code</span>
+    <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_fetch_token'>fetch_token</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:code</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_verify_credentials'>verify_credentials</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -715,6 +709,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
+<p>Finds the user given the sessions user_id and chooses the render layout</p>
+
 
   </div>
 </div>
@@ -727,17 +723,17 @@
       <pre class="lines">
 
 
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+47
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_contact'>contact</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -778,13 +774,13 @@
       <pre class="lines">
 
 
-244
-245
-246
-247</pre>
+228
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_notif'>delete_notif</span>
   <span class='id identifier rubyid_notif'>notif</span> <span class='op'>=</span> <span class='const'>Notif</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -821,16 +817,16 @@
       <pre class="lines">
 
 
-171
-172
-173
-174
-175
-176
-177</pre>
+155
+156
+157
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@request</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -864,6 +860,9 @@
   </div>
 
 <p class="note returns_void">This method returns an undefined value.</p>
+<p>Redirects the user to index_path if the user id not an admin, and sets the
+render layout to “home_temp” otherwise</p>
+
 
   </div>
 </div>
@@ -876,26 +875,24 @@
       <pre class="lines">
 
 
-75
-76
-77
-78
-79
-80
-81
-82
-83</pre>
+60
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 60</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_home'>home</span>   
+<span class='kw'>def</span> <span class='id identifier rubyid_home'>home</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_index_path'>index_path</span>
     <span class='kw'>return</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>layout:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>home_temp</span><span class='tstring_end'>&quot;</span></span>
-    <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_init'>init</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -915,6 +912,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
+<p>Redirects the user to admin_index_user_index_path if the user is an admin.
+Ges all task given a user id and renders layout as “application_user”</p>
+
 
   </div>
 </div>
@@ -927,8 +927,6 @@
       <pre class="lines">
 
 
-11
-12
 13
 14
 15
@@ -939,15 +937,13 @@
 20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>    
-  <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_admin'>admin</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_admin</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_admin_index_user_index_path'>admin_index_user_index_path</span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
-
   <span class='ivar'>@files</span><span class='comma'>,</span> <span class='ivar'>@details</span> <span class='op'>=</span> <span class='const'>Task</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_render'>render</span> <span class='label'>layout:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application_user</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
@@ -982,15 +978,15 @@
       <pre class="lines">
 
 
-98
-99
-100</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_login'>login</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_authorize'>authorize</span>  <span class='comment'># redirect to google login
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_build_auth_uri'>build_auth_uri</span>  <span class='comment'># redirect to google login
 </span><span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1023,22 +1019,20 @@
       <pre class="lines">
 
 
-88
-89
-90
-91
-92
-93</pre>
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logout'>logout</span>
   <span class='id identifier rubyid_render'>render</span> <span class='label'>layout:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>home_temp</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_session'>session</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span> <span class='comment'># only deletes app session, browser is still logged in to account
-</span>  <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_reset'>reset</span> 
-  <span class='comment'>#VimeoClient::delete_credentials
-</span><span class='kw'>end</span></pre>
+</span>  <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_delete_credentials'>delete_credentials</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1056,6 +1050,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
+<p>Makes a notification for this user</p>
+
 
   </div>
 </div>
@@ -1068,15 +1064,15 @@
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
-197</pre>
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_notify'>notify</span>
   <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'>Notif</span><span class='period'>.</span><span class='id identifier rubyid_create_new'>create_new</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1115,12 +1111,12 @@
       <pre class="lines">
 
 
-164
-165
-166</pre>
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requests_list'>requests_list</span>
   <span class='ivar'>@requests</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -1156,12 +1152,12 @@
       <pre class="lines">
 
 
-215
-216
-217</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond'>respond</span>
   <span class='ivar'>@notif_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>
@@ -1197,27 +1193,27 @@
       <pre class="lines">
 
 
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
 222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239</pre>
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_response'>send_response</span>
   <span class='id identifier rubyid_notif'>notif</span> <span class='op'>=</span> <span class='const'>Notif</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:notif_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1254,6 +1250,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
+<p>Gets all the users and sets the current_user_id to the sessions user_id</p>
+
 
   </div>
 </div>
@@ -1266,13 +1264,13 @@
       <pre class="lines">
 
 
-54
-55
-56
-57</pre>
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
   <span class='ivar'>@users</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -1309,15 +1307,15 @@
       <pre class="lines">
 
 
-182
-183
-184
-185
-186
-187</pre>
+166
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unauthorize'>unauthorize</span>
   <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_delete_and_respond'>delete_and_respond</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1356,20 +1354,20 @@
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159</pre>
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vauthentication'>vauthentication</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_get_base'>get_base</span>
@@ -1421,27 +1419,29 @@
       <pre class="lines">
 
 
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
 117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134</pre>
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify_credentials'>verify_credentials</span>
   <span class='id identifier rubyid_user_info'>user_info</span> <span class='op'>=</span> <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_get_user_info'>get_user_info</span>
@@ -1450,12 +1450,14 @@
     <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find_if_exists'>find_if_exists</span><span class='lparen'>(</span><span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>  <span class='comment'># if user is authorized to use app
 </span>    <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
       <span class='id identifier rubyid_render'>render</span> <span class='label'>layout:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>home_temp</span><span class='tstring_end'>&quot;</span></span>
-      <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_reset'>reset</span> <span class='comment'># effectively deleting access token for current client instance
-</span>      <span class='ivar'>@message</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_create_new'>create_new</span><span class='lparen'>(</span><span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_session'>session</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+      <span class='ivar'>@message</span> <span class='op'>=</span> <span class='const'>Request</span><span class='period'>.</span><span class='id identifier rubyid_create_new'>create_new</span><span class='lparen'>(</span><span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_user_info'>user_info</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
       <span class='kw'>return</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_update_user_session'>update_user_session</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_admin'>admin</span>
-    <span class='id identifier rubyid_update_google_session'>update_google_session</span> <span class='const'>GoogleClient</span><span class='op'>::</span><span class='id identifier rubyid_get_auth'>get_auth</span>     
+
+    <span class='id identifier rubyid_update_user_session'>update_user_session</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_admin'>admin</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_update_google_session'>update_google_session</span>
+
     <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_root_url'>root_url</span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
@@ -1492,19 +1494,19 @@
       <pre class="lines">
 
 
-139
-140
-141
-142
-143
-144</pre>
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vlogin'>vlogin</span>
   <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:vimeo_oauth</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_fetch_oauth'>fetch_oauth</span>
-  
+
   <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:return_to</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_referer'>referer</span> <span class='comment'># save url where login was invoked
 </span>  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_fetch_url'>fetch_url</span>
 <span class='kw'>end</span></pre>
@@ -1516,23 +1518,34 @@
       <div class="method_details ">
   <h3 class="signature " id="voptions-instance_method">
   
-    - (<tt>Object</tt>) <strong>voptions</strong> 
+    - (<tt>void</tt>) <strong>voptions</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Controller for the vimeo options</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-48
-49</pre>
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/user_controller.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_voptions'>voptions</span>
 <span class='kw'>end</span></pre>
@@ -1546,7 +1559,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 11 20:33:50 2015 by
+  Generated on Sat May 16 23:19:44 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>

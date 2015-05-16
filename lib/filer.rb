@@ -1,3 +1,4 @@
+# Module including the methods for parsing and compiling the files
 module Filer
   
   # Parses the doc file

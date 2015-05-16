@@ -1,3 +1,4 @@
+# Class for getting the Vimeo video file
 class VideoGet
   include Sidekiq::Worker
 

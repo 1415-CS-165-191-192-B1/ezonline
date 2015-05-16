@@ -1,3 +1,4 @@
+# Class for the authentication requests. Contains the method for creating new authentication requests
 class Request < ActiveRecord::Base
   self.primary_key = :user_id
   default_scope { order('created_at DESC') }

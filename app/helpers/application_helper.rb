@@ -1,3 +1,4 @@
+# Helper module for the application EzOnline
 module ApplicationHelper
 
   # Sets the site's name

@@ -2,14 +2,14 @@ module ApplicationHelper
 
   # Sets the site's name
   #
-  # @retrun [void]
+  # @return [void]
   def site_name
     "EZ Online"
   end
 
   # Sets the site's url
   #
-  # @retrun [void]
+  # @return [void]
   def site_url
     if Rails.env.production?
       # Place your production URL in the quotes below

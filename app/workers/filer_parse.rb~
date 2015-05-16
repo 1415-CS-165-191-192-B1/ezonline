@@ -9,6 +9,7 @@ class FilerParse
   # @param title
   # @param link
   # @param user_id
+  # @return [void]
   def perform result, id, title, link, user_id
     Filer::parse result, id, title, link, user_id
   end

@@ -101,7 +101,19 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Class for the documents added by the admins. Contains the methods for
+getting and deleting documents</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -266,15 +278,15 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
       <pre class="lines">
 
 
-23
 24
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_delete_and_respond'>delete_and_respond</span><span class='lparen'>(</span><span class='id identifier rubyid_doc_id'>doc_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_doc_id'>doc_id</span><span class='rparen'>)</span>
@@ -345,7 +357,6 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
       <pre class="lines">
 
 
-34
 35
 36
 37
@@ -358,10 +369,11 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
 44
 45
 46
-47</pre>
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
   <span class='id identifier rubyid_docs'>docs</span> <span class='op'>=</span> <span class='id identifier rubyid_all'>all</span>
@@ -428,12 +440,12 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_name'>get_name</span><span class='lparen'>(</span><span class='id identifier rubyid_doc_id'>doc_id</span><span class='rparen'>)</span>
 	<span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_doc_id'>doc_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_docname'>docname</span>
@@ -448,7 +460,7 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 11 20:33:50 2015 by
+  Generated on Sat May 16 23:19:43 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>

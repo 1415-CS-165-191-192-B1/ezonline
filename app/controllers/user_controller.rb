@@ -1,11 +1,13 @@
 require 'google_client'
 require 'vimeo_client'
 
+# Controller class for the users using the application
 class UserController < ApplicationController
   before_action :check_login_state, :except => [:home, :login, :authentication, :verify_credentials, :logout]
   before_action :restrict_non_admin, :only => [:admin_index]
   before_action :set_access_from_session, :only => [:login]
-  #
+  
+  # Redirects the user to admin_index_user_index_path if the user is an admin. Ges all task given a user id and renders layout as "application_user"
   #
   # @return [void]
   def index
@@ -17,7 +19,7 @@ class UserController < ApplicationController
     render layout: "application_user"
   end
 
-  #
+  # Gets all the notifications for the admin
   #
   # @return [void]
   def admin_index
@@ -25,12 +27,13 @@ class UserController < ApplicationController
     @notifs = Notif.get_all(session[:user_id])
   end
 
+  # Controller for the vimeo options
   #
-  #
+  # @return [void]
   def voptions
   end
 
-  #
+  # Gets all the users and sets the current_user_id to the sessions user_id
   #
   # @return [void]
   def show
@@ -38,7 +41,7 @@ class UserController < ApplicationController
     @current_user_id = session[:user_id]
   end
 
-  #
+  # Finds the user given the sessions user_id and chooses the render layout
   #
   # @return [void]
   def contact
@@ -50,7 +53,7 @@ class UserController < ApplicationController
     render layout: "application"
   end
 
-  #
+  # Redirects the user to index_path if the user id not an admin, and sets the render layout to "home_temp" otherwise
   #
   # @return [void]
   # @note Set as root
@@ -167,7 +170,7 @@ class UserController < ApplicationController
     return
   end
 
-  #
+  # Makes a notification for this user
   #
   # @return [void]
   def notify

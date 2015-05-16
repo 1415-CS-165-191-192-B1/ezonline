@@ -1,3 +1,4 @@
+# Class for the nortifications for the users and the admins. Contains the methods for creating and deleting notifications
 class Notif < ActiveRecord::Base
   belongs_to :user, :foreign_key => :from_id
   belongs_to :doc
@@ -22,6 +23,10 @@ class Notif < ActiveRecord::Base
     return :error, "Failed to send a notification to the admin."
   end
 
+  # Gets all the notifications for a given user
+  #
+  # @param user_id [Decimal] The user_id of the user who we eill get all the notifications
+  # @return [Array] notifs_with_extras
   def self.get_all(user_id)
     notifs = Notif.where(to_id: user_id)
     notifs_with_extras = Array.new

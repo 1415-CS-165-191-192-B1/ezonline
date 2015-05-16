@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Controller class for the files in the application</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -136,7 +147,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Assigns this snippet.</p>
+<p>Assigns this file/snippets to a user.</p>
 </div></span>
   
 </li>
@@ -351,7 +362,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Controller for making the new file.</p>
+</div></span>
   
 </li>
 
@@ -465,7 +478,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="ApplicationController.html" title="ApplicationController (class)">ApplicationController</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#redirect_to-instance_method" title="ApplicationController#redirect_to (method)">#redirect_to</a></span>, <span class='object_link'><a href="ApplicationController.html#set_name-instance_method" title="ApplicationController#set_name (method)">#set_name</a></span>, <span class='object_link'><a href="ApplicationController.html#update_google_session-instance_method" title="ApplicationController#update_google_session (method)">#update_google_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_user_session-instance_method" title="ApplicationController#update_user_session (method)">#update_user_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_vimeo_session-instance_method" title="ApplicationController#update_vimeo_session (method)">#update_vimeo_session</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="ApplicationController.html#authenticate_admin-instance_method" title="ApplicationController#authenticate_admin (method)">#authenticate_admin</a></span>, <span class='object_link'><a href="ApplicationController.html#check_login_state-instance_method" title="ApplicationController#check_login_state (method)">#check_login_state</a></span>, <span class='object_link'><a href="ApplicationController.html#check_vlogin_state-instance_method" title="ApplicationController#check_vlogin_state (method)">#check_vlogin_state</a></span>, <span class='object_link'><a href="ApplicationController.html#redirect_to-instance_method" title="ApplicationController#redirect_to (method)">#redirect_to</a></span>, <span class='object_link'><a href="ApplicationController.html#restrict_non_admin-instance_method" title="ApplicationController#restrict_non_admin (method)">#restrict_non_admin</a></span>, <span class='object_link'><a href="ApplicationController.html#save_login_state-instance_method" title="ApplicationController#save_login_state (method)">#save_login_state</a></span>, <span class='object_link'><a href="ApplicationController.html#save_vlogin_state-instance_method" title="ApplicationController#save_vlogin_state (method)">#save_vlogin_state</a></span>, <span class='object_link'><a href="ApplicationController.html#set_access_from_session-instance_method" title="ApplicationController#set_access_from_session (method)">#set_access_from_session</a></span>, <span class='object_link'><a href="ApplicationController.html#set_name-instance_method" title="ApplicationController#set_name (method)">#set_name</a></span>, <span class='object_link'><a href="ApplicationController.html#update_google_session-instance_method" title="ApplicationController#update_google_session (method)">#update_google_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_user_session-instance_method" title="ApplicationController#update_user_session (method)">#update_user_session</a></span>, <span class='object_link'><a href="ApplicationController.html#update_vimeo_session-instance_method" title="ApplicationController#update_vimeo_session (method)">#update_vimeo_session</a></span></p>
 
   
 
@@ -485,7 +498,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Assigns this snippet</p>
+<p>Assigns this file/snippets to a user</p>
 
 
   </div>
@@ -532,7 +545,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p>
-<p>Creates gdoc with latest commits</p>
+<p>Creates gdoc with latest commits. Compiles all the snippets for this file.</p>
 
 
   </div>
@@ -893,7 +906,18 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Controller for making the new file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -947,7 +971,7 @@
       <pre class="code"><span class="info file"># File 'app/controllers/file_controller.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh_videos'>refresh_videos</span>
-  <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_save_latest'>save_latest</span> 
+  <span class='const'>VimeoClient</span><span class='op'>::</span><span class='id identifier rubyid_save_latest'>save_latest</span>
   <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='symbol'>:back</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -993,7 +1017,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_save_task'>save_task</span>
   <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='const'>Task</span><span class='period'>.</span><span class='id identifier rubyid_create_new'>create_new</span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:doc_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
-  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_file_index_path'>file_index_path</span>  
+  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_file_index_path'>file_index_path</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1093,11 +1117,11 @@
 </span>    <span class='ivar'>@commit_text</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:text</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:commit_text</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
     <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:edit</span> <span class='comment'># renders edit template
-</span>  <span class='kw'>else</span> 
+</span>  <span class='kw'>else</span>
     <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_message'>message</span>
 	  <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_history_file_path'>history_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:snippet_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  
+
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1109,7 +1133,7 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 11 20:33:50 2015 by
+  Generated on Sat May 16 23:19:43 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>

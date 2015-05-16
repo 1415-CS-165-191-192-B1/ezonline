@@ -1,3 +1,4 @@
+# Class for the tasks assigned by the admins to the users. Contains the methods for creating and getting the tasks.
 class Task < ActiveRecord::Base
   self.primary_key = :doc_id
   belongs_to :user

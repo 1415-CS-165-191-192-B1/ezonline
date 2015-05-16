@@ -12,7 +12,7 @@ class Request < ActiveRecord::Base
   # @return [Symbol, String] 'Sorry, you have no permission to use this application. A request was sent to grant access.',
   # 	if the user sent a request for the first time,
   # 	or 'A request was already sent to the application. Please try again later.'
-  # 	Iif the user already has an existing request
+  # 	if the user already has an existing request
   def self.create_new(user_id, email, username)
   	request = new(user_id: user_id, email: email, username: username)
     return 'Sorry, you have no permission to use this application. A request was sent to grant access.' if request.save

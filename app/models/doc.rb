@@ -1,3 +1,4 @@
+# Class for the documents added by the admins. Contains the methods for getting and deleting documents
 class Doc < ActiveRecord::Base
   self.primary_key = :doc_id
   has_many :snippets, :dependent => :destroy

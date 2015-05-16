@@ -1,3 +1,4 @@
+# Class for parsing the Google doc file
 class FilerParse
   include Sidekiq::Worker
   sidekiq_options retry: false
