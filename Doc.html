@@ -324,27 +324,14 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash</tt>, <tt>Hash</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>files The snippets of the files</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>workers The users in charge of the file</p>
+<p>files - The snippets of the files, workers - The users in charge of the
+file</p>
 </div>
       
     </li>
@@ -357,6 +344,7 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
       <pre class="lines">
 
 
+34
 35
 36
 37
@@ -369,11 +357,10 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
 44
 45
 46
-47
-48</pre>
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/models/doc.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
   <span class='id identifier rubyid_docs'>docs</span> <span class='op'>=</span> <span class='id identifier rubyid_all'>all</span>
@@ -460,7 +447,7 @@ file &#39;#Doc.docdoc.docname&#39;” if the document was not deleted</p>
 </div>
 
     <div id="footer">
-  Generated on Sun May 17 00:25:03 2015 by
+  Generated on Sun May 17 00:43:59 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.2).
 </div>
