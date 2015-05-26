@@ -85,6 +85,7 @@ class GoogleClient
   # @param code
   # @return [void]
   def self.fetch_token code
+    init
     @client.authorization.code = code
 
     @client.authorization.fetch_access_token!
