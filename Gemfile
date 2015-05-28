@@ -25,8 +25,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # testing
 
-group :test, :development do
+group :test do
   gem 'capybara', :require => false
+  gem 'selenium-webdriver', :require => false
+  gem 'chromedriver-helper', :require => false
   gem 'rspec-rails', :require => false
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
