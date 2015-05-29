@@ -29,6 +29,7 @@ group :test do
   gem 'capybara', :require => false
   gem 'selenium-webdriver', :require => false
   gem 'chromedriver-helper', :require => false
+  gem 'ci_reporter_rspec', :require => false
   gem 'rspec-rails', :require => false
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
