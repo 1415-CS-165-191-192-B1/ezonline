@@ -8,7 +8,7 @@ feature 'try to visit google login', type: :feature do
   click_link 'Log In'
     find_by_id('Email').set("ezonline.dev")
     find_by_id('Passwd').set("ezonlinedev")
-    click_button 'signIn'
+    click_button 'signIn'					#sign in and out from heroku
     expect(page).to have_text("Dashboard")    
     click_link 'Log Out'
     expect(page).to have_text("You have successfully logged out.")
