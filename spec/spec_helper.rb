@@ -3,7 +3,7 @@ require 'simplecov-rcov'
 require 'capybara/rspec'
 
 SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-SimpleCov.start 'rails'
+SimpleCov.start
 
 Capybara.configure do |config|
   config.run_server = false
