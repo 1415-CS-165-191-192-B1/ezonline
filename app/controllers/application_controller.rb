@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
   #
   # @return [false] if the user is not logged in to Google
   def check_login_state
-    redirect_to login_user_index_path unless session[:user_id]
+    #redirect_to login_user_index_path unless session[:user_id]
     return false
   end
 
